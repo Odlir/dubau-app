@@ -18,10 +18,10 @@ use App\Http\Controllers\AuthController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-/*
+
 Route::get('/test', function () {
     return 'Hello World';
-});*/
+});
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
@@ -29,4 +29,5 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
     Route::get('me', 'me');
+
 });
