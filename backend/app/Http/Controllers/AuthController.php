@@ -18,12 +18,14 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
+            'USUA_usuario' => 'required|string',
+            'USUA_Password' => 'required|string',
         ]);
-        $credentials = $request->only('email', 'password');
+
+        $credentials = $request->only('USUA_usuario', 'USUA_Password');
 
         $token = Auth::attempt($credentials);
+
         if (!$token) {
             return response()->json([
                 'status' => 'error',
@@ -34,7 +36,7 @@ class AuthController extends Controller
         $user = Auth::user();
         return response()->json([
             'status' => 'success',
-            'user' => $user,
+            'USUA_usuario' => $user,
             'authorisation' => [
                 'token' => $token,
                 'type' => 'bearer',
@@ -45,15 +47,15 @@ class AuthController extends Controller
 
     public function register(Request $request){
         $request->validate([
-            'name' => 'required|string|max:255',
+            'USUA_usuario' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
+            'USUA_Password' => 'required|string|min:6',
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'USUA_usuario' => $request->USUA_usuario,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'USUA_Password' => Hash::make($request->USUA_Password),
         ]);
 
         $token = Auth::login($user);
