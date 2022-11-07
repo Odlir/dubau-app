@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use App\Models\User2;
 
 class AuthController extends Controller
 {
@@ -17,13 +17,28 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-        $credentials = $request->only('email', 'password');
+        auth()->shouldUse('api');
+        $user = User2::where('emaill', $request->all()['emaill'])->first();
+        // Check Password
+        if (!$user || !Hash::check($request->all()['passsword'], $user->passsword)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 401);
+        }
 
-        $token = Auth::attempt($credentials);
+        $token = Auth::login($user);
+        return response()->json([
+            'status' => 'success',
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
+/*       $token = Auth::attempt($credentials);
+       var_dump($credentials);
+
         if (!$token) {
             return response()->json([
                 'status' => 'error',
@@ -39,21 +54,21 @@ class AuthController extends Controller
                 'token' => $token,
                 'type' => 'bearer',
             ]
-        ]);
+        ]);*/
 
     }
 
     public function register(Request $request){
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
+            'names' => 'required|string|max:255',
+            'emaill' => 'required|string|email|max:255|unique:users',
+            'passsword' => 'required|string|min:6',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+        $user = User2::create([
+            'names' => $request->names,
+            'emaill' => $request->emaill,
+            'passsword' => Hash::make($request->passsword),
         ]);
 
         $token = Auth::login($user);
