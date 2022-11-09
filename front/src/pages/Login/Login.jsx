@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-const Counter = (props) => {
+const Login = (props) => {
     const {store, USUA_usuario, setUSUA_usuario, USUA_Password, setUSUA_Password} = props;
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
@@ -53,4 +53,4 @@ const Counter = (props) => {
         </section>
     )
 }
-export default Counter;
+export default Login;

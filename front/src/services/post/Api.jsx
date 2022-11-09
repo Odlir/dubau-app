@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-import Counter from "../components/Counter.jsx";
+import Login from "../../pages/Login/Login.jsx";
 
 const endpoint = 'http://localhost:8000/api/login'
 
@@ -26,7 +26,7 @@ const Api = () => {
     return (
         <div>
             {/*Mando data a mi hijo*/}
-            <Counter store={store} USUA_usuario={USUA_usuario} setUSUA_usuario={setUSUA_usuario}   USUA_Password={USUA_Password} setUSUA_Password={setUSUA_Password}  />
+            <Login store={store} USUA_usuario={USUA_usuario} setUSUA_usuario={setUSUA_usuario}   USUA_Password={USUA_Password} setUSUA_Password={setUSUA_Password}  />
         </div>
     )
 }
