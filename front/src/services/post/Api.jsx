@@ -1,9 +1,11 @@
 import axios from 'axios'
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
+import { env } from '../../env.js';
 import Login from "../../pages/Login/Login.jsx";
 
-const endpoint = 'http://localhost:8000/api/login'
+//Rute Login
+const endpoint = `${env.apiURL}api/login`
 
 const Api = () => {
     const [USUA_usuario, setUSUA_usuario] = useState('')
