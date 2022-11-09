@@ -18,9 +18,9 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         auth()->shouldUse('api');
-        $user = User2::where('emaill', $request->all()['emaill'])->first();
+        $user = User2::where('USUA_usuario', $request->all()['USUA_usuario'])->first();
         // Check Password
-        if (!$user || !Hash::check($request->all()['passsword'], $user->passsword)) {
+        if (!$user || !Hash::check($request->all()['USUA_Password'], $user->USUA_Password)) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorized',
@@ -60,15 +60,13 @@ class AuthController extends Controller
 
     public function register(Request $request){
         $request->validate([
-            'names' => 'required|string|max:255',
-            'emaill' => 'required|string|email|max:255|unique:users',
-            'passsword' => 'required|string|min:6',
+            'USUA_usuario' => 'required|string|max:255|unique:cji_usuario',
+            'USUA_Password' => 'required|string|min:6',
         ]);
 
         $user = User2::create([
-            'names' => $request->names,
-            'emaill' => $request->emaill,
-            'passsword' => Hash::make($request->passsword),
+            'USUA_usuario' => $request->USUA_usuario,
+            'USUA_Password' => Hash::make($request->USUA_Password),
         ]);
 
         $token = Auth::login($user);

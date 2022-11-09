@@ -10,13 +10,14 @@ use Illuminate\Notifications\Notifiable;
 class User2 extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
-    protected $table = 'users';
-    protected $fillable = array('names','emaill', 'passsword');
+    protected $table = 'cji_usuario';
+    protected $primaryKey = 'USUA_Codigo';
+    protected $fillable = array('USUA_usuario', 'USUA_Password');
     public $timestamps = false;
     public static $rules = array();
 
     protected $hidden = [
-        'passsword',
+        'USUA_Password',
         'remember_token',
     ];
 

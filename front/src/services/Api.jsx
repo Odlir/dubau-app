@@ -6,14 +6,14 @@ import Counter from "../components/Counter.jsx";
 const endpoint = 'http://localhost:8000/api/login'
 
 const Api = () => {
-    const [emaill, setemaill] = useState('')
-    const [passsword, setpasssword] = useState('')
+    const [USUA_usuario, setUSUA_usuario] = useState('')
+    const [USUA_Password, setUSUA_Password] = useState('')
 
     const navigate = useNavigate()
 
     const store = async (e) => {
         e.preventDefault()
-        await axios.post(endpoint, {emaill: emaill, passsword: passsword})
+        await axios.post(endpoint, {USUA_usuario: USUA_usuario, USUA_Password: USUA_Password})
             .then(function (response) {
                 console.log(response);
                 console.log("Successfully Logged in ");
@@ -26,33 +26,8 @@ const Api = () => {
     return (
         <div>
             {/*Mando data a mi hijo*/}
-            <Counter store={store} emaill={emaill} setemaill={setemaill}   passsword={passsword} setpasssword={setpasssword}  />
-
+            <Counter store={store} USUA_usuario={USUA_usuario} setUSUA_usuario={setUSUA_usuario}   USUA_Password={USUA_Password} setUSUA_Password={setUSUA_Password}  />
         </div>
-       /* <div>
-            <h3>Login DUB</h3>
-            <form onSubmit={store}>
-                <div className='mb-3'>
-                    <label className='form-label'>emaill</label>
-                    <input
-                        value={emaill}
-                        onChange={ (e)=> setemaill(e.target.value)}
-                        type='text'
-                        className='form-control'
-                    />
-                </div>
-                <div className='mb-3'>
-                    <label className='form-label'>passsword</label>
-                    <input
-                        value={passsword}
-                        onChange={ (e)=> setpasssword(e.target.value)}
-                        type='text'
-                        className='form-control'
-                    />
-                </div>
-                <button type='submit' className='btn btn-primary'>Login</button>
-            </form>
-        </div>*/
     )
 }
 
