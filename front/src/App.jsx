@@ -22,20 +22,14 @@ import Api from "./services/post/Api.jsx";
 import LayoutMain from "./componentes/LayoutMain.jsx";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RecoilRoot } from "recoil";
-import Route from "./router";
-//import './index.css'
+import Router from "./router";
+
 function App() {
     return (
         <div className="App">
             <RecoilRoot>
                     <BrowserRouter>
-                        <Routes>
-                            {/* <Route path='/' element={ <Api/> } />
-                            <Route path='/layoutmain' element={ <LayoutMain/> } /> */}
-
-                             <Route />
-                             {/* <ScrollToTop /> */}
-                        </Routes>
+                        <Router />
                     </BrowserRouter>
             </RecoilRoot>
 
