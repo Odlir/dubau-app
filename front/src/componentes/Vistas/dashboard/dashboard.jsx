@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import Profile_tres from "../../assets/images/profile-3.jpg";
-import Profile_dos from "../../assets/images/profile-2.jpg";
-import Profile_cinco from "../../assets/images/profile-5.jpg";
-import Preview_catorce from "../../assets/images/preview-14.jpg";
-import Preview_siete from "../../assets/images/preview-7.jpg";
-import Preview_quince from "../../assets/images/preview-15.jpg";
-import Profile_quince from "../../assets/images/profile-15.jpg";
-import Profile_seis from "../../assets/images/profile-6.jpg";
-import Profile_once from "../../assets/images/profile-11.jpg";
-import Profile_ocho from "../../assets/images/profile-8.jpg";
-import Profile_diez from "../../assets/images/preview-10.jpg";
-import Profile_doce from "../../assets/images/preview-12.jpg";
-import Preview_seis from "../../assets/images/preview-6.jpg";
-import Preview_ocho from "../../assets/images/preview-8.jpg";
-import Preview_uno from "../../assets/images/preview-1.jpg";
+import Profile_tres from "../../../assets/images/profile-3.jpg";
+import Profile_dos from "../../../assets/images/profile-2.jpg";
+import Profile_cinco from "../../../assets/images/profile-5.jpg";
+import Preview_catorce from "../../../assets/images/preview-14.jpg";
+import Preview_siete from "../../../assets/images/preview-7.jpg";
+import Preview_quince from "../../../assets/images/preview-15.jpg";
+import Profile_quince from "../../../assets/images/profile-15.jpg";
+import Profile_seis from "../../../assets/images/profile-6.jpg";
+import Profile_once from "../../../assets/images/profile-11.jpg";
+import Profile_ocho from "../../../assets/images/profile-8.jpg";
+import Profile_diez from "../../../assets/images/preview-10.jpg";
+import Profile_doce from "../../../assets/images/preview-12.jpg";
+import Preview_seis from "../../../assets/images/preview-6.jpg";
+import Preview_ocho from "../../../assets/images/preview-8.jpg";
+import Preview_uno from "../../../assets/images/preview-1.jpg";
 
 
 class Dashboard extends React.Component {
@@ -27,7 +27,7 @@ class Dashboard extends React.Component {
                     <div className="col-span-12 mt-8">
                         <div className="intro-y flex items-center h-10">
                             <h2 className="text-lg font-medium truncate mr-5">
-                                General Report
+                                Reporte General
                             </h2>
                             <a href="" className="ml-auto flex items-center text-primary"> <i data-lucide="refresh-ccw" className="w-4 h-4 mr-3"></i> Reload Data </a>
                         </div>

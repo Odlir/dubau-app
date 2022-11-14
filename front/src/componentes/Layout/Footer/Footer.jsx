@@ -1,4 +1,5 @@
 import React from "react";
+import DarkModeSwitcher from "@/componentes/Layout/Footer/Main";
 
 class Footer extends React.Component {
   render() {

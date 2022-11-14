@@ -19,7 +19,7 @@ const Api = () => {
             .then(function (response) {
                 console.log(response);
                 console.log("Successfully Logged in ");
-                navigate('/dashboard')
+                navigate('/layoutmain')
             })
             .catch(error => {
                 alert('Usuario o Contraseña incorrectos')

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Button from "../componentes/Button/Button";
 import Layout from './Layout/Layout';
 
 const Dashboard = () => {
