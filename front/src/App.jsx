@@ -21,14 +21,13 @@ import LayoutMain from "./componentes/LayoutMain.jsx";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RecoilRoot } from "recoil";
 import Router from "./router";
-//import './index.css'
 function App() {
     return (
         <div className="App">
             <RecoilRoot>
-                <BrowserRouter>
-                    <Router />
-                </BrowserRouter>
+                    <BrowserRouter>
+                        <Router />
+                    </BrowserRouter>
             </RecoilRoot>
         </div>
     )
