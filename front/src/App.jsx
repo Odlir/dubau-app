@@ -2,7 +2,6 @@
 // import { BrowserRouter } from "react-router-dom";
 // import { RecoilRoot } from "recoil";
 // import Router from "./router";
-
 // function App() {
 //   return (
 //     <RecoilRoot>
@@ -13,7 +12,6 @@
 //     </RecoilRoot>
 //   );
 // }
-
 // export default App;
 
 
@@ -22,24 +20,24 @@ import Api from "./services/post/Api.jsx";
 import LayoutMain from "./componentes/LayoutMain.jsx";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RecoilRoot } from "recoil";
-import Route from "./router";
+import Router from "./router";
 //import './index.css'
 function App() {
     return (
         <div className="App">
             <RecoilRoot>
-                    <BrowserRouter>
-                        <Routes>
-                            {/* <Route path='/' element={ <Api/> } />
-                            <Route path='/layoutmain' element={ <LayoutMain/> } /> */}
-
-                             <Route />
-                             {/* <ScrollToTop /> */}
-                        </Routes>
-                    </BrowserRouter>
+                <BrowserRouter>
+                    <Router />
+                </BrowserRouter>
             </RecoilRoot>
-
         </div>
     )
 }
 export default App;
+
+ {/* <Routes> */}
+                            {/* <Route path='/' element={ <Api/> } />
+                            <Route path='/layoutmain' element={ <LayoutMain/> } /> */}
+
+                             {/* <ScrollToTop /> */}
+                        {/* </Routes> */}
