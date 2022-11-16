@@ -22,7 +22,7 @@ class Sidebar_mobile extends React.Component {
                 {/* <!-- BEGIN: Logo --> */}
                 <a href="" className="logo -intro-x hidden md:flex xl:w-[180px] block">
                     <img alt="Midone - HTML Admin Template" className="logo__image w-6" src={logo}/>
-                    <span className="logo__text text-white text-lg ml-3"> Enigma </span> 
+                    <span className="logo__text text-white text-lg ml-3"> Dubau </span> 
                 </a>
                 
                 {/* <!-- END: Logo --> */}

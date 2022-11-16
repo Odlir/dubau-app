@@ -7,6 +7,7 @@ import logoUrl from "@/assets/images/logo.svg";
 import illustrationUrl from "@/assets/images/illustration.svg";
 
 const Login = (props) => {
+  
     const {store, USUA_usuario, setUSUA_usuario, USUA_Password, setUSUA_Password} = props;
 
     const handleChange = (e) => {

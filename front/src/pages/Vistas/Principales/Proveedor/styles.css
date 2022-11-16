@@ -1,0 +1,56 @@
+[aria-hidden="true"] {
+    display: none;
+}
+
+
+
+
+.rdt_Table{
+  opacity: 0;
+  z-index: calc(50 - 2);
+  opacity: 0;
+  position: relative;
+  transform: translateY(50px);
+  animation: 0.4s intro-y-animation ease-in-out 0.33333s;
+  animation-fill-mode: forwards;
+  animation-delay: calc(2 * 0.1s);
+  background-color: rgb(255 255 255 / 0.05);
+}
+  
+
+/* .rdt_TableRow{
+  opacity: 0;
+  z-index: calc(50 - 2);
+  opacity: 0;
+  position: relative;
+  transform: translateY(50px);
+  animation: 0.4s intro-y-animation ease-in-out 0.33333s;
+  animation-fill-mode: forwards;
+  animation-delay: calc(2 * 0.1s);
+  background-color: rgb(255 255 255 / 0.05);
+} */
+
+.rdt_TableHeader
+{
+  opacity: 0;
+  z-index: calc(50 - 2);
+  opacity: 0;
+  position: relative;
+  transform: translateY(50px);
+  animation: 0.4s intro-y-animation ease-in-out 0.33333s;
+  animation-fill-mode: forwards;
+  animation-delay: calc(2 * 0.1s);
+  background-color: rgb(255 255 255 / 0.05);
+}
+
+.rdt_TableCell{
+  opacity: 0;
+  z-index: calc(50 - 2);
+  opacity: 0;
+  position: relative;
+  transform: translateY(50px);
+  animation: 0.4s intro-y-animation ease-in-out 0.33333s;
+  animation-fill-mode: forwards;
+  animation-delay: calc(2 * 0.1s);
+  background-color: rgb(255 255 255 / 0.05);
+}

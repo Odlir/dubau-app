@@ -121,6 +121,43 @@ const fakers = {
     ];
     return _.shuffle(products);
   },
+  fakeCategories() {
+    const categories = [
+      { name: "PC & Laptop", tags: "Apple, Asus, Lenovo, Dell, Acer" },
+      {
+        name: "Smartphone & Tablet",
+        tags: "Samsung, Apple, Huawei, Nokia, Sony",
+      },
+      { name: "Electronic", tags: "Sony, LG, Toshiba, Hisense, Vizio" },
+      {
+        name: "Home Appliance",
+        tags: "Whirlpool, Amana, LG, Frigidaire, Samsung",
+      },
+      { name: "Photography", tags: "Canon, Nikon, Sony, Fujifilm, Panasonic" },
+      { name: "Fashion & Make Up", tags: "Nike, Adidas, Zara, H&M, Levi’s" },
+      {
+        name: "Kids & Baby",
+        tags: "Mothercare, Gini & Jony, H&M, Babyhug, Liliput",
+      },
+      { name: "Hobby", tags: "Bandai, Atomik R/C, Atlantis Models, Carisma" },
+      {
+        name: "Sport & Outdoor",
+        tags: "Nike, Adidas, Puma, Rebook, Under Armour",
+      },
+    ];
+
+    return _.sampleSize(categories, 3).map((category) => {
+      return {
+        name: category.name,
+        tags: category.tags,
+        slug: _.replace(
+          _.replace(_.toLower(category.name), / /g, "-"),
+          "&",
+          "and"
+        ),
+      };
+    });
+  },
   fakeNews() {
     const news = [
       {
@@ -325,6 +362,7 @@ for (let i = 0; i < 20; i++) {
     trueFalse: fakers.fakeTrueFalse(),
     stocks: fakers.fakeStocks(),
     products: fakers.fakeProducts(),
+    categories: fakers.fakeCategories(),
     news: fakers.fakeNews(),
     files: fakers.fakeFiles(),
     jobs: fakers.fakeJobs(),
