@@ -90,10 +90,10 @@ import {
                     </DropdownContent>
                   </DropdownMenu>
                 </Dropdown>
-                <div className="hidden md:block mx-auto text-slate-500">
+                {/* <div className="hidden md:block mx-auto text-slate-500">
                   Showing 1 to 10 of 150 entries
-                </div>
-                <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+                </div> */}
+                {/* <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                   <div className="w-56 relative text-slate-500">
                     <input
                       type="text"
@@ -105,174 +105,16 @@ import {
                       className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* BEGIN: Data List */}
-              <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-                
-                {/* 
-                    <table className="table table-report -mt-2">
-                      <thead>
-                        <tr>
-                          <th className="whitespace-nowrap">IMAGES</th>
-                          <th className="whitespace-nowrap">CATEGORY NAME</th>
-                          <th className="whitespace-nowrap">SLUG</th>
-                          <th className="text-center whitespace-nowrap">STATUS</th>
-                          <th className="text-center whitespace-nowrap">ACTIONS</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {$_.take($f(), 9).map((faker, fakerKey) => (
-                          <tr key={fakerKey} className="intro-x">
-                            <td className="w-40">
-                              <div className="flex">
-                                <div className="w-10 h-10 image-fit zoom-in">
-                                  <Tippy
-                                    tag="img"
-                                    alt="Midone Tailwind HTML Admin Template"
-                                    className="rounded-full"
-                                    src={faker.images[0]}
-                                    content={`Uploaded at ${faker.dates[0]}`}
-                                  />
-                                </div>
-                                <div className="w-10 h-10 image-fit zoom-in -ml-5">
-                                  <Tippy
-                                    tag="img"
-                                    alt="Midone Tailwind HTML Admin Template"
-                                    className="rounded-full"
-                                    src={faker.images[1]}
-                                    content={`Uploaded at ${faker.dates[1]}`}
-                                  />
-                                </div>
-                                <div className="w-10 h-10 image-fit zoom-in -ml-5">
-                                  <Tippy
-                                    tag="img"
-                                    alt="Midone Tailwind HTML Admin Template"
-                                    className="rounded-full"
-                                    src={faker.images[2]}
-                                    content={`Uploaded at ${faker.dates[2]}`}
-                                  />
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <a href="" className="font-medium whitespace-nowrap">
-                                {faker.categories[0].name}
-                              </a>
-                              <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
-                                Tags: {faker.categories[0].tags}
-                              </div>
-                            </td>
-                            <td>
-                              <a
-                                className="text-slate-500 flex items-center mr-3"
-                                href="#"
-                              >
-                                <Lucide icon="ExternalLink" className="w-4 h-4 mr-2" />
-                                /categories/{faker.categories[0].slug}
-                              </a>
-                            </td>
-                            <td className="w-40">
-                              <div
-                                className={classnames({
-                                  "flex items-center justify-center": true,
-                                  "text-success": faker.trueFalse[0],
-                                  "text-danger": !faker.trueFalse[0],
-                                })}
-                              >
-                                <Lucide icon="CheckSquare" className="w-4 h-4 mr-2" />
-                                {faker.trueFalse[0] ? "Active" : "Inactive"}
-                              </div>
-                            </td>
-                            <td className="table-report__action w-56">
-                              <div className="flex justify-center items-center">
-                                <a className="flex items-center mr-3" href="#">
-                                  <Lucide icon="CheckSquare" className="w-4 h-4 mr-1" />{" "}
-                                  Edit
-                                </a>
-                                <a
-                                  className="flex items-center text-danger"
-                                  href="#"
-                                  onClick={() => {
-                                    setDeleteConfirmationModal(true);
-                                  }}
-                                >
-                                  <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Delete
-                                </a>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                */}
 
-                <TablaMain />
+              <TablaMain/>
 
-
-
-              </div>
               {/* END: Data List */}
-              {/* BEGIN: Pagination */}
-              <div className="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
-                <nav className="w-full sm:w-auto sm:mr-auto">
-                  <ul className="pagination">
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        <Lucide icon="ChevronsLeft" className="w-4 h-4" />
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        <Lucide icon="ChevronLeft" className="w-4 h-4" />
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        ...
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        1
-                      </a>
-                    </li>
-                    <li className="page-item active">
-                      <a className="page-link" href="#">
-                        2
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        3
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        ...
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        <Lucide icon="ChevronRight" className="w-4 h-4" />
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">
-                        <Lucide icon="ChevronsRight" className="w-4 h-4" />
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-                <select className="w-20 form-select box mt-3 sm:mt-0">
-                  <option>10</option>
-                  <option>25</option>
-                  <option>35</option>
-                  <option>50</option>
-                </select>
-              </div>
-              {/* END: Pagination */}
+
+
             </div>
 
 
