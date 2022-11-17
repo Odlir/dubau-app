@@ -76,7 +76,7 @@ export const Table = ({ columns, rows }) => {
             <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
               <div className="w-56 relative text-slate-500">
                   <select className="w-20 form-select box mt-3 sm:mt-0 cursor-pointer" onChange={GetValue}>
-                    <option value="10" selected >10</option>
+                    <option value="10"  >10</option>
                     <option value="25">25</option>
                     <option value="35">35</option>
                     <option value="50">50</option>
@@ -97,11 +97,11 @@ export const Table = ({ columns, rows }) => {
                       const sortIcon = () => {
                         if (column.accessor === sort.orderBy) {
                           if (sort.order === 'asc') {
-                            return '  '+<Lucide icon="ArrowUp" className="w-4 h-4 cursor-pointer"  />
+                            return <Lucide icon="ArrowUp" className="w-4 h-4 cursor-pointer"  />;
                           }
-                          return '  '+<Lucide icon="ArrowDown" className="w-4 h-4 cursor-pointer" />
-                        } else {
-                          return '️  ↕️'
+                          return <Lucide icon="ArrowDown" className="w-4 h-4 cursor-pointer" />;
+                        } else { 
+                          return '↕️';
                         }
                       }
                       return (
@@ -141,14 +141,21 @@ export const Table = ({ columns, rows }) => {
                 <tbody>
                   {calculatedRows.map((row) => {
                     return (
-                      <tr  key={row.id}   className="intro-x">
+                      <tr key={row.id}   className="intro-x">
                         {columns.map((column) => {
+                                                  // console.log("🚀 ~ file: Table.jsx ~ line 155 ~ {columns.map ~ column", column);
+                                                  console.log("🚀 ~ file: Table.jsx ~ line 155 ~ {columns.map ~ column", column.format)
+
                           if (column.format) {
+
+
                             return  <td className="text-center" key={column.accessor}>
                                         {column.format(row[column.accessor])}                          
                                     </td>
                           }
-                          return <td className="text-center" key={column.accessor}>{row[column.accessor]}</td>
+                          return <td className="text-center" key={column.accessor}>
+                            {row[column.accessor]}
+                            </td>
                         })}
                       </tr>
                     )

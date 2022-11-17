@@ -43,29 +43,7 @@ class CJI_Proveedor extends Controller
                 $tipo_proveedor = $valor->PROVC_TipoPersona==1?"P.JURIDICA":"P.NATURAL";
                 $telefono       = $valor->telefono;
                 $movil          = $valor->movil;
-                $accion         = `
-
-                <a className="flex items-center mr-3" href="#">
-                    <Lucide icon="CheckSquare" className="w-4 h-4 mr-1" />{" "}
-                    Edit
-                </a>
-                <a
-                        className="flex items-center text-danger"
-                        href="#"
-                        onClick={() => {
-                        setDeleteConfirmationModal(true);
-                        }}
-                >
-                        <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Delete
-                </a>
-
-                `;
-                // $precio         = "<a href='#' id='precio_New' onclick='precio_proveedor(".$codigo.")'><img src='".base_url()."images/dolar.png' width='16' height='16' border='0' title='Precio' ></a>";
-                // $editar         = "<a href='#' onclick='editar_proveedor(".$codigo.")'><img src='".base_url()."images/modificar.png' width='16' height='16' border='0' title='Modificar'></a>";
-                // $ver            = "<a href='#' onclick='ver_proveedor(".$codigo.")'><img src='".base_url()."images/ver.png' width='16' height='16' border='0' title='Modificar'></a>";
-                // $eliminar       = "<a href='#' onclick='eliminar_proveedor(".$codigo.")'><img src='".base_url()."images/eliminar.png' width='16' height='16' border='0' title='Modificar'></a>";
-
-
+                $accion         = '<a className="flex items-center mr-3" href="#"><Lucide icon="CheckSquare" className="w-4 h-4 mr-1" />{" "}Edit</a>'.'<a className="flex items-center text-danger"href="#" onClick={() => {setDeleteConfirmationModal(true);  }}><Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Delete</a>';
                 $lista[]        = array("id" => $item,
                                         "ruc" => $ruc,
                                         "dni" => $dni,

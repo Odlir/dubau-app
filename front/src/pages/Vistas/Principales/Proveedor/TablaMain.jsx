@@ -7,7 +7,6 @@ import { env } from '@/env.js';
 
 export default class TablaMain extends React.Component {
 
-
   state = {
     rows: [],
     columns : [
@@ -32,9 +31,7 @@ export default class TablaMain extends React.Component {
 
   render() {
     return (
-
       <Table rows={this.state.rows} columns={this.state.columns} />
-
     )
   }
 }
