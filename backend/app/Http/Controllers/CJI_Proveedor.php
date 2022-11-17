@@ -32,36 +32,28 @@ class CJI_Proveedor extends Controller
             ->where('prov.PROVP_Codigo', '<>', 0)
             ->get();
 
-            $item            = 1;
-            $lista           = array();
+        $item = 1;
+        $lista = array();
 
-            foreach( $consulta1 as $indice=>$valor ) {
-                $codigo         = $valor->PROVP_Codigo;
-                $ruc            = $valor->ruc;
-                $dni            = $valor->dni;
-                $razon_social   = $valor->nombre;
-                $tipo_proveedor = $valor->PROVC_TipoPersona==1?"P.JURIDICA":"P.NATURAL";
-                $telefono       = $valor->telefono;
-                $movil          = $valor->movil;
-                $accion         = '<a className="flex items-center mr-3" href="#"><Lucide icon="CheckSquare" className="w-4 h-4 mr-1" />{" "}Edit</a>'.'<a className="flex items-center text-danger"href="#" onClick={() => {setDeleteConfirmationModal(true);  }}><Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Delete</a>';
-                $lista[]        = array("id" => $item,
-                                        "ruc" => $ruc,
-                                        "dni" => $dni,
-                                        "nombre" => $razon_social,
-                                        "tipo_proveedor" => $tipo_proveedor,
-                                        "telefono" => $telefono,
-                                        "movil" => $movil,
-                                        "accion" => $accion,
-                                    );
-                $item++;
-            }
-
-
-            return response()->json($lista, 200);
-
-
-
-
-
+        foreach ($consulta1 as $indice => $valor) {
+            $codigo = $valor->PROVP_Codigo;
+            $ruc = $valor->ruc;
+            $dni = $valor->dni;
+            $razon_social = $valor->nombre;
+            $tipo_proveedor = $valor->PROVC_TipoPersona == 1 ? "P.JURIDICA" : "P.NATURAL";
+            $telefono = $valor->telefono;
+            $movil = $valor->movil;
+            $lista[] = array(
+                "id" => $item,
+                "ruc" => $ruc,
+                "dni" => $dni,
+                "nombre" => $razon_social,
+                "tipo_proveedor" => $tipo_proveedor,
+                "telefono" => $telefono,
+                "movil" => $movil
+            );
+            $item++;
+        }
+        return response()->json($lista, 200);
     }
 }

@@ -27,11 +27,11 @@ import {
 
   import TablaMain from "./TablaMain";
 
-  
+
   function Main() {
     const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
     const [headerFooterModalPreview, setHeaderFooterModalPreview] = useState(false);
-    
+
     /* TIPO EMPRESA*/
     const [selectTipo_Codigo_EMP, setSelectTipo_Codigo_EMP] = useState("0");
     const [selectSectorComercial_EMP, setSelectSectorComercial_EMP] = useState("0");
@@ -51,7 +51,7 @@ import {
       const [selectDistrito_PER, setSelectDistrito_PER] = useState("0");
 
 
-    
+
     const [selected, setSelected] = useState("");
     const changeHandler = e => {
       setSelected(e.target.value);
@@ -180,7 +180,7 @@ import {
 
                                             <div className="col-span-12 sm:col-span-12">
                                                 <label htmlFor="modal-form-1" className="form-label">
-                                                  Tipo Persona <span className="text-red-600" >*</span> 
+                                                  Tipo Persona <span className="text-red-600" >*</span>
                                                 </label>
                                                 <div className="flex flex-col sm:flex-row mt-2">
                                                     <div className="form-check mr-2">
@@ -229,7 +229,7 @@ import {
 
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-2" className="form-label">
-                                                              Tipo de documento <span className="text-red-600" >*</span> 
+                                                              Tipo de documento <span className="text-red-600" >*</span>
                                                           </label>
                                                           <TomSelect
                                                             value={selectTipo_Codigo_PER}
@@ -247,7 +247,7 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-3" className="form-label">
-                                                              Nombres <span className="text-red-600" >*</span> 
+                                                              Nombres <span className="text-red-600" >*</span>
                                                           </label>
                                                           <input
                                                             id="nombre_per"
@@ -259,7 +259,7 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-3" className="form-label">
-                                                              Apellido Paterno <span className="text-red-600" >*</span> 
+                                                              Apellido Paterno <span className="text-red-600" >*</span>
                                                           </label>
                                                           <input
                                                             id="apellido_parterno_per"
@@ -271,7 +271,7 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-3" className="form-label">
-                                                              Apellido Materno <span className="text-red-600" >*</span> 
+                                                              Apellido Materno <span className="text-red-600" >*</span>
                                                           </label>
                                                           <input
                                                             id="apellido_materno_per"
@@ -284,7 +284,7 @@ import {
 
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-3" className="form-label">
-                                                              Apellido Materno <span className="text-red-600" >*</span> 
+                                                              Apellido Materno <span className="text-red-600" >*</span>
                                                           </label>
                                                           <input
                                                             id="apellido_materno_per"
@@ -310,7 +310,7 @@ import {
                                                             id="nacionalidad_per"
                                                             name="nacionalidad_per"
                                                           >
-                                                              <option value="0">::Seleccione::</option>	
+                                                              <option value="0">::Seleccione::</option>
                                                               <option value="2">MADERA</option>
                                                               <option value="3">METALMECANICA</option>
                                                               <option value="1">TRANSPORTE</option>
@@ -318,7 +318,7 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                            Número de Documento	<span className="text-red-600" >*</span> 	
+                                                            Número de Documento	<span className="text-red-600" >*</span>
                                                           </label>
                                                           <input
                                                             id="num_doc_per"
@@ -331,7 +331,7 @@ import {
 
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                            Lugar de Nacimiento	<span className="text-red-600" >* ( Departamento , Provincia , Distrito  )</span> 	
+                                                            Lugar de Nacimiento	<span className="text-red-600" >* ( Departamento , Provincia , Distrito  )</span>
                                                           </label>
                                                           <input
                                                             id="num_doc_per"
@@ -344,7 +344,7 @@ import {
 
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-5" className="form-label">
-                                                            Sexo (*) <span className="text-red-600" >* </span> 	
+                                                            Sexo (*) <span className="text-red-600" >* </span>
                                                           </label>
 
                                                           <TomSelect
@@ -357,7 +357,7 @@ import {
                                                             id="sexo_per"
                                                             name="sexo_per"
                                                           >
-                                                              <option value="0">::Seleccione::</option>	
+                                                              <option value="0">::Seleccione::</option>
                                                               <option value="1">MASCULINO</option>
                                                               <option value="2">FEMENINO</option>
                                                           </TomSelect>
@@ -365,7 +365,7 @@ import {
 
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-5" className="form-label">
-                                                          Estado Civil	 (*) <span className="text-red-600" >* </span> 	
+                                                          Estado Civil	 (*) <span className="text-red-600" >* </span>
                                                           </label>
 
                                                           <TomSelect
@@ -403,7 +403,7 @@ import {
                                                             id="departamento_per"
                                                             name="departamento_per"
                                                           >
-                                                              <option value="0">::Seleccione::</option>	
+                                                              <option value="0">::Seleccione::</option>
                                                               <option value="2">MADERA</option>
                                                               <option value="3">METALMECANICA</option>
                                                               <option value="1">TRANSPORTE</option>
@@ -421,11 +421,11 @@ import {
                                                               placeholder: "SELECCIONE PROVINCIA",
                                                             }}
                                                             className="w-full"
-                                                              
+
                                                             id="provincia_per"
                                                             name="provincia_per"
                                                           >
-                                                              <option value="0">::Seleccione::</option>	
+                                                              <option value="0">::Seleccione::</option>
                                                               <option value="2">MADERA</option>
                                                               <option value="3">METALMECANICA</option>
                                                               <option value="1">TRANSPORTE</option>
@@ -443,11 +443,11 @@ import {
                                                               placeholder: "SELECCIONE DISTRITO",
                                                             }}
                                                             className="w-full"
-                                                            
+
                                                             id="distrito_per"
                                                             name="distrito_per"
                                                           >
-                                                              <option value="0">::Seleccione::</option>	
+                                                              <option value="0">::Seleccione::</option>
                                                               <option value="2">MADERA</option>
                                                               <option value="3">METALMECANICA</option>
                                                               <option value="1">TRANSPORTE</option>
@@ -455,7 +455,7 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                            Dirección fiscal	<span className="text-yellow-600" >TIPO VIA / NOMBRE VIA / N° / INTERIOR / ZONA	</span> 
+                                                            Dirección fiscal	<span className="text-yellow-600" >TIPO VIA / NOMBRE VIA / N° / INTERIOR / ZONA	</span>
                                                           </label>
                                                           <input
                                                             type="text"
@@ -469,7 +469,7 @@ import {
 
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Teléfono	
+                                                          Teléfono
                                                           </label>
                                                           <input
                                                             id="telefono_per"
@@ -481,7 +481,7 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Móvil	
+                                                          Móvil
                                                           </label>
                                                           <input
                                                             id="movil_per"
@@ -493,7 +493,7 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Fax	
+                                                          Fax
                                                           </label>
                                                           <input
                                                             id="fax_per"
@@ -505,36 +505,36 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Correo electrónico		
+                                                          Correo electrónico
                                                           </label>
                                                           <input
                                                             id="correo_elect_per"
-                                                            name="correo_elect_per"                                            
+                                                            name="correo_elect_per"
                                                             type="text"
                                                             className="form-control"
                                                             placeholder="INGRESE CORREO ELECTRÓNICO"
                                                           />
-                                                        </div>         
+                                                        </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Dirección web		
+                                                          Dirección web
                                                           </label>
                                                           <input
                                                             id="direc_web_per"
-                                                            name="direc_web_per"  
+                                                            name="direc_web_per"
                                                             type="text"
                                                             className="form-control"
                                                             placeholder="INGRESE DIRECCIÓN WEB"
                                                           />
                                                         </div>
-                                                          
+
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Cta. Cte. Soles		
+                                                          Cta. Cte. Soles
                                                           </label>
                                                           <input
                                                             id="cta_cte_sol_per"
-                                                            name="cta_cte_sol_per"  
+                                                            name="cta_cte_sol_per"
                                                             type="text"
                                                             className="form-control"
                                                             placeholder="INGRESE CUENTA CORRENTE EN SOLES"
@@ -542,11 +542,11 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Cta. Cte. Dolares	
+                                                          Cta. Cte. Dolares
                                                           </label>
                                                           <input
                                                             id="cta_cte_dolar_per"
-                                                            name="cta_cte_dolar_per"  
+                                                            name="cta_cte_dolar_per"
                                                             type="text"
                                                             className="form-control"
                                                             placeholder="INGRESE CUENTA CORRIENTE EN DOLARES"
@@ -562,7 +562,7 @@ import {
 
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-2" className="form-label">
-                                                              Tipo de Código <span className="text-red-600" >*</span> 
+                                                              Tipo de Código <span className="text-red-600" >*</span>
                                                           </label>
                                                           <TomSelect
                                                             value={selectTipo_Codigo_EMP}
@@ -580,7 +580,7 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-3" className="form-label">
-                                                              RUC / NIC <span className="text-red-600" >*</span> 
+                                                              RUC / NIC <span className="text-red-600" >*</span>
                                                           </label>
                                                           <input
                                                             id="nr_doc_emp"
@@ -592,7 +592,7 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                              Nombre o Razón Social <span className="text-red-600" >*</span> 	
+                                                              Nombre o Razón Social <span className="text-red-600" >*</span>
                                                           </label>
                                                           <input
                                                             id="nom_rz_soc_emp"
@@ -606,7 +606,7 @@ import {
                                                           <label htmlFor="modal-form-5" className="form-label">
                                                             Sector Comercial
                                                           </label>
-                                                        
+
                                                           <TomSelect
                                                             value={selectSectorComercial_EMP}
                                                             onChange={setSelectSectorComercial_EMP}
@@ -617,7 +617,7 @@ import {
                                                             id="sector_comer_emp"
                                                             name="sector_comer_emp"
                                                           >
-                                                              <option value="0">::Seleccione::</option>	
+                                                              <option value="0">::Seleccione::</option>
                                                               <option value="2">MADERA</option>
                                                               <option value="3">METALMECANICA</option>
                                                               <option value="1">TRANSPORTE</option>
@@ -629,7 +629,7 @@ import {
                                                           <label htmlFor="modal-form-5" className="form-label">
                                                             Departamento
                                                           </label>
-                                                        
+
                                                           <TomSelect
                                                             value={selectDepartamento_EMP}
                                                             onChange={setSelectDepartamento_EMP}
@@ -640,7 +640,7 @@ import {
                                                             id="departamento_emp"
                                                             name="departamento_emp"
                                                           >
-                                                              <option value="0">::Seleccione::</option>	
+                                                              <option value="0">::Seleccione::</option>
                                                               <option value="2">MADERA</option>
                                                               <option value="3">METALMECANICA</option>
                                                               <option value="1">TRANSPORTE</option>
@@ -650,7 +650,7 @@ import {
                                                           <label htmlFor="modal-form-5" className="form-label">
                                                             Provincia
                                                           </label>
-                                                        
+
                                                           <TomSelect
                                                             value={selectProvincia_EMP}
                                                             onChange={setSelectProvincia_EMP}
@@ -658,11 +658,11 @@ import {
                                                               placeholder: "SELECCIONE PROVINCIA",
                                                             }}
                                                             className="w-full"
-                                                              
+
                                                             id="provincia_emp"
                                                             name="provincia_emp"
                                                           >
-                                                              <option value="0">::Seleccione::</option>	
+                                                              <option value="0">::Seleccione::</option>
                                                               <option value="2">MADERA</option>
                                                               <option value="3">METALMECANICA</option>
                                                               <option value="1">TRANSPORTE</option>
@@ -672,7 +672,7 @@ import {
                                                           <label htmlFor="modal-form-5" className="form-label">
                                                             Distrito
                                                           </label>
-                                                        
+
                                                           <TomSelect
                                                             value={selectDistrito_EMP}
                                                             onChange={setSelectDistrito_EMP}
@@ -680,11 +680,11 @@ import {
                                                               placeholder: "SELECCIONE DISTRITO",
                                                             }}
                                                             className="w-full"
-                                                            
+
                                                             id="distrito_emp"
                                                             name="distrito_emp"
                                                           >
-                                                              <option value="0">::Seleccione::</option>	
+                                                              <option value="0">::Seleccione::</option>
                                                               <option value="2">MADERA</option>
                                                               <option value="3">METALMECANICA</option>
                                                               <option value="1">TRANSPORTE</option>
@@ -692,7 +692,7 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                            Dirección fiscal	<span className="text-yellow-600" >TIPO VIA / NOMBRE VIA / N° / INTERIOR / ZONA	</span> 
+                                                            Dirección fiscal	<span className="text-yellow-600" >TIPO VIA / NOMBRE VIA / N° / INTERIOR / ZONA	</span>
                                                           </label>
                                                           <input
                                                             type="text"
@@ -706,7 +706,7 @@ import {
 
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Teléfono	
+                                                          Teléfono
                                                           </label>
                                                           <input
                                                             id="telefono_emp"
@@ -718,7 +718,7 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Móvil	
+                                                          Móvil
                                                           </label>
                                                           <input
                                                             id="movil_emp"
@@ -730,7 +730,7 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Fax	
+                                                          Fax
                                                           </label>
                                                           <input
                                                             id="fax_emp"
@@ -742,36 +742,36 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Correo electrónico		
+                                                          Correo electrónico
                                                           </label>
                                                           <input
                                                             id="correo_elect_emp"
-                                                            name="correo_elect_emp"                                            
+                                                            name="correo_elect_emp"
                                                             type="text"
                                                             className="form-control"
                                                             placeholder="INGRESE CORREO ELECTRÓNICO"
                                                           />
-                                                        </div>         
+                                                        </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Dirección web		
+                                                          Dirección web
                                                           </label>
                                                           <input
                                                             id="direc_web_emp"
-                                                            name="direc_web_emp"  
+                                                            name="direc_web_emp"
                                                             type="text"
                                                             className="form-control"
                                                             placeholder="INGRESE DIRECCIÓN WEB"
                                                           />
                                                         </div>
-                                                          
+
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Cta. Cte. Soles		
+                                                          Cta. Cte. Soles
                                                           </label>
                                                           <input
                                                             id="cta_cte_sol_emp"
-                                                            name="cta_cte_sol_emp"  
+                                                            name="cta_cte_sol_emp"
                                                             type="text"
                                                             className="form-control"
                                                             placeholder="INGRESE CUENTA CORRENTE EN SOLES"
@@ -779,17 +779,17 @@ import {
                                                         </div>
                                                         <div className="col-span-12 sm:col-span-6">
                                                           <label htmlFor="modal-form-4" className="form-label">
-                                                          Cta. Cte. Dolares	
+                                                          Cta. Cte. Dolares
                                                           </label>
                                                           <input
                                                             id="cta_cte_dolar_emp"
-                                                            name="cta_cte_dolar_emp"  
+                                                            name="cta_cte_dolar_emp"
                                                             type="text"
                                                             className="form-control"
                                                             placeholder="INGRESE CUENTA CORRIENTE EN DOLARES"
                                                           />
                                                         </div>
-                                                    
+
                                                   </div>
 
                                             </div>
@@ -806,7 +806,7 @@ import {
 
 
 
-                        {/*               
+                        {/*
                           <div className="col-span-12 sm:col-span-6">
                               <label htmlFor="modal-form-1" className="form-label">
                                   From
@@ -847,13 +847,13 @@ import {
                                   <option>35</option>
                                   <option>50</option>
                               </select>
-                          </div> 
+                          </div>
                         */}
 
 
                       </ModalBody>
                       <ModalFooter>
-                          <button type="button" 
+                          <button type="button"
                               onClick={()=> { setHeaderFooterModalPreview(false); }}
                               className="btn btn-outline-secondary w-20 mr-1"
                               >
@@ -871,6 +871,5 @@ import {
       </>
     );
   }
-  
+
   export default Main;
-  
