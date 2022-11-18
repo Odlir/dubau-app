@@ -27,12 +27,12 @@ import {
 
   import TablaMain from "./TablaMain";
 
-  
+
   function Main() {
 
     const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
     const [headerFooterModalPreview, setHeaderFooterModalPreview] = useState(false);
-    
+
     /* TIPO EMPRESA*/
     const [selectTipo_Codigo_EMP, setSelectTipo_Codigo_EMP] = useState("0");
     const [selectSectorComercial_EMP, setSelectSectorComercial_EMP] = useState("0");
@@ -808,7 +808,7 @@ import {
 
                       </ModalBody>
                       <ModalFooter>
-                          <button type="button" 
+                          <button type="button"
                               onClick={()=> { setHeaderFooterModalPreview(false); }}
                               className="btn btn-outline-secondary w-20 mr-1"
                               >
@@ -826,6 +826,5 @@ import {
       </>
     );
   }
-  
+
   export default Main;
-  
