@@ -7,6 +7,9 @@ import {
   Lucide,
 } from "@/base-components";
 
+import parse from 'html-react-parser';
+
+
 export const Table = ({ columns, rows }) => {
 
   const [activePage, setActivePage] = useState(1)
@@ -143,19 +146,14 @@ export const Table = ({ columns, rows }) => {
                     return (
                       <tr key={row.id}   className="intro-x">
                         {columns.map((column) => {
-                                                  // console.log("🚀 ~ file: Table.jsx ~ line 155 ~ {columns.map ~ column", column);
-                                                  console.log("🚀 ~ file: Table.jsx ~ line 155 ~ {columns.map ~ column", column.format)
-
-                          if (column.format) {
-
-
-                            return  <td className="text-center" key={column.accessor}>
-                                        {column.format(row[column.accessor])}                          
+                          if (column.accessor==='accion') {
+                            return  <td className="table-report__action text-center" key={column.accessor}>
+                                        {parse(row[column.accessor])}
                                     </td>
                           }
-                          return <td className="text-center" key={column.accessor}>
-                            {row[column.accessor]}
-                            </td>
+                          return  <td className="text-center" key={column.accessor}>
+                                        {row[column.accessor]}
+                                  </td>
                         })}
                       </tr>
                     )

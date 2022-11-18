@@ -60,93 +60,93 @@ const sideMenu = atom({
             ],
           },
 
-          // {
-          //   icon: "",
-          //   title: "Table",
-          //   subMenu: [
-          //     {
-          //       icon: "",
-          //       pathname: "/layoutmain/regular-table",
-          //       title: "Regular Table",
-          //     },
-          //     {
-          //       icon: "",
-          //       pathname: "/layoutmain/tabulator",
-          //       title: "Tabulator",
-          //     },
-          //   ],
-          // },
-          // {
-          //   icon: "",
-          //   title: "Overlay",
-          //   subMenu: [
-          //     {
-          //       icon: "",
-          //       pathname: "/layoutmain/modal",
-          //       title: "Modal",
-          //     },
-          //     {
-          //       icon: "",
-          //       pathname: "/layoutmain/slide-over",
-          //       title: "Slide Over",
-          //     },
-          //     {
-          //       icon: "",
-          //       pathname: "/layoutmain/notification",
-          //       title: "Notification",
-          //     },
-          //   ],
-          // },
-          // {
-          //   icon: "",
-          //   pathname: "/layoutmain/tab",
-          //   title: "Tab",
-          // },
-          // {
-          //   icon: "",
-          //   pathname: "/layoutmain/accordion",
-          //   title: "Accordion",
-          // },
-          // {
-          //   icon: "",
-          //   pathname: "/layoutmain/button",
-          //   title: "Button",
-          // },
-          // {
-          //   icon: "",
-          //   pathname: "/layoutmain/alert",
-          //   title: "Alert",
-          // },
-          // {
-          //   icon: "",
-          //   pathname: "/layoutmain/progress-bar",
-          //   title: "Progress Bar",
-          // },
-          // {
-          //   icon: "",
-          //   pathname: "/layoutmain/tooltip",
-          //   title: "Tooltip",
-          // },
-          // {
-          //   icon: "",
-          //   pathname: "/layoutmain/dropdown",
-          //   title: "Dropdown",
-          // },
-          // {
-          //   icon: "",
-          //   pathname: "/layoutmain/typography",
-          //   title: "Typography",
-          // },
-          // {
-          //   icon: "",
-          //   pathname: "/layoutmain/icon",
-          //   title: "Icon",
-          // },
-          // {
-          //   icon: "",
-          //   pathname: "/layoutmain/loading-icon",
-          //   title: "Loading Icon",
-          // },
+          {
+            icon: "",
+            title: "Table",
+            subMenu: [
+              {
+                icon: "",
+                pathname: "/layoutmain/regular-table",
+                title: "Regular Table",
+              },
+              {
+                icon: "",
+                pathname: "/layoutmain/tabulator",
+                title: "Tabulator",
+              },
+            ],
+          },
+          {
+            icon: "",
+            title: "Overlay",
+            subMenu: [
+              {
+                icon: "",
+                pathname: "/layoutmain/modal",
+                title: "Modal",
+              },
+              {
+                icon: "",
+                pathname: "/layoutmain/slide-over",
+                title: "Slide Over",
+              },
+              {
+                icon: "",
+                pathname: "/layoutmain/notification",
+                title: "Notification",
+              },
+            ],
+          },
+          {
+            icon: "",
+            pathname: "/layoutmain/tab",
+            title: "Tab",
+          },
+          {
+            icon: "",
+            pathname: "/layoutmain/accordion",
+            title: "Accordion",
+          },
+          {
+            icon: "",
+            pathname: "/layoutmain/button",
+            title: "Button",
+          },
+          {
+            icon: "",
+            pathname: "/layoutmain/alert",
+            title: "Alert",
+          },
+          {
+            icon: "",
+            pathname: "/layoutmain/progress-bar",
+            title: "Progress Bar",
+          },
+          {
+            icon: "",
+            pathname: "/layoutmain/tooltip",
+            title: "Tooltip",
+          },
+          {
+            icon: "",
+            pathname: "/layoutmain/dropdown",
+            title: "Dropdown",
+          },
+          {
+            icon: "",
+            pathname: "/layoutmain/typography",
+            title: "Typography",
+          },
+          {
+            icon: "",
+            pathname: "/layoutmain/icon",
+            title: "Icon",
+          },
+          {
+            icon: "",
+            pathname: "/layoutmain/loading-icon",
+            title: "Loading Icon",
+          },
         ],
       },
 
