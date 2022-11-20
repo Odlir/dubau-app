@@ -22,11 +22,20 @@ Route::get('/test', function () {
     return 'Hello World';
 });
 
+Route::get('/testsss', function () {
+    return 'Hello Worlda';
+})->middleware('auth');
+
+Route::get('/login', function () {
+    return 'Debe Loguearse';
+})->name('login');
+
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
     Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
     Route::get('me', 'me');
+    Route::get('ruta', 'ruta');
 
 });

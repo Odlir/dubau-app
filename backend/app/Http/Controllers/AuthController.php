@@ -15,6 +15,17 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
+    public function ruta()
+    {
+        echo 'wee';
+        return response()->json([
+            'status' => 'success',
+            'user' => 'Holaaaaaa',
+        ]);
+    }
+
+
+
     public function login(Request $request)
     {
         auth()->shouldUse('api');
@@ -36,26 +47,6 @@ class AuthController extends Controller
                 'type' => 'bearer',
             ]
         ]);
-/*       $token = Auth::attempt($credentials);
-       var_dump($credentials);
-
-        if (!$token) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized',
-            ], 401);
-        }
-
-        $user = Auth::user();
-        return response()->json([
-            'status' => 'success',
-            'user' => $user,
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
-        ]);*/
-
     }
 
     public function register(Request $request){
