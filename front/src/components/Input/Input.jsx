@@ -1,22 +1,21 @@
 import React, {useState} from 'react'
+
 const Input = (props) => {
-    const {store, USUA_usuario, setUSUA_usuario, USUA_Password, setUSUA_Password} = props;
+    const { dataType, dataName,dataId, dataValue, dataOnchange, dataPlaceholder} = props
 
     return (
-        <input type="text" name="email" id="email"
-               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-               placeholder="name@company.com"
-               value={USUA_usuario}
-              onChange={ (e)=> setUSUA_usuario(e.target.value)}
+        <input type={dataType} name={dataName} id={dataId}
+               className="intro-x login__input form-control py-3 px-4 block"
+               value={dataValue}
+               onChange={ (e)=> dataOnchange(e.target.value)}
+               placeholder={dataPlaceholder}
                required=""/>
     );
 };
 
-/*Button.defaultProps = {
-    type: 'primary',
-    children: null,
-    className: '',
-    inline: false
-};*/
+Input.defaultProps = {
+    type: 'text',
+    placeholder: ''
+};
 
 export default Input ;
