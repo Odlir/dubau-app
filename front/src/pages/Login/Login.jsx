@@ -61,8 +61,8 @@ const Login = (props) => {
                                     </div>
 
                                     <div className="intro-x mt-2 text-slate-400 xl:hidden text-center">
-                                        A few more clicks to sign in to your account. Manage all your
-                                        e-commerce accounts in one place
+                                      {/*  A few more clicks to sign in to your account. Manage all your
+                                        e-commerce accounts in one place*/}
                                     </div>
                                     <div className="intro-x mt-8">
                                         <Input dataType={'email'} dataName={'email'} dataId={'email'}
