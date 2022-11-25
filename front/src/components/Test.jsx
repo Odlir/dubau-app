@@ -4,7 +4,7 @@ import Button from "../components/Button/Button";
 import axios from "axios";
 import {env} from "../env.js";
 const Test = () => {
-//Rute Login
+//Rute Form
     const endpoint = `${env.apiURL}`
 
     const cookies = new Cookies();

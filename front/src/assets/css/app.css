@@ -116,7 +116,7 @@
 @import "./components/_report-box-4.css";
 @import "./components/_content.css";
 @import "./components/_top-nav.css";
-@import "./components/_side-nav.css";
+@import "components/_side-nav.scss";
 @import "./components/_breadcrumb.css";
 @import "./components/_toastify.css";
 @import "./components/_toastify-content.css";
@@ -143,7 +143,7 @@
 @import "./components/_dropzone.css";
 @import "./components/_ckeditor.css";
 @import "./components/_zoom-vanilla.css";
-@import "./components/_dark-mode-switcher.css";
+@import "components/_dark-mode-switcher.scss";
 @import "./components/_hljs.css";
 @import "./components/_source-preview.css";
 @import "./components/_full-calendar.css";

@@ -1,11 +1,11 @@
 import axios from 'axios'
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { env } from '../../env.js';
-import Login from "../../pages/Login/Login.jsx";
+import { env } from '../../../env.js';
+import Login from "../../../pages/Login/Form.jsx";
 import Cookies from "universal-cookie";
 
-//Rute Login
+//Rute Form
 const endpoint = `${env.apiURL}login`
 
 const Api = () => {
@@ -28,8 +28,6 @@ const Api = () => {
                 alert('Usuario o Contraseña incorrectos')
             })
     }
-
-
 
     return (
         <div>

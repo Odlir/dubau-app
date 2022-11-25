@@ -1,22 +1,17 @@
-
-import Api from "./services/post/Api.jsx";
-import Dashboard from "./components/Dashboard.jsx";
-import Test from "./components/Test.jsx";
+import { RecoilRoot } from "recoil";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import Router from "./router";
 import './index.css'
 
 function App() {
     return (
+        <RecoilRoot>
         <div className="App">
             <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={ <Api/> } />
-                    <Route path='/dashboard' element={ <Dashboard/> } />
-                    <Route path='/test' element={ <Test/> } />
-                </Routes>
+                <Router />
             </BrowserRouter>
         </div>
+        </RecoilRoot>
     )
 }
 export default App;

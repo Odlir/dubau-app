@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import Button from "../components/Button/Button";
+import React, {useState} from "react";
+import Menu_tool from "../components/layouts/side-menu/Main";
+
 const Dashboard = () => {
     return (
-        <div>
-            <p>Hola mundo - DUB</p>
-            <Button   />
-        </div>
-)
+        <>
+            <Menu_tool/>
+        </>
+    )
 }
 export default Dashboard;
