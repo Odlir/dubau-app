@@ -37,5 +37,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('refresh', 'refresh');
     Route::get('me', 'me');
     Route::get('ruta', 'ruta');
+    Route::get('list', 'list');
+    Route::post('verifyUser', 'verifyUser');
 
 });

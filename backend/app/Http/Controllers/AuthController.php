@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User2;
-
+use Illuminate\Support\Facades\DB;
 class AuthController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
+        $this->middleware('auth:api', ['except' => ['login','register','list','verifyUser']]);
     }
 
     public function ruta()
@@ -24,6 +24,22 @@ class AuthController extends Controller
         ]);
     }
 
+    public function list()
+    {
+        //$user = DB::table('cji_usuario')->get();
+        $user = User2::all();
+        sleep(1);
+       return $user;
+    }
+
+    public function verifyUser(Request $request)
+    {
+        DB::table('cji_usuario')
+            ->where('PERSP_Codigo', $request->PERSP_Codigo)
+            ->update([
+                'cji_usuario_estadoVerificado' => $request->cji_usuario_estadoVerificado
+            ]);
+    }
 
 
     public function login(Request $request)
@@ -51,13 +67,17 @@ class AuthController extends Controller
 
     public function register(Request $request){
         $request->validate([
-            'USUA_usuario' => 'required|string|max:255|unique:cji_usuario',
+            'USUA_usuario' => 'required|email|max:255|unique:cji_usuario',
             'USUA_Password' => 'required|string|min:6',
+            'cji_usuario_estadoVerificado' => 'required|string|min:1',
+            'cji_usuario_estadoID' => 'required|string|min:1',
         ]);
 
         $user = User2::create([
             'USUA_usuario' => $request->USUA_usuario,
             'USUA_Password' => Hash::make($request->USUA_Password),
+            'cji_usuario_estadoVerificado' => $request->cji_usuario_estadoVerificado,
+            'cji_usuario_estadoID' => $request->cji_usuario_estadoID,
         ]);
 
         $token = Auth::login($user);

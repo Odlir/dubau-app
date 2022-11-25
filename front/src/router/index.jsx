@@ -1,6 +1,8 @@
 import { useRoutes } from "react-router-dom";
 import Login from "@/pages/Login/index.jsx";
-import Dashboard from "@/components/Dashboard.jsx";
+import Dashboard from "@/pages/Dashboard/index.jsx";
+import User from "@/pages/User/index.jsx";
+import Layout from "@/pages/Layout/index.jsx";
 
 function Router() {
   const routes = [
@@ -9,17 +11,19 @@ function Router() {
       element: <Login />,
     },
     {
-      path: "/dashboard",
-      element: <Dashboard />,
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/dashboard",
+          element: <Dashboard />,
+        },
+        {
+          path: "/users",
+          element: <User />,
+        },
+          ]
     },
-    /*{
-      path: "/error-page",
-      element: <ErrorPage />,
-    },
-    {
-      path: "*",
-      element: <ErrorPage />,
-    },*/
   ];
 
   return useRoutes(routes);
