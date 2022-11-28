@@ -24,12 +24,39 @@ class AuthController extends Controller
         ]);
     }
 
-    public function list()
+/*    public function list()
     {
         //$user = DB::table('cji_usuario')->get();
         $user = User2::all();
         sleep(1);
        return $user;
+    } */
+
+    public function list()
+    {
+        $page = $_GET["page"];
+        $per_page = $_GET["per_page"];
+        $total = User2::all()->count();
+        $total_pages = $total / $per_page;
+        if($page == 1){
+            $auto_increment = 0;
+        }else{
+            $auto_increment = ($page - 1) * $per_page;
+        }
+
+        $data = User2::skip($page)->take($per_page)->get()->each(function ($row,$index) use ($auto_increment) {
+            $row->auto_increment = $auto_increment + $index + 1;
+        });
+
+        $objContenedorListUser= new \stdClass();
+        $objContenedorListUser->page = $page;
+        $objContenedorListUser->per_page = $per_page;
+        $objContenedorListUser->total = $total;
+        $objContenedorListUser->total_pages = $total_pages;
+        $objContenedorListUser->data = $data;
+
+        sleep(1);
+        return response()->json($objContenedorListUser,200);
     }
 
     public function verifyUser(Request $request)
