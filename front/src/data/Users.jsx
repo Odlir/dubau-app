@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Lucide} from "@/components/base-components/index.js";
 
-const columns = (actionVerify) =>{
-   return  [
+let number = 20;
+const columns = (actionVerify, number) => {
+    return [
         {
             name: '#',
-            selector: (row, index) => index + 1
+            selector: row => row.auto_increment,
         },
         {
             name: 'Usuario',
@@ -17,15 +18,27 @@ const columns = (actionVerify) =>{
         },
         {
             name: 'Estado',
-            selector: row => row.cji_usuario_estadoVerificado && row.cji_usuario_estadoVerificado != 0 ? 'Verificado' : 'EN ESPERA',
+            cell: (selector) => selector.cji_usuario_estadoVerificado && selector.cji_usuario_estadoVerificado != 0 ?
+                <>
+                    <Lucide icon="CheckSquare" className="w-4 h-4 mr-1 text-success"/><p
+                    className="text-success">{"Verificado"}</p>
+                </>
+
+                :
+                <>
+                    <Lucide icon="CheckSquare" className="w-4 h-4 mr-1 text-danger"/><p
+                    className="text-danger">{"En Espera"}</p>
+                </>
         },
         {
             name: 'Acciones',
             selector: row => row.USUA_usuario,
-            cell: (selector)=> <button className="flex items-center mr-3" onClick={(e) => actionVerify(selector.PERSP_Codigo)}>
-                <Lucide icon="CheckSquare" className="w-4 h-4 mr-1" />{" "}
-                Aprobar
-            </button>,
+            cell: (selector) =>
+                <button className="flex items-center mr-3" onClick={(e) => actionVerify(selector.PERSP_Codigo)}>
+                    <Lucide icon="CheckSquare" className="w-4 h-4 mr-1"/>{" "}
+                    Aprobar
+                </button>
+            ,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,

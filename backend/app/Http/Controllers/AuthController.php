@@ -55,7 +55,6 @@ class AuthController extends Controller
         $objContenedorListUser->total_pages = $total_pages;
         $objContenedorListUser->data = $data;
 
-        sleep(1);
         return response()->json($objContenedorListUser,200);
     }
 
