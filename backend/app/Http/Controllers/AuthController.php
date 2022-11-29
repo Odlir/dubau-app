@@ -44,10 +44,12 @@ class AuthController extends Controller
             $auto_increment = ($page - 1) * $per_page;
         }
 
-        $data = User2::skip($page)->take($per_page)->get()->each(function ($row,$index) use ($auto_increment) {
+    /*    $data = User2::skip($page)->take($per_page)->get()->each(function ($row,$index) use ($auto_increment) {
+            $row->auto_increment = $auto_increment + $index + 1;
+        });*/
+        $data = User2::paginate($per_page)->each(function ($row,$index) use ($auto_increment) {
             $row->auto_increment = $auto_increment + $index + 1;
         });
-
         $objContenedorListUser= new \stdClass();
         $objContenedorListUser->page = $page;
         $objContenedorListUser->per_page = $per_page;

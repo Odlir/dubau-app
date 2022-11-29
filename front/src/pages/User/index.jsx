@@ -58,10 +58,18 @@ const Index = () => {
                         fetchUsers(page_);
                     })
                     .catch(error => {
-                        alert('Usuario o Contraseña incorrectos')
+                        alert('Operacion no completada')
                     })
                 Swal.fire('Usuario Verificado!', ' ', 'success')
             } else if (result.isDenied) {
+                const endpoint = `${env.apiURL}verifyUser`;
+                axios.post(endpoint, {PERSP_Codigo: PERSP_Codigo, cji_usuario_estadoVerificado: 0})
+                    .then(function (response) {
+                        fetchUsers(page_);
+                    })
+                    .catch(error => {
+                        alert('Operacion no completada')
+                    })
                 Swal.fire('Usuario desaprobado', '', 'error')
             }
         })
