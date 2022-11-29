@@ -60,7 +60,7 @@ const Index = () => {
                     .catch(error => {
                         alert('Usuario o Contraseña incorrectos')
                     })
-                Swal.fire('Usuario Verificado!', '', 'success')
+                Swal.fire('Usuario Verificado!', ' ', 'success')
             } else if (result.isDenied) {
                 Swal.fire('Usuario desaprobado', '', 'error')
             }
