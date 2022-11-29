@@ -75,7 +75,7 @@ class AuthController extends Controller
         auth()->shouldUse('api');
         $user = User2::where('USUA_usuario', $request->all()['USUA_usuario'])->first();
         // Check Password
-        if (!$user || !Hash::check($request->all()['USUA_Password'], $user->USUA_Password)) {
+        if (!$user || !Hash::check($request->all()['USUA_Password'], $user->USUA_Password) || $user->cji_usuario_estadoVerificado !=1) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorized',
