@@ -7,17 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+
 class User2 extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
+
     protected $table = 'cji_usuario';
     protected $primaryKey = 'USUA_Codigo';
-    protected $fillable = array('USUA_usuario', 'USUA_Password','cji_usuario_estadoVerificado','cji_usuario_estadoID');
+    protected $fillable = array('USUA_usuario', 'USUA_Password', 'cji_usuario_estadoVerificado', 'cji_usuario_estadoID');
     public $timestamps = false;
     public static $rules = array();
 
     protected $hidden = [
-        'USUA_Password',
         'remember_token',
     ];
 

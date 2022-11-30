@@ -7,12 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User2;
 use Illuminate\Support\Facades\DB;
+
 class AuthController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register','list','verifyUser']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'list', 'verifyUser', 'deleteUser','listXUser','updateUser']]);
     }
 
     public function ruta()
@@ -24,58 +25,82 @@ class AuthController extends Controller
         ]);
     }
 
-/*    public function list()
-    {
-        //$user = DB::table('cji_usuario')->get();
-        $user = User2::all();
-        sleep(1);
-       return $user;
-    } */
+    /*    public function list()
+        {
+            //$user = DB::table('cji_usuario')->get();
+            $user = User2::all();
+            sleep(1);
+           return $user;
+        } */
 
     public function list()
     {
         $page = $_GET["page"];
         $per_page = $_GET["per_page"];
-        $total = User2::all()->count();
+        //$total = User2::all()->count();
+        $total= User2::where('cji_usuario_estadoID', '=', '1')->count();
         $total_pages = $total / $per_page;
-        if($page == 1){
+        if ($page == 1) {
             $auto_increment = 0;
-        }else{
+        } else {
             $auto_increment = ($page - 1) * $per_page;
         }
 
-    /*    $data = User2::skip($page)->take($per_page)->get()->each(function ($row,$index) use ($auto_increment) {
-            $row->auto_increment = $auto_increment + $index + 1;
-        });*/
-        $data = User2::paginate($per_page)->each(function ($row,$index) use ($auto_increment) {
+        /*    $data = User2::skip($page)->take($per_page)->get()->each(function ($row,$index) use ($auto_increment) {
+                $row->auto_increment = $auto_increment + $index + 1;
+            });*/
+        $data = User2::where('cji_usuario_estadoID', '=', '1')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
             $row->auto_increment = $auto_increment + $index + 1;
         });
-        $objContenedorListUser= new \stdClass();
+        $objContenedorListUser = new \stdClass();
         $objContenedorListUser->page = $page;
         $objContenedorListUser->per_page = $per_page;
         $objContenedorListUser->total = $total;
         $objContenedorListUser->total_pages = $total_pages;
         $objContenedorListUser->data = $data;
 
-        return response()->json($objContenedorListUser,200);
+        return response()->json($objContenedorListUser, 200);
+    }
+    public function listXUser()
+    {
+        $USUA_Codigo = $_GET["USUA_Codigo"];
+        $user = User2::where('USUA_Codigo', $USUA_Codigo)->first();
+        return response()->json($user, 200);
+    }
+    public function updateUser(Request $request)
+    {
+        DB::table('cji_usuario')
+            ->where('USUA_Codigo', $request->USUA_Codigo)
+            ->update([
+                'USUA_usuario' => $request->USUA_usuario,
+                'USUA_Password' => Hash::make($request->USUA_Password)
+            ]);
     }
 
     public function verifyUser(Request $request)
     {
         DB::table('cji_usuario')
-            ->where('PERSP_Codigo', $request->PERSP_Codigo)
+            ->where('USUA_Codigo', $request->USUA_Codigo)
             ->update([
                 'cji_usuario_estadoVerificado' => $request->cji_usuario_estadoVerificado
             ]);
     }
 
+    public function deleteUser(Request $request)
+    {
+        DB::table('cji_usuario')
+            ->where('USUA_Codigo', $request->USUA_Codigo)
+            ->update([
+                'cji_usuario_estadoID' => $request->cji_usuario_estadoID
+            ]);
+    }
 
     public function login(Request $request)
     {
         auth()->shouldUse('api');
         $user = User2::where('USUA_usuario', $request->all()['USUA_usuario'])->first();
         // Check Password
-        if (!$user || !Hash::check($request->all()['USUA_Password'], $user->USUA_Password) || $user->cji_usuario_estadoVerificado !=1) {
+        if (!$user || !Hash::check($request->all()['USUA_Password'], $user->USUA_Password) || $user->cji_usuario_estadoVerificado != 1) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorized',
@@ -93,7 +118,8 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $request->validate([
             'USUA_usuario' => 'required|email|max:255|unique:cji_usuario',
             'USUA_Password' => 'required|string|min:6',

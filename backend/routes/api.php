@@ -39,5 +39,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('ruta', 'ruta');
     Route::get('list', 'list');
     Route::post('verifyUser', 'verifyUser');
+    Route::post('deleteUser', 'deleteUser');
+    Route::get('listXUser', 'listXUser');
+    Route::post('updateUser', 'updateUser');
 
 });
