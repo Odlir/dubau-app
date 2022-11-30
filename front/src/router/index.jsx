@@ -2,6 +2,7 @@ import { useRoutes } from "react-router-dom";
 import Login from "@/pages/Login/index.jsx";
 import Dashboard from "@/pages/Dashboard/index.jsx";
 import User from "@/pages/User/index.jsx";
+import AddUser from "@/pages/User/add.jsx";
 import Layout from "@/pages/Layout/index.jsx";
 
 function Router() {
@@ -21,6 +22,10 @@ function Router() {
         {
           path: "/users",
           element: <User />,
+        },
+        {
+          path: "/addUser",
+          element: <AddUser />,
         },
           ]
     },

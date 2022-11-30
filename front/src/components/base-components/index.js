@@ -15,7 +15,7 @@ import ClassicEditor from "./ckeditor/ClassicEditor";
 import Dropzone from "./dropzone/Main";
 
 import Notification from "./notification/Main";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "./modal";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "./modal/index.jsx";
 import {
   Dropdown,
   DropdownToggle,
