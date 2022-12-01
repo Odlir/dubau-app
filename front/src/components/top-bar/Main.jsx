@@ -10,6 +10,7 @@ import {
   DropdownDivider,
 } from "@/components/base-components";
 import logoUrl from "@/assets/images/logo.svg";
+import profileimg from "@/assets/images/profile-8.jpg";
 import PropTypes from "prop-types";
 
 function Main(props) {
@@ -101,7 +102,12 @@ function Main(props) {
                   tag="div"
                   role="button"
                   className="w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
-              >
+                  >
+              <img
+                  alt="Midone Tailwind HTML Admin Template"
+                  src={profileimg}
+              />
+
               </DropdownToggle>
               <DropdownMenu className="w-56">
                 <DropdownContent className="bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">

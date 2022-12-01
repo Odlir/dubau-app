@@ -9,19 +9,28 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import {Lucide} from "@/components/base-components/index.js";
 import Input from "../../components/Input/Input.jsx";
+import PasswordChecklist from "react-password-checklist"
 
 const Add =  (props) => {
     const {
         handleOnClickRegister,
         setFormType,
-        USUA_usuario,
-        setUSUA_usuario,
-        USUA_Password,
-        setUSUA_Password
+        user_Name,
+        setUser_Name,
+        user_Password,
+        setUser_Password,
+        passwordAgain,
+        setPasswordAgain,
+        setUser_ApprovedStatus
     } = props;
 
     const handleOnClickList = () => {
+        setUser_Name('');
+        setUser_Password('');
         setFormType('list');
+    }
+    const captureType = (e) => {
+        setUser_ApprovedStatus(e.target.value);
     }
 
     return (
@@ -31,62 +40,73 @@ const Add =  (props) => {
             </h2>
             <div className="intro-y box p-5 mt-5">
                 <div className={"flex"} >
-                    <div  className="border w-6/12 border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
-                        <div
-                            className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                            <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Usuario
-                            Info
+                    <div className=" w-6/12">
+                        <div  className="border w-full border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                            <div
+                                className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Usuario
+                                Info
+                            </div>
+                            <div className="mt-5">
+                                <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                    <div className="form-label xl:w-64 xl:!mr-10">
+                                        <div className="text-left">
+                                            <div className="flex items-center">
+                                                <div className="font-medium">Nombre completo</div>
+                                                <div
+                                                    className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                    Required
+                                                </div>
+                                            </div>
+                                            <div className="leading-relaxed text-slate-500 text-xs mt-3">
+                                                Por favor ingrese el nombre completo
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="w-full mt-3 xl:mt-0 flex-1">
+                                        <input
+                                            id="product-name"
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="example name"
+                                        />
+                                        <div className="form-help text-right">
+                                            Maximum character 0/50
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                    <div className="form-label xl:w-64 xl:!mr-10">
+                                        <div className="text-left">
+                                            <div className="flex items-center">
+                                                <div className="font-medium">UserName</div>
+                                                <div
+                                                    className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                    Required
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="w-full mt-3 xl:mt-0 flex-1">
+                                        <Input dataType={'email'} dataName={'email'} dataId={'email'} className={'form-control'}
+                                               dataPlaceholder={'name@company.com'} dataValue={user_Name}
+                                               dataOnchange={setUser_Name}/>
+                                        <div className="form-help text-right">
+                                            Maximum character 0/50
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="mt-5">
-                            <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                <div className="form-label xl:w-64 xl:!mr-10">
-                                    <div className="text-left">
-                                        <div className="flex items-center">
-                                            <div className="font-medium">Nombre completo</div>
-                                            <div
-                                                className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                Required
-                                            </div>
-                                        </div>
-                                        <div className="leading-relaxed text-slate-500 text-xs mt-3">
-                                            Por favor ingrese el nombre completo
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full mt-3 xl:mt-0 flex-1">
-                                    <input
-                                        id="product-name"
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Product name"
-                                    />
-                                    <div className="form-help text-right">
-                                        Maximum character 0/50
-                                    </div>
-                                </div>
+                        <div className={"p-1"}></div>
+                        <div  className="border w-full border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                            <div
+                                className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Usuario
+                                Security
                             </div>
-                            <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                <div className="form-label xl:w-64 xl:!mr-10">
-                                    <div className="text-left">
-                                        <div className="flex items-center">
-                                            <div className="font-medium">UserName</div>
-                                            <div
-                                                className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                Required
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full mt-3 xl:mt-0 flex-1">
-                                    <Input dataType={'email'} dataName={'email'} dataId={'email'}
-                                           dataPlaceholder={'name@company.com'} dataValue={USUA_usuario}
-                                           dataOnchange={setUSUA_usuario}/>
-                                    <div className="form-help text-right">
-                                        Maximum character 0/50
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                            <div className="mt-5">
+                                <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
                                 <div className="form-label xl:w-64 xl:!mr-10">
                                     <div className="text-left">
                                         <div className="flex items-center">
@@ -101,9 +121,39 @@ const Add =  (props) => {
                                     </div>
                                 </div>
                                 <div className="w-full mt-3 xl:mt-0 flex-1">
-                                    <Input dataType={'password'} dataName={'password'} dataId={'password'}
-                                           dataPlaceholder={'*********'} dataValue={USUA_Password}
-                                           dataOnchange={setUSUA_Password}/>
+                                    <Input dataType={'password'} dataName={'password'} dataId={'password'} className={'form-control'}
+                                           dataPlaceholder={'*********'} dataValue={user_Password}
+                                           dataOnchange={setUser_Password}/>
+                                </div>
+                            </div>
+                                <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                    <div className="form-label xl:w-64 xl:!mr-10">
+                                        <div className="text-left">
+                                            <div className="flex items-center">
+                                                <div className="font-medium">Repeat Password</div>
+                                                <div
+                                                    className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                    Required
+                                                </div>
+                                            </div>
+                                            <div className="leading-relaxed text-slate-500 text-xs mt-3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="w-full mt-3 xl:mt-0 flex-1">
+                                        <Input dataType={'password'} dataName={'password'} dataId={'password'} className={'form-control'}
+                                               dataPlaceholder={'*********'} dataValue={passwordAgain}
+                                               dataOnchange={setPasswordAgain}/>
+                                        <PasswordChecklist
+                                            rules={["match"]}
+                                            minLength={8}
+                                            value={user_Password}
+                                            valueAgain={passwordAgain}
+                                            messages={{
+                                                match: "Las contraseñas coinciden.",
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -156,15 +206,14 @@ const Add =  (props) => {
                                 </div>
                                 <div className="w-full mt-3 xl:mt-0 flex-1">
                                     <div className="w-full">
-                                        <select className="form-select w-full">
-                                            <option value="1">Aprobado</option>
+                                        <select className="form-select w-full"  onChange={captureType}>
+                                            <option value="1">Verificado</option>
                                             <option value="0">En Espera</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 

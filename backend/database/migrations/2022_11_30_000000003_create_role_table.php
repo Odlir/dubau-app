@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id('role_ID');
             $table->string('role_Name')->nullable();
             $table->string('role_Description')->nullable();
-            $table->timestamp('role_CreationDate')->nullable();
+            $table->dateTime('role_CreationDate')->nullable();
             $table->string('role_CreationUser')->nullable();
-            $table->timestamp('role_ModificationDate')->nullable();
+            $table->dateTime('role_ModificationDate')->nullable();
             $table->string('role_ModificationUser')->nullable();
             $table->integer('role_StatusID')->comment('0 removed, 1 activated')->nullable();
         });

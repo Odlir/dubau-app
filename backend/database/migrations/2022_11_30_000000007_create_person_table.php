@@ -38,12 +38,12 @@ return new class extends Migration
             $table->string('person_Email')->nullable();
             $table->string('person_Home')->nullable();
             $table->string('person_WebSite')->nullable();
-            $table->unsignedBigInteger('typeaccount_ID');
-            $table->foreign('typeaccount_ID')->references('typeaccount_ID')->on('typeaccount');
+            $table->string('person_TypeAccountSoles')->nullable();
+            $table->string('person_TypeAccountDolares')->nullable();
             $table->string('person_AccountNumber')->nullable();
-            $table->timestamp('person_CreationDate')->nullable();
+            $table->dateTime('person_CreationDate')->nullable();
             $table->string('person_CreationUser')->nullable();
-            $table->timestamp('person_ModificationDate')->nullable();
+            $table->dateTime('person_ModificationDate')->nullable();
             $table->string('person_ModificationUser')->nullable();
             $table->integer('person_StatusID')->comment('0 removed, 1 activated')->nullable();
         });

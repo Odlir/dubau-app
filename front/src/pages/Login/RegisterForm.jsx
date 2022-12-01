@@ -9,10 +9,16 @@ const Form = (props) => {
     const {
         handleOnClickRegister,
         setFormType,
-        USUA_usuario,
-        setUSUA_usuario,
-        USUA_Password,
-        setUSUA_Password
+        person_Name,
+        setPerson_Name,
+        person_LastNamePaternal,
+        setPerson_LastNamePaternal,
+        person_LastNameMaternal,
+        setPerson_LastNameMaternal,
+        user_Name,
+        setUser_Name,
+        user_Password,
+        setUser_Password
     } = props;
 
     const handleOnClickViewRegister = () => {
@@ -76,14 +82,29 @@ const Form = (props) => {
                                         e-commerce accounts in one place*/}
                                 </div>
                                 <div className="intro-x mt-8">
+                                    <Input dataType={'text'} dataName={'emails'} dataId={'emails'}
+                                           dataPlaceholder={'Nombres'} dataValue={person_Name}
+                                           dataOnchange={setPerson_Name}/>
+                                </div>
+                                <div className="intro-x mt-8">
+                                    <Input dataType={'text'} dataName={'emaila'} dataId={'emailas'}
+                                           dataPlaceholder={'Apellido Paterno'} dataValue={person_LastNamePaternal}
+                                           dataOnchange={setPerson_LastNamePaternal}/>
+                                </div>
+                                <div className="intro-x mt-8">
+                                    <Input dataType={'text'} dataName={'emailsa'} dataId={'emailsa'}
+                                           dataPlaceholder={'Apellido Materno'} dataValue={person_LastNameMaternal}
+                                           dataOnchange={setPerson_LastNameMaternal}/>
+                                </div>
+                                <div className="intro-x mt-8">
                                     <Input dataType={'email'} dataName={'email'} dataId={'email'}
-                                           dataPlaceholder={'name@company.com'} dataValue={USUA_usuario}
-                                           dataOnchange={setUSUA_usuario}/>
+                                           dataPlaceholder={'name@company.com'} dataValue={user_Name}
+                                           dataOnchange={setUser_Name}/>
                                 </div>
                                 <div className="intro-x mt-8">
                                     <Input dataType={'password'} dataName={'password'} dataId={'password'}
-                                           dataPlaceholder={'*********'} dataValue={USUA_Password}
-                                           dataOnchange={setUSUA_Password}/>
+                                           dataPlaceholder={'*********'} dataValue={user_Password}
+                                           dataOnchange={setUser_Password}/>
                                 </div>
                                 <div
                                     className="intro-x flex text-slate-600 dark:text-slate-500 text-xs sm:text-sm mt-4">

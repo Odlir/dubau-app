@@ -9,13 +9,17 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import { useNavigate } from 'react-router-dom';
 import Add  from '../User/add.jsx'
+import Input from "@/components/Input/Input";
 
 
 const Index = () => {
     const navigate = useNavigate()
-    const endpoint = `${env.apiURL}list`;
-    const [USUA_usuario, setUSUA_usuario] = useState('');
-    const [USUA_Password, setUSUA_Password] = useState('');
+
+    const [user_Name, setUser_Name] = useState('');
+    const [user_Password, setUser_Password] = useState('');
+    const [passwordAgain, setPasswordAgain] = useState('');
+    const [user_CreationDate, setUserCreationDate] = useState('');
+    const [user_ApprovedStatus, setUser_ApprovedStatus] = useState('1');
     const [formType, setFormType] = useState('list');
     /*Server Side*/
     const [data, setData] = useState([]);
@@ -27,6 +31,7 @@ const Index = () => {
 
     const fetchUsers = async page => {
         setLoading(true);
+        const endpoint = `${env.apiURL}list`;
         const response = await axios.get(`${endpoint}?page=${page}&per_page=${perPage}`);
         setData(response.data.data);
         setPage_(response.data.page);
@@ -51,7 +56,7 @@ const Index = () => {
         fetchUsers(page_);
     }, [perPage]);
 
-    const actionVerify = async (USUA_Codigo) => {
+    const actionVerify = async (user_ID) => {
         Swal.fire({
             title: 'Que accion desea realizar?',
             showDenyButton: true,
@@ -61,7 +66,7 @@ const Index = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 const endpoint = `${env.apiURL}verifyUser`;
-                 axios.post(endpoint, {USUA_Codigo: USUA_Codigo, cji_usuario_estadoVerificado: 1})
+                 axios.post(endpoint, {user_ID: user_ID, user_ApprovedStatus: 1})
                     .then(function (response) {
                         fetchUsers(page_);
                     })
@@ -71,7 +76,7 @@ const Index = () => {
                 Swal.fire('Usuario Verificado!', ' ', 'success')
             } else if (result.isDenied) {
                 const endpoint = `${env.apiURL}verifyUser`;
-                axios.post(endpoint, {USUA_Codigo: USUA_Codigo, cji_usuario_estadoVerificado: 0})
+                axios.post(endpoint, {user_ID: user_ID, user_ApprovedStatus: 0})
                     .then(function (response) {
                         fetchUsers(page_);
                     })
@@ -83,7 +88,7 @@ const Index = () => {
         })
     }
 
-    const actionDelete = async (USUA_Codigo) => {
+    const actionDelete = async (user_ID) => {
         Swal.fire({
             title: 'Desea realizar esta accion?',
             text: "No podra revertir los cambios!",
@@ -95,7 +100,7 @@ const Index = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 const endpoint = `${env.apiURL}deleteUser`;
-                axios.post(endpoint, {USUA_Codigo: USUA_Codigo, cji_usuario_estadoID: 0})
+                axios.post(endpoint, {user_ID: user_ID, user_StatusID: 0})
                     .then(function (response) {
                         fetchUsers(page_);
                     })
@@ -110,16 +115,13 @@ const Index = () => {
             }
         })
     }
-    const actionEdit = async (USUA_Codigo) => {
+    const actionEdit = async (user_ID) => {
         const endpoint = `${env.apiURL}listXUser`;
-        const response = await axios.get(`${endpoint}?USUA_Codigo=${USUA_Codigo}`);
-        setdataxUser(response.data.USUA_Codigo);
-        setUSUA_usuario(response.data.USUA_usuario);
-
-        setUSUA_Password(response.data.USUA_Password);
+        const response = await axios.get(`${endpoint}?user_ID=${user_ID}`);
+        setdataxUser(response.data.user_ID);
+        setUser_Name(response.data.user_Name);
         setFormType('edit');
     }
-    console.log(dataxUser);
     const actionAdd = async () => {
         setFormType('register');
        /* navigate('/addUser')*/
@@ -128,7 +130,7 @@ const Index = () => {
     const handleOnClickRegister = async (e) => {
         e.preventDefault();
         const endpoint = `${env.apiURL}register`
-        await axios.post(endpoint, {USUA_usuario: USUA_usuario, USUA_Password: USUA_Password, cji_usuario_estadoVerificado: '0',cji_usuario_estadoID: '1'})
+        await axios.post(endpoint, {user_Name: user_Name, user_Password: user_Password, user_ApprovedStatus: user_ApprovedStatus,user_StatusID: '1'})
             .then(function (response) {
                 window.location.reload();
             })
@@ -140,7 +142,7 @@ const Index = () => {
     const handleOnClickUpdate = async (e) => {
         e.preventDefault();
         const endpoint = `${env.apiURL}updateUser`
-        await axios.post(endpoint, {USUA_Codigo:dataxUser, USUA_usuario: USUA_usuario, USUA_Password: USUA_Password})
+        await axios.post(endpoint, {user_ID:dataxUser, user_Name: user_Name, user_Password: user_Password, user_ApprovedStatus: user_ApprovedStatus})
             .then(function (response) {
                 window.location.reload();
             })
@@ -148,6 +150,32 @@ const Index = () => {
                 alert('Debe completar correctamente sus datos')
             })
     }
+
+    const captureType = (e) => {
+        setUser_ApprovedStatus(e.target.value);
+    }
+
+    const handleOnClickSearch = async page => {
+        setLoading(true);
+
+        const endpoint = `${env.apiURL}list`;
+        const response = await axios.get(`${endpoint}?page=${page_}&per_page=${perPage}&user_Name=${user_Name}&user_CreationDate=${user_CreationDate}&user_ApprovedStatus=${user_ApprovedStatus}`);
+        setData(response.data.data);
+        setPage_(response.data.page);
+        setTotalRows(response.data.total);
+        setLoading(false);
+    };
+
+    const handleOnClickClean= async page => {
+        setLoading(true);
+        setUser_Name('');
+        setUser_Password('');
+        setUser_ApprovedStatus('');
+        setUserCreationDate('');
+        fetchUsers(1);
+        setLoading(false);
+    };
+    console.log(user_ApprovedStatus);
 
     return (
         <div>
@@ -157,17 +185,46 @@ const Index = () => {
                         Listado de Usuarios
                     </h2>
                     <div className="grid grid-cols-12 gap-6 mt-5">
-                        <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-                            <button className="btn btn-primary shadow-md mr-2" onClick={actionAdd}>Nuevo Usuario
-                            </button>
-                            <div className="hidden md:block mx-auto text-slate-500"></div>
+                        <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 ">
                             <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                                 <div className="w-56 relative text-slate-500">
-                                    <input type="text" className="form-control w-56 box pr-10" placeholder="Search..."/>
+                                    <Input dataType={'email'} dataName={'email'} dataId={'email'} className={'form-control w-56 box pr-10'}
+                                           dataPlaceholder={'name@company.com'} dataValue={user_Name}
+                                           dataOnchange={setUser_Name}/>
                                     <i className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0 btn-primary"
                                        data-lucide="search"></i>
                                 </div>
                             </div>
+                            <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 p-1">
+                                <div className="w-56 relative text-slate-500 p-1">
+                                    <Input dataType={'date'} dataName={'email'} dataId={'email'} className={'form-control w-56 box pr-10'}
+                                           dataPlaceholder={'2022-11-08'} dataValue={user_CreationDate}
+                                           dataOnchange={setUserCreationDate}/>
+                                    <i className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0 btn-primary"
+                                       data-lucide="search"></i>
+                                </div>
+                            </div>
+                            <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 p-1">
+                                <div className="w-56 relative text-slate-500 p-1">
+                                    <div className="w-full mt-3 xl:mt-0 flex-1">
+                                        <div className="w-full">
+                                            <select className="form-select w-full" onChange={captureType}>
+                                                <option value="1">Aprobado</option>
+                                                <option value="0">En Espera</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <i className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0 btn-primary"
+                                       data-lucide="search"></i>
+                                </div>
+                            </div>
+                            <div className="hidden md:block mx-auto text-slate-500"></div>
+                            <button className="btn btn-facebook shadow-md mr-2" onClick={handleOnClickSearch}>Buscar
+                            </button>
+                            <button className="btn btn-close shadow-md mr-2" onClick={handleOnClickClean}>X Limpiar
+                            </button>
+                            <button className="btn btn-primary shadow-md mr-2" onClick={actionAdd}>Nuevo Usuario
+                            </button>
                         </div>
                     </div>
                     <br/>
@@ -191,19 +248,25 @@ const Index = () => {
                 <>
                     { (formType === 'register') ?
                     <Add  handleOnClickRegister={handleOnClickRegister}
-                          USUA_usuario={USUA_usuario}
-                          setUSUA_usuario={setUSUA_usuario}
-                          USUA_Password={USUA_Password}
-                          setUSUA_Password={setUSUA_Password}
+                          user_Name={user_Name}
+                          setUser_Name={setUser_Name}
+                          user_Password={user_Password}
+                          setUser_Password={setUser_Password}
+                          passwordAgain={passwordAgain}
+                          setPasswordAgain={setPasswordAgain}
                           setFormType={setFormType}
+                          setUser_ApprovedStatus={setUser_ApprovedStatus}
                     />
                     :
                         <Add  handleOnClickRegister={handleOnClickUpdate}
-                              USUA_usuario={USUA_usuario}
-                              setUSUA_usuario={setUSUA_usuario}
-                              USUA_Password={USUA_Password}
-                              setUSUA_Password={setUSUA_Password}
+                              user_Name={user_Name}
+                              setUser_Name={setUser_Name}
+                              user_Password={user_Password}
+                              setUser_Password={setUser_Password}
+                              passwordAgain={passwordAgain}
+                              setPasswordAgain={setPasswordAgain}
                               setFormType={setFormType}
+                              setUser_ApprovedStatus={setUser_ApprovedStatus}
                         />
                     }
                     </>

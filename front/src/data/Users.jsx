@@ -11,15 +11,15 @@ const columns = (actionVerify, actionDelete,actionEdit) => {
         },
         {
             name: 'Usuario',
-            selector: row => row.USUA_usuario,
+            selector: row => row.user_Name,
         },
         {
             name: 'Fecha de Creacion',
-            selector: row => row.USUA_FechaRegistro,
+            selector: row => row.user_CreationDate,
         },
         {
             name: 'Estado',
-            cell: (selector) => selector.cji_usuario_estadoVerificado && selector.cji_usuario_estadoVerificado != 0 ?
+            cell: (selector) => selector.user_ApprovedStatus && selector.user_ApprovedStatus != 0 ?
                 <>
                     <Lucide icon="CheckSquare" className="w-4 h-4 mr-1 text-success"/><p
                     className="text-success">{"Verificado"}</p>
@@ -33,17 +33,17 @@ const columns = (actionVerify, actionDelete,actionEdit) => {
         },
         {
             name: 'Acciones',
-            selector: row => row.USUA_Codigo,
+            selector: row => row.user_ID,
             cell: (selector) =>
                 <div className="flex justify-center items-center">
-                    <button className="flex items-center mr-3" onClick={(e) => actionVerify(selector.USUA_Codigo)}>
+                    <button className="flex items-center mr-3" onClick={(e) => actionVerify(selector.user_ID)}>
                         <Lucide icon="CheckSquare" className="w-4 h-4 mr-1"/>{" "}
                         Aprobar
                     </button>
-                    <button className="flex items-center mr-3" onClick={(e) => actionEdit(selector.USUA_Codigo)}>
+                    <button className="flex items-center mr-3" onClick={(e) => actionEdit(selector.user_ID)}>
                         <Lucide icon="Edit3" className="w-4 h-4 mr-1 text-primary"/>{" "}
                     </button>
-                    <button className="flex items-center mr-3" onClick={(e) => actionDelete(selector.USUA_Codigo)}>
+                    <button className="flex items-center mr-3" onClick={(e) => actionDelete(selector.user_ID)}>
                         <Lucide icon="Trash2" className="w-4 h-4 mr-1 text-danger" />
 
                     </button>

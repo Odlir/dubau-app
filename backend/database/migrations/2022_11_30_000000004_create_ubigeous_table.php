@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('ubigeous_ProvinceID')->nullable();
             $table->string('ubigeous_DistrictID')->nullable();
             $table->string('ubigeous_Description')->nullable();
-            $table->timestamp('ubigeous_CreationDate')->nullable();
+            $table->dateTime('ubigeous_CreationDate')->nullable();
             $table->string('ubigeous_CreationUser')->nullable();
-            $table->timestamp('ubigeous_ModificationDate')->nullable();
+            $table->dateTime('ubigeous_ModificationDate')->nullable();
             $table->string('ubigeous_ModificationUser')->nullable();
             $table->integer('ubigeous_StatusID')->comment('0 removed, 1 activated')->nullable();
         });

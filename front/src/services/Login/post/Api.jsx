@@ -9,14 +9,14 @@ import Cookies from "universal-cookie";
 const endpoint = `${env.apiURL}login`
 
 const Api = () => {
-    const [USUA_usuario, setUSUA_usuario] = useState('')
-    const [USUA_Password, setUSUA_Password] = useState('')
+    const [user_Name, setUser_Name] = useState('')
+    const [user_Password, setUser_Password] = useState('')
 
     const navigate = useNavigate()
     let token = '';
     const store = async (e) => {
         e.preventDefault()
-        await axios.post(endpoint, {USUA_usuario: USUA_usuario, USUA_Password: USUA_Password})
+        await axios.post(endpoint, {user_Name: user_Name, user_Password: user_Password})
             .then(function (response) {
                 token = response.data.authorisation.token;
                 const cookies = new Cookies();
@@ -31,8 +31,7 @@ const Api = () => {
 
     return (
         <div>
-            {/*Mando data a mi hijo*/}
-            <Login store={store} USUA_usuario={USUA_usuario} setUSUA_usuario={setUSUA_usuario}   USUA_Password={USUA_Password} setUSUA_Password={setUSUA_Password}  />
+            <Login store={store} user_Name={user_Name} setUser_Name={setUser_Name}   user_Password={user_Password} setUser_Password={setUser_Password}  />
         </div>
     )
 }

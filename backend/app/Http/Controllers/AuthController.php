@@ -5,40 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User2;
+use App\Models\User;
+use App\Models\Person;
 use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'list', 'verifyUser', 'deleteUser','listXUser','updateUser','listSearchUsuario']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'list', 'verifyUser', 'deleteUser','listXUser','updateUser','listSearchUser']]);
     }
-
-    public function ruta()
-    {
-        echo 'wee';
-        return response()->json([
-            'status' => 'success',
-            'user' => 'Holaaaaaa',
-        ]);
-    }
-
-    /*    public function list()
-        {
-            //$user = DB::table('cji_usuario')->get();
-            $user = User2::all();
-            sleep(1);
-           return $user;
-        } */
 
     public function list()
     {
         $page = $_GET["page"];
         $per_page = $_GET["per_page"];
 
-        $total= User2::where('cji_usuario_estadoID', '=', '1')->count();
+        $total= User::where('user_StatusID', '=', '1')->count();
         $total_pages = $total / $per_page;
         if ($page == 1) {
             $auto_increment = 0;
@@ -46,16 +29,16 @@ class AuthController extends Controller
             $auto_increment = ($page - 1) * $per_page;
         }
 
-        $data = User2::where('cji_usuario_estadoID', '=', '1')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+        $data = User::where('user_StatusID', '=', '1')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
             $row->auto_increment = $auto_increment + $index + 1;
         });
 
-        if(isset($_GET["USUA_usuario"])){
-            $USUA_usuario = $_GET["USUA_usuario"];
-            $USUA_FechaRegistro = $_GET["USUA_FechaRegistro"];
-            $cji_usuario_estadoVerificado = $_GET["cji_usuario_estadoVerificado"];
-            $total= User2::where('cji_usuario_estadoID', '=', '1')->where('USUA_usuario','LIKE','%'. $USUA_usuario . '%')->where('USUA_FechaRegistro','LIKE','%'. $USUA_FechaRegistro . '%')->where('cji_usuario_estadoVerificado','LIKE','%'. $cji_usuario_estadoVerificado . '%')->count();
-            $data = User2::where('cji_usuario_estadoID', '=', '1')->where('USUA_usuario','LIKE','%'. $USUA_usuario . '%')->where('USUA_FechaRegistro','LIKE','%'. $USUA_FechaRegistro . '%')->where('cji_usuario_estadoVerificado','LIKE','%'. $cji_usuario_estadoVerificado . '%')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+        if(isset($_GET["user_Name"])){
+            $user_Name = $_GET["user_Name"];
+            $user_CreationDate = $_GET["user_CreationDate"];
+            $user_ApprovedStatus = $_GET["user_ApprovedStatus"];
+            $total= User::where('user_StatusID', '=', '1')->where('user_Name','LIKE','%'. $user_Name . '%')->where('user_CreationDate','LIKE','%'. $user_CreationDate . '%')->where('user_ApprovedStatus','LIKE','%'. $user_ApprovedStatus . '%')->count();
+            $data = User::where('user_StatusID', '=', '1')->where('user_Name','LIKE','%'. $user_Name . '%')->where('user_CreationDate','LIKE','%'. $user_CreationDate . '%')->where('user_ApprovedStatus','LIKE','%'. $user_ApprovedStatus . '%')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
                 $row->auto_increment = $auto_increment + $index + 1;});
             $total_pages = $total / $per_page;
             if ($page == 1) {
@@ -76,63 +59,59 @@ class AuthController extends Controller
     }
     public function listXUser()
     {
-        $USUA_Codigo = $_GET["USUA_Codigo"];
-        $user = User2::where('USUA_Codigo', $USUA_Codigo)->first();
+        $user_ID = $_GET["user_ID"];
+        $user = User::where('user_ID', $user_ID)->first();
         return response()->json($user, 200);
     }
 
-    public function listSearchUsuario(Request $request)
+    public function listSearchUser(Request $request)
     {
-        $USUA_usuario = $_GET["USUA_usuario"];
-        $user = User2::where('name', 'LIKE', '%' . $USUA_usuario . '%')->first();
+        $user_Name = $_GET["user_Name"];
+        $user = User::where('name', 'LIKE', '%' . $user_Name . '%')->first();
         return response()->json($user, 200);
     }
 
 
     public function updateUser(Request $request)
     {
-        if($request->USUA_Password == ''){
-            DB::table('cji_usuario')
-                ->where('USUA_Codigo', $request->USUA_Codigo)
+        if($request->user_Password == ''){
+            User::where('user_ID', $request->user_ID)
                 ->update([
-                    'USUA_usuario' => $request->USUA_usuario,
-                    'cji_usuario_estadoVerificado' => $request->cji_usuario_estadoVerificado
+                    'user_Name' => $request->user_Name,
+                    'user_ApprovedStatus' => $request->user_ApprovedStatus
                 ]);
         }else{
-            DB::table('cji_usuario')
-                ->where('USUA_Codigo', $request->USUA_Codigo)
+            User::where('user_ID', $request->user_ID)
                 ->update([
-                    'USUA_usuario' => $request->USUA_usuario,
-                    'cji_usuario_estadoVerificado' => $request->cji_usuario_estadoVerificado,
-                    'USUA_Password' => Hash::make($request->USUA_Password)
+                    'user_Name' => $request->user_Name,
+                    'user_ApprovedStatus' => $request->user_ApprovedStatus,
+                    'user_Password' => Hash::make($request->user_Password)
                 ]);
         }
     }
 
     public function verifyUser(Request $request)
     {
-        DB::table('cji_usuario')
-            ->where('USUA_Codigo', $request->USUA_Codigo)
+        User::where('user_ID', $request->user_ID )
             ->update([
-                'cji_usuario_estadoVerificado' => $request->cji_usuario_estadoVerificado
+                'user_ApprovedStatus' => $request->user_ApprovedStatus
             ]);
     }
 
     public function deleteUser(Request $request)
     {
-        DB::table('cji_usuario')
-            ->where('USUA_Codigo', $request->USUA_Codigo)
+        User::where('user_ID', $request->user_ID)
             ->update([
-                'cji_usuario_estadoID' => $request->cji_usuario_estadoID
+                'user_StatusID' => $request->user_StatusID
             ]);
     }
 
     public function login(Request $request)
     {
         auth()->shouldUse('api');
-        $user = User2::where('USUA_usuario', $request->all()['USUA_usuario'])->first();
+        $user = User::where('user_Name', $request->all()['user_Name'])->first();
         // Check Password
-        if (!$user || !Hash::check($request->all()['USUA_Password'], $user->USUA_Password) || $user->cji_usuario_estadoVerificado != 1) {
+        if (!$user || !Hash::check($request->all()['user_Password'], $user->user_Password) || $user->user_ApprovedStatus != 1) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorized',
@@ -150,20 +129,40 @@ class AuthController extends Controller
         ]);
     }
 
+
+
     public function register(Request $request)
     {
         $request->validate([
-            'USUA_usuario' => 'required|email|max:255|unique:cji_usuario',
-            'USUA_Password' => 'required|string|min:6',
-            'cji_usuario_estadoVerificado' => 'required|string|min:1',
-            'cji_usuario_estadoID' => 'required|string|min:1',
+            'user_Name' => 'required|email|max:255|unique:user',
+            'user_Password' => 'required|string|min:6',
+            'user_ApprovedStatus' => 'required|string|min:1',
+            'user_StatusID' => 'required|string|min:1',
         ]);
 
-        $user = User2::create([
-            'USUA_usuario' => $request->USUA_usuario,
-            'USUA_Password' => Hash::make($request->USUA_Password),
-            'cji_usuario_estadoVerificado' => $request->cji_usuario_estadoVerificado,
-            'cji_usuario_estadoID' => $request->cji_usuario_estadoID,
+
+        \DB::transaction(function () use ($request) {
+        $person = Person::create([
+            'nationality_ID' => '1',
+            'ubigeous_PlaceBirth' => '0',
+            'ubigeous_Home' => '0',
+            'statusmarital_ID' => '1',
+            'typedocument_ID' => '1',
+            'person_Name' => $request->person_Name,
+            'person_LastNamePaternal' => $request->person_LastNamePaternal,
+            'person_LastNameMaternal' => $request->person_LastNameMaternal,
+            'person_CreationDate' => date('Y-m-d H:i:s'),
+            'person_ApprovedStatus' => '1',
+            'person_StatusID' => '1'
+        ]);
+        $user = User::create([
+            'person_ID' => $person->person_ID,
+            'role_ID' => 1,
+            'user_Name' => $request->user_Name,
+            'user_Password' => Hash::make($request->user_Password),
+            'user_CreationDate' => date('Y-m-d H:i:s'),
+            'user_ApprovedStatus' => $request->user_ApprovedStatus,
+            'user_StatusID' => $request->user_StatusID,
         ]);
 
         $token = Auth::login($user);
@@ -176,6 +175,8 @@ class AuthController extends Controller
                 'type' => 'bearer',
             ]
         ]);
+        });
+
     }
 
     public function logout()

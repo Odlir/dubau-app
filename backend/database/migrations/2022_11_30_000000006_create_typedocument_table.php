@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('typedocument_Name')->nullable();
             $table->string('typedocument_Description')->nullable();
             $table->string('typedocument_Initial')->nullable();
-            $table->timestamp('typedocument_CreationDate')->nullable();
+            $table->dateTime('typedocument_CreationDate')->nullable();
             $table->string('typedocument_CreationUser')->nullable();
-            $table->timestamp('typedocument_ModificationDate')->nullable();
+            $table->dateTime('typedocument_ModificationDate')->nullable();
             $table->string('typedocument_ModificationUser')->nullable();
             $table->integer('typedocument_StatusID')->comment('0 removed, 1 activated')->nullable();
         });
