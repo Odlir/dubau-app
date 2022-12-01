@@ -13,7 +13,7 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'list', 'verifyUser', 'deleteUser','listXUser','updateUser']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'list', 'verifyUser', 'deleteUser','listXUser','updateUser','listSearchUsuario']]);
     }
 
     public function ruta()
@@ -37,7 +37,7 @@ class AuthController extends Controller
     {
         $page = $_GET["page"];
         $per_page = $_GET["per_page"];
-        //$total = User2::all()->count();
+
         $total= User2::where('cji_usuario_estadoID', '=', '1')->count();
         $total_pages = $total / $per_page;
         if ($page == 1) {
@@ -46,12 +46,25 @@ class AuthController extends Controller
             $auto_increment = ($page - 1) * $per_page;
         }
 
-        /*    $data = User2::skip($page)->take($per_page)->get()->each(function ($row,$index) use ($auto_increment) {
-                $row->auto_increment = $auto_increment + $index + 1;
-            });*/
         $data = User2::where('cji_usuario_estadoID', '=', '1')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
             $row->auto_increment = $auto_increment + $index + 1;
         });
+
+        if(isset($_GET["USUA_usuario"])){
+            $USUA_usuario = $_GET["USUA_usuario"];
+            $USUA_FechaRegistro = $_GET["USUA_FechaRegistro"];
+            $cji_usuario_estadoVerificado = $_GET["cji_usuario_estadoVerificado"];
+            $total= User2::where('cji_usuario_estadoID', '=', '1')->where('USUA_usuario','LIKE','%'. $USUA_usuario . '%')->where('USUA_FechaRegistro','LIKE','%'. $USUA_FechaRegistro . '%')->where('cji_usuario_estadoVerificado','LIKE','%'. $cji_usuario_estadoVerificado . '%')->count();
+            $data = User2::where('cji_usuario_estadoID', '=', '1')->where('USUA_usuario','LIKE','%'. $USUA_usuario . '%')->where('USUA_FechaRegistro','LIKE','%'. $USUA_FechaRegistro . '%')->where('cji_usuario_estadoVerificado','LIKE','%'. $cji_usuario_estadoVerificado . '%')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+                $row->auto_increment = $auto_increment + $index + 1;});
+            $total_pages = $total / $per_page;
+            if ($page == 1) {
+                $auto_increment = 0;
+            } else {
+                $auto_increment = ($page - 1) * $per_page;
+            }
+        }
+
         $objContenedorListUser = new \stdClass();
         $objContenedorListUser->page = $page;
         $objContenedorListUser->per_page = $per_page;
@@ -67,14 +80,33 @@ class AuthController extends Controller
         $user = User2::where('USUA_Codigo', $USUA_Codigo)->first();
         return response()->json($user, 200);
     }
+
+    public function listSearchUsuario(Request $request)
+    {
+        $USUA_usuario = $_GET["USUA_usuario"];
+        $user = User2::where('name', 'LIKE', '%' . $USUA_usuario . '%')->first();
+        return response()->json($user, 200);
+    }
+
+
     public function updateUser(Request $request)
     {
-        DB::table('cji_usuario')
-            ->where('USUA_Codigo', $request->USUA_Codigo)
-            ->update([
-                'USUA_usuario' => $request->USUA_usuario,
-                'USUA_Password' => Hash::make($request->USUA_Password)
-            ]);
+        if($request->USUA_Password == ''){
+            DB::table('cji_usuario')
+                ->where('USUA_Codigo', $request->USUA_Codigo)
+                ->update([
+                    'USUA_usuario' => $request->USUA_usuario,
+                    'cji_usuario_estadoVerificado' => $request->cji_usuario_estadoVerificado
+                ]);
+        }else{
+            DB::table('cji_usuario')
+                ->where('USUA_Codigo', $request->USUA_Codigo)
+                ->update([
+                    'USUA_usuario' => $request->USUA_usuario,
+                    'cji_usuario_estadoVerificado' => $request->cji_usuario_estadoVerificado,
+                    'USUA_Password' => Hash::make($request->USUA_Password)
+                ]);
+        }
     }
 
     public function verifyUser(Request $request)
