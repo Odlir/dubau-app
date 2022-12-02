@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import DataTable from 'react-data-table-component';
+import { useNavigate } from 'react-router-dom';
 import {env} from "@/env.js";
+import DataTable from 'react-data-table-component';
 import columns from '../../data/Users.jsx';
 import Preload from "@/components/preload/preload";
-import Button from "@/components/Button/Button.jsx";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
-import { useNavigate } from 'react-router-dom';
 import Add  from '../User/add.jsx'
-import Input from "@/components/Input/Input";
-
+import List from "../../components/layouts/list/index.jsx";
 
 const Index = () => {
     const navigate = useNavigate()
@@ -181,53 +179,19 @@ const Index = () => {
         <div>
             { (formType === 'list') ?
                 <>
-                    <h2 className="intro-y text-lg font-medium mt-10">
-                        Listado de Usuarios
-                    </h2>
-                    <div className="grid grid-cols-12 gap-6 mt-5">
-                        <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2 ">
-                            <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
-                                <div className="w-56 relative text-slate-500">
-                                    <Input dataType={'email'} dataName={'email'} dataId={'email'} className={'form-control w-56 box pr-10'}
-                                           dataPlaceholder={'name@company.com'} dataValue={user_Name}
-                                           dataOnchange={setUser_Name}/>
-                                    <i className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0 btn-primary"
-                                       data-lucide="search"></i>
-                                </div>
-                            </div>
-                            <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 p-1">
-                                <div className="w-56 relative text-slate-500 p-1">
-                                    <Input dataType={'date'} dataName={'email'} dataId={'email'} className={'form-control w-56 box pr-10'}
-                                           dataPlaceholder={'2022-11-08'} dataValue={user_CreationDate}
-                                           dataOnchange={setUserCreationDate}/>
-                                    <i className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0 btn-primary"
-                                       data-lucide="search"></i>
-                                </div>
-                            </div>
-                            <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 p-1">
-                                <div className="w-56 relative text-slate-500 p-1">
-                                    <div className="w-full mt-3 xl:mt-0 flex-1">
-                                        <div className="w-full">
-                                            <select className="form-select w-full" onChange={captureType}>
-                                                <option value="1">Aprobado</option>
-                                                <option value="0">En Espera</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <i className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0 btn-primary"
-                                       data-lucide="search"></i>
-                                </div>
-                            </div>
-                            <div className="hidden md:block mx-auto text-slate-500"></div>
-                            <button className="btn btn-facebook shadow-md mr-2" onClick={handleOnClickSearch}>Buscar
-                            </button>
-                            <button className="btn btn-close shadow-md mr-2" onClick={handleOnClickClean}>X Limpiar
-                            </button>
-                            <button className="btn btn-primary shadow-md mr-2" onClick={actionAdd}>Nuevo Usuario
-                            </button>
-                        </div>
-                    </div>
-                    <br/>
+                <List
+                    nameSection={'Usuarios'}
+                    dataType={'text'}
+                    dataSearch1={user_Name}
+                    setdataSearch1={setUser_Name}
+                    dataType2={'date'}
+                    dataSearch2={user_CreationDate}
+                    setdataSearch2={setUserCreationDate}
+                    captureType={captureType}
+                    handleOnClickSearch={handleOnClickSearch}
+                    handleOnClickClean={handleOnClickSearch}
+                    actionAdd={actionAdd}
+                />
                     {data.length != 0 ?
                         <DataTable
                             columns={columns(actionVerify,actionDelete,actionEdit)}

@@ -144,8 +144,8 @@ class AuthController extends Controller
         \DB::transaction(function () use ($request) {
         $person = Person::create([
             'nationality_ID' => '1',
-            'ubigeous_PlaceBirth' => '0',
-            'ubigeous_Home' => '0',
+            'ubigeous_PlaceBirth' => '1',
+            'ubigeous_Home' => '1',
             'statusmarital_ID' => '1',
             'typedocument_ID' => '1',
             'person_Name' => $request->person_Name,
