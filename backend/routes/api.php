@@ -3,6 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\LineController;
+use App\Http\Controllers\AreaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,5 +47,40 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('listXUser', 'listXUser');
     Route::post('updateUser', 'updateUser');
     Route::get('listSearchUsuario', 'listSearchUsuario');
+});
 
+Route::controller(RoleController::class)->group(function () {
+    Route::post('loginRole', 'loginRole');
+    Route::post('registerRole', 'registerRole');
+    Route::get('listRole', 'listRole');
+    Route::get('listXRole', 'listXRole');
+    Route::post('deleteRole', 'deleteRole');
+    Route::post('updateRole', 'updateRole');
+});
+
+Route::controller(BrandController::class)->group(function () {
+    Route::post('loginBrand', 'loginBrand');
+    Route::post('registerBrand', 'registerBrand');
+    Route::get('listBrand', 'listBrand');
+    Route::get('listXBrand', 'listXBrand');
+    Route::post('deleteBrand', 'deleteBrand');
+    Route::post('updateBrand', 'updateBrand');
+});
+
+Route::controller(AreaController::class)->group(function () {
+    Route::post('loginArea', 'loginArea');
+    Route::post('registerArea', 'registerArea');
+    Route::get('listArea', 'listArea');
+    Route::get('listXArea', 'listXArea');
+    Route::post('deleteArea', 'deleteArea');
+    Route::post('updateArea', 'updateArea');
+});
+
+Route::controller(LineController::class)->group(function () {
+    Route::post('loginLine', 'loginLine');
+    Route::post('registerLine', 'registerLine');
+    Route::get('listLine', 'listLine');
+    Route::get('listXLine', 'listXLine');
+    Route::post('deleteLine', 'deleteLine');
+    Route::post('updateLine', 'updateLine');
 });

@@ -2,8 +2,12 @@ import { useRoutes } from "react-router-dom";
 import Login from "@/pages/Login/index.jsx";
 import Dashboard from "@/pages/Dashboard/index.jsx";
 import User from "@/pages/User/index.jsx";
+import Role from "@/pages/Role/index.jsx";
 import AddUser from "@/pages/User/add.jsx";
 import Layout from "@/pages/Layout/index.jsx";
+import Brand from "@/pages/Brand/index.jsx";
+import Area from "@/pages/Area/index.jsx";
+import Line from "@/pages/Line/index.jsx";
 
 function Router() {
   const routes = [
@@ -24,9 +28,21 @@ function Router() {
           element: <User />,
         },
         {
-          path: "/addUser",
-          element: <AddUser />,
+          path: "/roles",
+          element: <Role />,
         },
+        {
+          path: "/brand",
+          element: <Brand />,
+        },
+        {
+          path: "/line",
+          element: <Line />,
+        },
+        {
+          path: "/area",
+          element: <Area />,
+        }
           ]
     },
   ];

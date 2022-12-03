@@ -61,7 +61,7 @@ const Index = (props) => {
                     </button>
                     <button className="btn btn-close shadow-md mr-2" onClick={handleOnClickClean}>X Limpiar
                     </button>
-                    <button className="btn btn-primary shadow-md mr-2" onClick={actionAdd}>Nuevo Usuario
+                    <button className="btn btn-primary shadow-md mr-2" onClick={actionAdd}>Nuevo {nameSection}
                     </button>
                 </div>
             </div>

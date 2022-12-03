@@ -180,7 +180,7 @@ const Index = () => {
             { (formType === 'list') ?
                 <>
                 <List
-                    nameSection={'Usuarios'}
+                    nameSection={'Usuario'}
                     dataType={'text'}
                     dataSearch1={user_Name}
                     setdataSearch1={setUser_Name}

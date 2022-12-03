@@ -144,19 +144,19 @@ class AuthController extends Controller
         \DB::transaction(function () use ($request) {
         $person = Person::create([
             'nationality_ID' => '1',
-            'ubigeous_PlaceBirth' => '1',
-            'ubigeous_Home' => '1',
+            'ubigeous_PlaceBirth' => '0',
+            'ubigeous_Home' => '0',
             'statusmarital_ID' => '1',
             'typedocument_ID' => '1',
-            'person_Name' => $request->person_Name,
-            'person_LastNamePaternal' => $request->person_LastNamePaternal,
-            'person_LastNameMaternal' => $request->person_LastNameMaternal,
+            'person_Name' => '$request->person_Name',
+            'person_LastNamePaternal' => '$request->person_LastNamePaternal',
+            'person_LastNameMaternal' => '$request->person_LastNameMaternal',
             'person_CreationDate' => date('Y-m-d H:i:s'),
             'person_ApprovedStatus' => '1',
             'person_StatusID' => '1'
         ]);
         $user = User::create([
-            'person_ID' => $person->person_ID,
+            'person_ID' => '1',//$person->person_ID,
             'role_ID' => 1,
             'user_Name' => $request->user_Name,
             'user_Password' => Hash::make($request->user_Password),
