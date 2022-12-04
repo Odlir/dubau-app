@@ -13,7 +13,7 @@ class Area extends Model
     use HasFactory, Notifiable;
     protected $table = 'area';
     protected $primaryKey = 'area_ID';
-    protected $fillable = array('area_Name', 'area_Description', 'area_StatusID');
+    protected $fillable = array('area_Name', 'area_Description', 'area_StatusID','area_CreationDate');
     public $timestamps = false;
     public static $rules = array();
 }

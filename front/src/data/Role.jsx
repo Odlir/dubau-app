@@ -15,7 +15,7 @@ const columns = ( actionDelete,actionEdit) => {
         },
         {
             name: 'Descripcion',
-            selector: row => row.description_Name,
+            selector: row => row.role_Description,
         },
         {
             name: 'Fecha de Creacion',

@@ -37,19 +37,27 @@ class RoleController extends Controller
         if(isset($_GET["role_Name"])){
             $role_Name = $_GET["role_Name"];
             $role_CreationDate = $_GET["role_CreationDate"];
-            $total_pages = $total / $per_page;
-            if ($page == 1) {
-                $auto_increment = 0;
-            } else {
-                $auto_increment = ($page - 1) * $per_page;
-            }
 
             if($role_CreationDate != '' || $role_CreationDate != null){
                 $total= Role::where('role_StatusID', '=', '1')->where('role_Name','LIKE','%'. $role_Name . '%')->where('role_CreationDate','LIKE','%'. $role_CreationDate . '%')->count();
+                $total_pages = $total / $per_page;
+                if ($page == 1) {
+                    $auto_increment = 0;
+                } else {
+                    $auto_increment = ($page - 1) * $per_page;
+                }
+
                 $data = Role::where('role_StatusID', '=', '1')->where('role_Name','LIKE','%'. $role_Name . '%')->where('role_CreationDate','LIKE','%'. $role_CreationDate . '%')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
                     $row->auto_increment = $auto_increment + $index + 1;});
             }else{
                 $total= Role::where('role_StatusID', '=', '1')->where('role_Name','LIKE','%'. $role_Name . '%')->count();
+                $total_pages = $total / $per_page;
+                if ($page == 1) {
+                    $auto_increment = 0;
+                } else {
+                    $auto_increment = ($page - 1) * $per_page;
+                }
+
                 $data = Role::where('role_StatusID', '=', '1')->where('role_Name','LIKE','%'. $role_Name . '%')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
                     $row->auto_increment = $auto_increment + $index + 1;});
             }

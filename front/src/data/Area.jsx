@@ -10,12 +10,12 @@ const columns = ( actionDelete,actionEdit) => {
             width: "4rem",
         },
         {
-            name: 'Rol',
+            name: 'Area',
             selector: row => row.area_Name,
         },
         {
             name: 'Descripcion',
-            selector: row => row.description_Name,
+            selector: row => row.area_Description,
         },
         {
             name: 'Fecha de Creacion',

@@ -25,6 +25,7 @@ const Add =  (props) => {
     } = props;
 
     const handleOnClickList = () => {
+        console.log('a');
         setUser_Name('');
         setUser_Password('');
         setFormType('list');

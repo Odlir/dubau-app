@@ -14,7 +14,7 @@ class StatusMarital extends Model
 
     protected $table = 'statusmarital';
     protected $primaryKey = 'statusmarital_ID';
-    protected $fillable = array('statusmarital_Name', 'statusmarital_Description', 'statusmarital_StatusID');
+    protected $fillable = array('statusmarital_Name', 'statusmarital_Description', 'statusmarital_StatusID','statusmarital_CreationDate');
     public $timestamps = false;
     public static $rules = array();
 

@@ -189,7 +189,7 @@ const Index = () => {
                     setdataSearch2={setUserCreationDate}
                     captureType={captureType}
                     handleOnClickSearch={handleOnClickSearch}
-                    handleOnClickClean={handleOnClickSearch}
+                    handleOnClickClean={handleOnClickClean}
                     actionAdd={actionAdd}
                 />
                     {data.length != 0 ?

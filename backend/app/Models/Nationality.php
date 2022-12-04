@@ -14,7 +14,7 @@ class Nationality extends Model
 
     protected $table = 'nationality';
     protected $primaryKey = 'nationality_ID';
-    protected $fillable = array('nationality_Name', 'cji_usuario_estadoVerificado', 'nationality_StatusID');
+    protected $fillable = array('nationality_Name', 'cji_usuario_estadoVerificado', 'nationality_StatusID','nationality_CreationDate');
     public $timestamps = false;
     public static $rules = array();
 

@@ -14,7 +14,7 @@ class TypeDocument extends Model
 
     protected $table = 'typedocument';
     protected $primaryKey = 'typedocument_ID';
-    protected $fillable = array('typedocument_Name', 'typedocument_Description', 'typedocument_Initial', 'typedocument_StatusID');
+    protected $fillable = array('typedocument_Name', 'typedocument_Description', 'typedocument_Initial', 'typedocument_StatusID','typedocument_CreationDate');
     public $timestamps = false;
     public static $rules = array();
 

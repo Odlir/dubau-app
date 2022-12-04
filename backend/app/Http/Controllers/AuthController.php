@@ -38,14 +38,15 @@ class AuthController extends Controller
             $user_CreationDate = $_GET["user_CreationDate"];
             $user_ApprovedStatus = $_GET["user_ApprovedStatus"];
             $total= User::where('user_StatusID', '=', '1')->where('user_Name','LIKE','%'. $user_Name . '%')->where('user_CreationDate','LIKE','%'. $user_CreationDate . '%')->where('user_ApprovedStatus','LIKE','%'. $user_ApprovedStatus . '%')->count();
-            $data = User::where('user_StatusID', '=', '1')->where('user_Name','LIKE','%'. $user_Name . '%')->where('user_CreationDate','LIKE','%'. $user_CreationDate . '%')->where('user_ApprovedStatus','LIKE','%'. $user_ApprovedStatus . '%')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
-                $row->auto_increment = $auto_increment + $index + 1;});
+
             $total_pages = $total / $per_page;
             if ($page == 1) {
                 $auto_increment = 0;
             } else {
                 $auto_increment = ($page - 1) * $per_page;
             }
+            $data = User::where('user_StatusID', '=', '1')->where('user_Name','LIKE','%'. $user_Name . '%')->where('user_CreationDate','LIKE','%'. $user_CreationDate . '%')->where('user_ApprovedStatus','LIKE','%'. $user_ApprovedStatus . '%')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+                $row->auto_increment = $auto_increment + $index + 1;});
         }
 
         $objContenedorListUser = new \stdClass();
@@ -144,8 +145,8 @@ class AuthController extends Controller
         \DB::transaction(function () use ($request) {
         $person = Person::create([
             'nationality_ID' => '1',
-            'ubigeous_PlaceBirth' => '0',
-            'ubigeous_Home' => '0',
+            'ubigeous_PlaceBirth' => '1',
+            'ubigeous_Home' => '1',
             'statusmarital_ID' => '1',
             'typedocument_ID' => '1',
             'person_Name' => '$request->person_Name',

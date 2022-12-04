@@ -14,7 +14,7 @@ class Ubigeous extends Model
 
     protected $table = 'ubigeous';
     protected $primaryKey = 'ubigeous_ID';
-    protected $fillable = array('ubigeous_Name', 'ubigeous_Description', 'ubigeous_StatusID');
+    protected $fillable = array('ubigeous_Name', 'ubigeous_Description', 'ubigeous_StatusID','ubigeous_CreationDate');
     public $timestamps = false;
     public static $rules = array();
 
