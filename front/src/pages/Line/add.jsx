@@ -11,7 +11,7 @@ import {Lucide} from "@/components/base-components/index.js";
 import Input from "../../components/Input/Input.jsx";
 import PasswordChecklist from "react-password-checklist"
 
-const Add =  (props) => {
+const Add = (props) => {
     const {
         handleOnClickRegister,
         setFormType,
@@ -33,16 +33,17 @@ const Add =  (props) => {
                 Añadir Lines
             </h2>
             <div className="intro-y box p-5 mt-5">
-                <div className={"flex"} >
+                <div className={"flex"}>
                     <div className=" w-6/12">
-                        <div  className="border w-full border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                        <div className="border w-full border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                             <div
                                 className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
                                 <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/>Linea
                                 Info
                             </div>
                             <div className="mt-5">
-                                <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                <div
+                                    className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
                                     <div className="form-label xl:w-64 xl:!mr-10">
                                         <div className="text-left">
                                             <div className="flex items-center">
@@ -58,7 +59,8 @@ const Add =  (props) => {
                                         </div>
                                     </div>
                                     <div className="w-full mt-3 xl:mt-0 flex-1">
-                                        <Input dataType={'text'} dataName={'email'} dataId={'email'} className={'form-control'}
+                                        <Input dataType={'text'} dataName={'email'} dataId={'email'}
+                                               className={'form-control'}
                                                dataPlaceholder={'NameLinea'} dataValue={line_Name}
                                                dataOnchange={setLine_Name}/>
                                         <div className="form-help text-right">
@@ -66,7 +68,8 @@ const Add =  (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                <div
+                                    className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
                                     <div className="form-label xl:w-64 xl:!mr-10">
                                         <div className="text-left">
                                             <div className="flex items-center">
@@ -79,8 +82,10 @@ const Add =  (props) => {
                                         </div>
                                     </div>
                                     <div className="w-full mt-3 xl:mt-0 flex-1">
-                                        <Input dataType={'text'} dataName={'emailll'} dataId={'emailll'} className={'form-control'}
-                                               dataPlaceholder={'Este Linea es exclusivo para ....'} dataValue={line_Description}
+                                        <Input dataType={'text'} dataName={'emailll'} dataId={'emailll'}
+                                               className={'form-control'}
+                                               dataPlaceholder={'Este Linea es exclusivo para ....'}
+                                               dataValue={line_Description}
                                                dataOnchange={setLine_Description}/>
                                         <div className="form-help text-right">
                                             Maximum character 0/50
@@ -98,8 +103,9 @@ const Add =  (props) => {
                             Config
                         </div>
                         <div className="mt-5">
-                            <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                <div className="form-label xl:w-64 xl:!mr-10">
+                            <div
+                                className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                <div className="form-label xl:w-50 xl:!mr-10">
                                     <div className="text-left">
                                         <div className="flex items-center">
                                             <div className="font-medium">Logo</div>
@@ -112,14 +118,16 @@ const Add =  (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="w-full mt-3 xl:mt-0 flex-1">
-                                    <div className="w-full">
-                                        <select className="form-select w-full">
-                                            <option value="Gram (g)">001</option>
-                                        </select>
-                                    </div>
+
+                                <div className="xl:w-50">
+                                    <span className="sr-only">Choose File</span>
+                                    <input type="file"
+                                           className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>

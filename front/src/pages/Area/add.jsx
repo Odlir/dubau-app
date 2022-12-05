@@ -99,7 +99,7 @@ const Add =  (props) => {
                         </div>
                         <div className="mt-5">
                             <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                <div className="form-label xl:w-64 xl:!mr-10">
+                                <div className="form-label xl:w-50 xl:!mr-10">
                                     <div className="text-left">
                                         <div className="flex items-center">
                                             <div className="font-medium">Img Referencial</div>
@@ -112,12 +112,11 @@ const Add =  (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="w-full mt-3 xl:mt-0 flex-1">
-                                    <div className="w-full">
-                                        <select className="form-select w-full">
-                                            <option value="Gram (g)">001</option>
-                                        </select>
-                                    </div>
+                                <div className="xl:w-50">
+                                    <span className="sr-only">Choose File</span>
+                                    <input type="file"
+                                           className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+
                                 </div>
                             </div>
                         </div>

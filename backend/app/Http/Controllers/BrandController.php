@@ -14,7 +14,7 @@ class BrandController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['registerBrand', 'listBrand','listXBrand','deleteBrand','updateBrand']]);
+        $this->middleware('auth:api', ['except' => ['registerBrand', 'listBrand','listXBrand','deleteBrand','updateBrand','uploadfileBrand']]);
     }
 
     public function listBrand()
@@ -114,5 +114,14 @@ class BrandController extends Controller
             'brand_StatusID' => $request->brand_StatusID,
         ]);
         });
+    }
+
+    public function uploadfileBrand(Request $request){
+        $img="default.png";
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $img = time().$file->getClientOriginalName();
+            $file->move(public_path().'/images/',$img);
+        }
     }
 }

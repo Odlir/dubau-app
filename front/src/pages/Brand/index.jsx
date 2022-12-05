@@ -18,6 +18,7 @@ const Index = () => {
     const [DescriptionAgain, setDescriptionAgain] = useState('');
     const [brand_CreationDate, setBrandCreationDate] = useState('');
     const [brand_ApprovedStatus, setBrand_ApprovedStatus] = useState('1');
+    const [img, setImg] = useState('');
     const [formType, setFormType] = useState('list');
     /*Server Side*/
     const [data, setData] = useState([]);
@@ -99,7 +100,13 @@ const Index = () => {
     const handleOnClickRegister = async (e) => {
         e.preventDefault();
         const endpoint = `${env.apiURL}registerBrand`
-        await axios.post(endpoint, {brand_Name: brand_Name, brand_Description: brand_Description, brand_StatusID: '1'})
+        setImg.append('image', {
+            uri: this.state.image,
+            name: 'capturamovil.jpg',
+            type: 'image/jpg'
+        });
+        console.log(data);
+        await axios.post(endpoint, {brand_Name: brand_Name, brand_Description: brand_Description, brand_StatusID: '1' ,image:img})
             .then(function (response) {
                 window.location.reload();
             })
