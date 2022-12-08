@@ -10,6 +10,14 @@ const columns = ( actionDelete,actionEdit) => {
             width: "4rem",
         },
         {
+            name: 'Acciones',
+            selector: row => row.brand_NameImage,
+            cell: (selector) =>
+                   <img src={selector.brand_NameImage}
+                        width={60}
+                   />
+        },
+        {
             name: 'Marca',
             selector: row => row.brand_Name,
         },

@@ -65,6 +65,7 @@ Route::controller(BrandController::class)->group(function () {
     Route::get('listXBrand', 'listXBrand');
     Route::post('deleteBrand', 'deleteBrand');
     Route::post('updateBrand', 'updateBrand');
+    Route::post('uploadfileBrand', 'uploadfileBrand');
 });
 
 Route::controller(AreaController::class)->group(function () {

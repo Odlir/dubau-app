@@ -18,7 +18,9 @@ const Add =  (props) => {
         brand_Name,
         setBrand_Name,
         brand_Description,
-        setBrand_Description
+        setBrand_Description,
+        img,
+        setImg
     } = props;
 
     const handleOnClickList = () => {
@@ -114,9 +116,8 @@ const Add =  (props) => {
                                 </div>
                                 <div className="xl:w-50">
                                     <span className="sr-only">Choose File</span>
-                                    <input type="file"
+                                    <input type="file" name="img" onChange={ (e)=> setImg(e.target.files)}
                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
-
                                 </div>
                             </div>
                         </div>

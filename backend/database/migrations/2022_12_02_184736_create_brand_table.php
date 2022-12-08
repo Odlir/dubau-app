@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('brand_ID');
             $table->string('brand_Name')->nullable();
             $table->string('brand_Description')->nullable();
+            $table->string('brand_NameImage')->nullable();
             $table->dateTime('brand_CreationDate')->nullable();
             $table->string('brand_CreationUser')->nullable();
             $table->dateTime('brand_ModificationDate')->nullable();

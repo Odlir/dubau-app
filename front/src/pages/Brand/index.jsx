@@ -18,8 +18,8 @@ const Index = () => {
     const [DescriptionAgain, setDescriptionAgain] = useState('');
     const [brand_CreationDate, setBrandCreationDate] = useState('');
     const [brand_ApprovedStatus, setBrand_ApprovedStatus] = useState('1');
-    const [img, setImg] = useState('');
     const [formType, setFormType] = useState('list');
+    const [img, setImg] = useState('');
     /*Server Side*/
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -80,7 +80,6 @@ const Index = () => {
                     .catch(error => {
                         alert('Operacion no completada')
                     })
-
             }
         })
     }
@@ -100,15 +99,13 @@ const Index = () => {
     const handleOnClickRegister = async (e) => {
         e.preventDefault();
         const endpoint = `${env.apiURL}registerBrand`
-        setImg.append('image', {
-            uri: this.state.image,
-            name: 'capturamovil.jpg',
-            type: 'image/jpg'
-        });
-        console.log(data);
-        await axios.post(endpoint, {brand_Name: brand_Name, brand_Description: brand_Description, brand_StatusID: '1' ,image:img})
+        await axios.post(endpoint, {brand_Name: brand_Name, brand_Description: brand_Description, brand_StatusID: '1',img:img},{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
             .then(function (response) {
-                window.location.reload();
+            window.location.reload();
             })
             .catch(error => {
                 alert('Debe completar correctamente sus datos')
@@ -150,7 +147,7 @@ const Index = () => {
         fetchBrands(1);
         setLoading(false);
     };
-    console.log(brand_ApprovedStatus);
+
 
     return (
         <div>
@@ -195,6 +192,8 @@ const Index = () => {
                           setBrand_Description={setBrand_Description}
                           DescriptionAgain={DescriptionAgain}
                           setDescriptionAgain={setDescriptionAgain}
+                          img={img}
+                          setImg={setImg}
                           setFormType={setFormType}
                           setBrand_ApprovedStatus={setBrand_ApprovedStatus}
                     />
@@ -206,6 +205,8 @@ const Index = () => {
                               setBrand_Description={setBrand_Description}
                               DescriptionAgain={DescriptionAgain}
                               setDescriptionAgain={setDescriptionAgain}
+                              img={img}
+                              setImg={setImg}
                               setFormType={setFormType}
                               setBrand_ApprovedStatus={setBrand_ApprovedStatus}
                         />
