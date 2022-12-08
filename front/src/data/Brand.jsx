@@ -3,7 +3,7 @@ import {Lucide} from "@/components/base-components/index.js";
 import {env} from "@/env.js";
 
 let number = 20;
-const columns = ( actionDelete,actionEdit) => {
+const columns = ( actionDelete,actionEdit,handleOnClickModalImage) => {
     return [
         {
             name: '#',
@@ -11,11 +11,11 @@ const columns = ( actionDelete,actionEdit) => {
             width: "4rem",
         },
         {
-            name: 'Acciones',
+            name: 'Imagen',
             selector: row => row.brand_NameImage,
             cell: (selector) =>
                    <img src={env.URL + selector.brand_NameImage}
-                        width={60}
+                        width={60} onClick={(e) => handleOnClickModalImage(selector.brand_NameImage)}
                    />
         },
         {

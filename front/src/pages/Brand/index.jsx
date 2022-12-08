@@ -148,6 +148,16 @@ const Index = () => {
         setLoading(false);
     };
 
+    const handleOnClickModalImage = async (imageName) => {
+        Swal.fire({
+           /* title: 'Sweet!',
+            text: 'Modal with a custom image.',*/
+            imageUrl: env.URL + imageName,
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+        })
+    }
 
     return (
         <div>
@@ -168,7 +178,7 @@ const Index = () => {
                 />
                     {data.length != 0 ?
                         <DataTable
-                            columns={columns(actionDelete,actionEdit)}
+                            columns={columns(actionDelete,actionEdit,handleOnClickModalImage)}
                             data={data}
                             progressPending={loading}
                             progressComponent={<Preload/>}
