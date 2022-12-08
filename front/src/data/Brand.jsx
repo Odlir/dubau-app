@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Lucide} from "@/components/base-components/index.js";
+import {env} from "@/env.js";
 
 let number = 20;
 const columns = ( actionDelete,actionEdit) => {
@@ -13,7 +14,7 @@ const columns = ( actionDelete,actionEdit) => {
             name: 'Acciones',
             selector: row => row.brand_NameImage,
             cell: (selector) =>
-                   <img src={selector.brand_NameImage}
+                   <img src={env.URL + selector.brand_NameImage}
                         width={60}
                    />
         },

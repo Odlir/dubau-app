@@ -112,11 +112,11 @@ class BrandController extends Controller
             /*Image upload*/
             $routeImg = '';
             $files = $request->img;
-            $routeDestination = public_path() . '/images/brand';
+            $routeDestination ='images/brand';
             if ($request->hasFile('img')) {
                 foreach ($files as $file) {
                     $file_name = $file->getClientOriginalName();
-                    $routeImg = env('BACK_URL').'/images/brand/' . $file_name;
+                    $routeImg = 'images/brand/' . $file_name;
                     $file->move($routeDestination, $file_name);
                 }
             }
