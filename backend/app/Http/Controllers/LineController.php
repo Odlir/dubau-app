@@ -80,10 +80,23 @@ class LineController extends Controller
                     'line_Name' => $request->line_Name,
                 ]);
         }else{
+            /*Image upload*/
+            $routeImg = '';
+            $files = $request->img;
+            $routeDestination ='images/line';
+            if ($request->hasFile('img')) {
+                foreach ($files as $file) {
+                    $file_name = $file->getClientOriginalName();
+                    $routeImg = 'images/line/' . $file_name;
+                    $file->move($routeDestination, $file_name);
+                }
+            }
+            /*Image upload*/
             Line::where('line_ID', $request->line_ID)
                 ->update([
                     'line_Name' => $request->line_Name,
-                    'line_Description' => $request->line_Description
+                    'line_Description' => $request->line_Description,
+                    'line_NameImage' => $routeImg
                 ]);
         }
     }
@@ -106,10 +119,23 @@ class LineController extends Controller
         ]);
 
         \DB::transaction(function () use ($request) {
+            /*Image upload*/
+            $routeImg = '';
+            $files = $request->img;
+            $routeDestination ='images/line';
+            if ($request->hasFile('img')) {
+                foreach ($files as $file) {
+                    $file_name = $file->getClientOriginalName();
+                    $routeImg = 'images/line/' . $file_name;
+                    $file->move($routeDestination, $file_name);
+                }
+            }
+            /*Image upload*/
         $line = Line::create([
             'line_ID' => 1,
             'line_Name' => $request->line_Name,
             'line_Description' => $request->line_Description,
+            'line_NameImage' => $routeImg,
             'line_CreationDate' => date('Y-m-d H:i:s'),
             'line_StatusID' => $request->line_StatusID,
         ]);

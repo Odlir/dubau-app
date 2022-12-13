@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('line_ID');
             $table->string('line_Name')->nullable();
             $table->string('line_Description')->nullable();
+            $table->string('line_NameImage')->nullable();
             $table->dateTime('line_CreationDate')->nullable();
             $table->string('line_CreationUser')->nullable();
             $table->dateTime('line_ModificationDate')->nullable();

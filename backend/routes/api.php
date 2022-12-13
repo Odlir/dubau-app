@@ -7,6 +7,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\LineController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\MakerController;
+use App\Http\Controllers\WayToPayController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -84,4 +86,22 @@ Route::controller(LineController::class)->group(function () {
     Route::get('listXLine', 'listXLine');
     Route::post('deleteLine', 'deleteLine');
     Route::post('updateLine', 'updateLine');
+});
+
+Route::controller(MakerController::class)->group(function () {
+    Route::post('loginMaker', 'loginMaker');
+    Route::post('registerMaker', 'registerMaker');
+    Route::get('listMaker', 'listMaker');
+    Route::get('listXMaker', 'listXMaker');
+    Route::post('deleteMaker', 'deleteMaker');
+    Route::post('updateMaker', 'updateMaker');
+});
+
+Route::controller(WayToPayController::class)->group(function () {
+    Route::post('loginWaytoPay', 'loginWaytoPay');
+    Route::post('registerWaytoPay', 'registerWaytoPay');
+    Route::get('listWaytoPay', 'listWaytoPay');
+    Route::get('listXWaytoPay', 'listXWaytoPay');
+    Route::post('deleteWaytoPay', 'deleteWaytoPay');
+    Route::post('updateWaytoPay', 'updateWaytoPay');
 });

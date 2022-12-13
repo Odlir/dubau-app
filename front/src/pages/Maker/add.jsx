@@ -15,24 +15,24 @@ const Add = (props) => {
     const {
         handleOnClickRegister,
         setFormType,
-        line_Name,
-        setLine_Name,
-        line_Description,
-        setLine_Description,
+        maker_Name,
+        setMaker_Name,
+        maker_Description,
+        setMaker_Description,
         img,
         setImg
     } = props;
 
     const handleOnClickList = () => {
-        setLine_Name('');
-        setLine_Description('');
+        setMaker_Name('');
+        setMaker_Description('');
         setFormType('list');
     }
 
     return (
         <div>
             <h2 className="intro-y text-lg font-medium mt-10">
-                Añadir Lines
+                Añadir Makers
             </h2>
             <div className="intro-y box p-5 mt-5">
                 <div className={"flex"}>
@@ -40,16 +40,16 @@ const Add = (props) => {
                         <div className="border w-full border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                             <div
                                 className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/>Linea
+                                <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/>Fabricante
                                 Info
                             </div>
                             <div className="mt-5">
                                 <div
-                                    className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                    className="form-inmaker items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
                                     <div className="form-label xl:w-64 xl:!mr-10">
                                         <div className="text-left">
                                             <div className="flex items-center">
-                                                <div className="font-medium">NombreLinea</div>
+                                                <div className="font-medium">NombreFabricante</div>
                                                 <div
                                                     className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
                                                     Required
@@ -63,15 +63,15 @@ const Add = (props) => {
                                     <div className="w-full mt-3 xl:mt-0 flex-1">
                                         <Input dataType={'text'} dataName={'email'} dataId={'email'}
                                                className={'form-control'}
-                                               dataPlaceholder={'NameLinea'} dataValue={line_Name}
-                                               dataOnchange={setLine_Name}/>
+                                               dataPlaceholder={'NameFabricante'} dataValue={maker_Name}
+                                               dataOnchange={setMaker_Name}/>
                                         <div className="form-help text-right">
                                             Maximum character 0/50
                                         </div>
                                     </div>
                                 </div>
                                 <div
-                                    className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                    className="form-inmaker items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
                                     <div className="form-label xl:w-64 xl:!mr-10">
                                         <div className="text-left">
                                             <div className="flex items-center">
@@ -86,9 +86,9 @@ const Add = (props) => {
                                     <div className="w-full mt-3 xl:mt-0 flex-1">
                                         <Input dataType={'text'} dataName={'emailll'} dataId={'emailll'}
                                                className={'form-control'}
-                                               dataPlaceholder={'Este Linea es exclusivo para ....'}
-                                               dataValue={line_Description}
-                                               dataOnchange={setLine_Description}/>
+                                               dataPlaceholder={'Este Fabricante es exclusivo para ....'}
+                                               dataValue={maker_Description}
+                                               dataOnchange={setMaker_Description}/>
                                         <div className="form-help text-right">
                                             Maximum character 0/50
                                         </div>
@@ -101,11 +101,11 @@ const Add = (props) => {
                     <div className="border w-6/12 border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                         <div
                             className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                            <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Linea
+                            <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Fabricante
                             Config
                         </div>
                         <div className="mt-5">
-                            <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                            <div className="form-inmaker items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
                                 <div className="form-label xl:w-50 xl:!mr-10">
                                     <div className="text-left">
                                         <div className="flex items-center">

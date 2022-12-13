@@ -83,10 +83,24 @@ class BrandController extends Controller
                     'brand_Name' => $request->brand_Name,
                 ]);
         } else {
+            /*Image upload*/
+            $routeImg = '';
+            $files = $request->img;
+            $routeDestination ='images/brand';
+            if ($request->hasFile('img')) {
+                foreach ($files as $file) {
+                    $file_name = $file->getClientOriginalName();
+                    $routeImg = 'images/brand/' . $file_name;
+                    $file->move($routeDestination, $file_name);
+                }
+            }
+            /*Image upload*/
+
             Brand::where('brand_ID', $request->brand_ID)
                 ->update([
                     'brand_Name' => $request->brand_Name,
-                    'brand_Description' => $request->brand_Description
+                    'brand_Description' => $request->brand_Description,
+                    'brand_NameImage' =>$routeImg
                 ]);
         }
     }
@@ -120,7 +134,6 @@ class BrandController extends Controller
                     $file->move($routeDestination, $file_name);
                 }
             }
-
             /*Image upload*/
 
             $brand = Brand::create([

@@ -3,21 +3,21 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import {env} from "@/env.js";
 import DataTable from 'react-data-table-component';
-import columns from '../../data/Brand.jsx';
+import columns from '../../data/WaytoPay.jsx';
 import Preload from "@/components/preload/preload";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
-import Add  from '../Brand/add.jsx'
+import Add  from '../WaytoPay/add.jsx'
 import List from "../../components/layouts/list/index.jsx";
 
 const Index = () => {
     const navigate = useNavigate()
 
-    const [brand_Name, setBrand_Name] = useState('');
-    const [brand_Description, setBrand_Description] = useState('');
+    const [waytopay_Name, setWaytoPay_Name] = useState('');
+    const [waytopay_Description, setWaytoPay_Description] = useState('');
     const [DescriptionAgain, setDescriptionAgain] = useState('');
-    const [brand_CreationDate, setBrandCreationDate] = useState('');
-    const [brand_ApprovedStatus, setBrand_ApprovedStatus] = useState('1');
+    const [waytopay_CreationDate, setWaytoPayCreationDate] = useState('');
+    const [waytopay_ApprovedStatus, setWaytoPay_ApprovedStatus] = useState('1');
     const [formType, setFormType] = useState('list');
     const [img, setImg] = useState('');
     /*Server Side*/
@@ -26,11 +26,11 @@ const Index = () => {
     const [totalRows, setTotalRows] = useState(0);
     const [perPage, setPerPage] = useState(10);
     const [page_, setPage_] = useState(1);
-    const [dataxBrand, setdataxBrand] = useState('');
+    const [dataxWaytoPay, setdataxWaytoPay] = useState('');
 
-    const fetchBrands = async page => {
+    const fetchWaytoPays = async page => {
         setLoading(true);
-        const endpoint = `${env.apiURL}listBrand`;
+        const endpoint = `${env.apiURL}listWaytoPay`;
         const response = await axios.get(`${endpoint}?page=${page}&per_page=${perPage}`);
         setData(response.data.data);
         setPage_(response.data.page);
@@ -39,7 +39,7 @@ const Index = () => {
     };
 
     const handlePageChange = page => {
-        fetchBrands(page);
+        fetchWaytoPays(page);
     };
 
     const handlePerRowsChange = (rows) => {
@@ -48,14 +48,14 @@ const Index = () => {
     };
 
     useEffect(() => {
-        fetchBrands(page_);
+        fetchWaytoPays(page_);
     }, []);
 
     useEffect(() => {
-        fetchBrands(page_);
+        fetchWaytoPays(page_);
     }, [perPage]);
 
-    const actionDelete = async (brand_ID) => {
+    const actionDelete = async (waytopay_ID) => {
         Swal.fire({
             title: 'Desea realizar esta accion?',
             text: "No podra revertir los cambios!",
@@ -66,30 +66,31 @@ const Index = () => {
             confirmButtonText: 'Si, Eliminar!'
         }).then((result) => {
             if (result.isConfirmed) {
-                const endpoint = `${env.apiURL}deleteBrand`;
-                axios.post(endpoint, {brand_ID: brand_ID, brand_StatusID: 0})
+                const endpoint = `${env.apiURL}deleteWaytoPay`;
+                axios.post(endpoint, {waytopay_ID: waytopay_ID, waytopay_StatusID: 0})
                     .then(function (response) {
                         Swal.fire(
                             'Eliminado!',
                             'Se ha eliminado Correctamente.',
                             'success'
                         ).then((result) => {
-                            fetchBrands(page_);
+                            fetchWaytoPays(page_);
                         });
                     })
                     .catch(error => {
                         alert('Operacion no completada')
                     })
+
             }
         })
     }
 
-    const actionEdit = async (brand_ID) => {
-        const endpoint = `${env.apiURL}listXBrand`;
-        const response = await axios.get(`${endpoint}?brand_ID=${brand_ID}`);
-        setdataxBrand(response.data.brand_ID);
-        setBrand_Name(response.data.brand_Name);
-        setBrand_Description(response.data.brand_Description);
+    const actionEdit = async (waytopay_ID) => {
+        const endpoint = `${env.apiURL}listXWaytoPay`;
+        const response = await axios.get(`${endpoint}?waytopay_ID=${waytopay_ID}`);
+        setdataxWaytoPay(response.data.waytopay_ID);
+        setWaytoPay_Name(response.data.waytopay_Name);
+        setWaytoPay_Description(response.data.waytopay_Description);
         setFormType('edit');
     }
     const actionAdd = async () => {
@@ -98,14 +99,14 @@ const Index = () => {
 
     const handleOnClickRegister = async (e) => {
         e.preventDefault();
-        const endpoint = `${env.apiURL}registerBrand`
-        await axios.post(endpoint, {brand_Name: brand_Name, brand_Description: brand_Description, brand_StatusID: '1',img:img},{
+        const endpoint = `${env.apiURL}registerWaytoPay`
+        await axios.post(endpoint, {waytopay_Name: waytopay_Name, waytopay_Description: waytopay_Description, waytopay_StatusID: '1',img:img},{
             headers: {
                 'Content-Type': 'multipart/form-data',
-            },
-        })
+            },}
+        )
             .then(function (response) {
-            window.location.reload();
+                window.location.reload();
             })
             .catch(error => {
                 alert('Debe completar correctamente sus datos')
@@ -114,12 +115,12 @@ const Index = () => {
 
     const handleOnClickUpdate = async (e) => {
         e.preventDefault();
-        const endpoint = `${env.apiURL}updateBrand`
-        await axios.post(endpoint, {brand_ID:dataxBrand, brand_Name: brand_Name, brand_Description: brand_Description,img:img},{
+        const endpoint = `${env.apiURL}updateWaytoPay`
+        await axios.post(endpoint, {waytopay_ID:dataxWaytoPay, waytopay_Name: waytopay_Name, waytopay_Description: waytopay_Description,img:img},{
             headers: {
                 'Content-Type': 'multipart/form-data',
-            },
-        })
+            },}
+        )
             .then(function (response) {
                 window.location.reload();
             })
@@ -129,13 +130,13 @@ const Index = () => {
     }
 
     const captureType = (e) => {
-        setBrand_ApprovedStatus(e.target.value);
+        setWaytoPay_ApprovedStatus(e.target.value);
     }
 
     const handleOnClickSearch = async page => {
         setLoading(true);
-        const endpoint = `${env.apiURL}listBrand`;
-        const response = await axios.get(`${endpoint}?page=${page_}&per_page=${perPage}&brand_Name=${brand_Name}&brand_CreationDate=${brand_CreationDate}`);
+        const endpoint = `${env.apiURL}listWaytoPay`;
+        const response = await axios.get(`${endpoint}?page=${page_}&per_page=${perPage}&waytopay_Name=${waytopay_Name}&waytopay_CreationDate=${waytopay_CreationDate}`);
         setData(response.data.data);
         setPage_(response.data.page);
         setTotalRows(response.data.total);
@@ -144,19 +145,20 @@ const Index = () => {
 
     const handleOnClickClean= async page => {
         setLoading(true);
-        setBrand_Name('');
-        setBrand_Description('');
-        setBrand_ApprovedStatus('');
-        setBrandCreationDate('');
-        fetchBrands(1);
+        setWaytoPay_Name('');
+        setWaytoPay_Description('');
+        setWaytoPay_ApprovedStatus('');
+        setWaytoPayCreationDate('');
+        fetchWaytoPays(1);
         setLoading(false);
     };
+    console.log(waytopay_ApprovedStatus);
 
-    const handleOnClickModalImage = async (imageName,brandName,branDescription) => {
+    const handleOnClickModalImage = async (imageName,waytopayName,waytopayDescription) => {
         Swal.fire({
-            title: brandName,
-            text: branDescription,
-           /* imageAlt: 'Custom image',*/
+            title: waytopayName,
+            text: waytopayDescription,
+            /* imageAlt: 'Custom image',*/
             imageUrl: env.URL + imageName,
             imageWidth: 500,
             imageHeight: 300,
@@ -168,13 +170,13 @@ const Index = () => {
             { (formType === 'list') ?
                 <>
                 <List
-                    nameSection={'Marca'}
+                    nameSection={'Forma de Pago'}
                     dataType={'text'}
-                    dataSearch1={brand_Name}
-                    setdataSearch1={setBrand_Name}
+                    dataSearch1={waytopay_Name}
+                    setdataSearch1={setWaytoPay_Name}
                     dataType2={'date'}
-                    dataSearch2={brand_CreationDate}
-                    setdataSearch2={setBrandCreationDate}
+                    dataSearch2={waytopay_CreationDate}
+                    setdataSearch2={setWaytoPayCreationDate}
                     captureType={captureType}
                     handleOnClickSearch={handleOnClickSearch}
                     handleOnClickClean={handleOnClickClean}
@@ -200,29 +202,29 @@ const Index = () => {
                 <>
                     { (formType === 'register') ?
                     <Add  handleOnClickRegister={handleOnClickRegister}
-                          brand_Name={brand_Name}
-                          setBrand_Name={setBrand_Name}
-                          brand_Description={brand_Description}
-                          setBrand_Description={setBrand_Description}
+                          waytopay_Name={waytopay_Name}
+                          setWaytoPay_Name={setWaytoPay_Name}
+                          waytopay_Description={waytopay_Description}
+                          setWaytoPay_Description={setWaytoPay_Description}
                           DescriptionAgain={DescriptionAgain}
                           setDescriptionAgain={setDescriptionAgain}
                           img={img}
                           setImg={setImg}
                           setFormType={setFormType}
-                          setBrand_ApprovedStatus={setBrand_ApprovedStatus}
+                          setWaytoPay_ApprovedStatus={setWaytoPay_ApprovedStatus}
                     />
                     :
                         <Add  handleOnClickRegister={handleOnClickUpdate}
-                              brand_Name={brand_Name}
-                              setBrand_Name={setBrand_Name}
-                              brand_Description={brand_Description}
-                              setBrand_Description={setBrand_Description}
+                              waytopay_Name={waytopay_Name}
+                              setWaytoPay_Name={setWaytoPay_Name}
+                              waytopay_Description={waytopay_Description}
+                              setWaytoPay_Description={setWaytoPay_Description}
                               DescriptionAgain={DescriptionAgain}
                               setDescriptionAgain={setDescriptionAgain}
                               img={img}
                               setImg={setImg}
                               setFormType={setFormType}
-                              setBrand_ApprovedStatus={setBrand_ApprovedStatus}
+                              setWaytoPay_ApprovedStatus={setWaytoPay_ApprovedStatus}
                         />
                     }
                     </>

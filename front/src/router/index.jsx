@@ -8,6 +8,8 @@ import Layout from "@/pages/Layout/index.jsx";
 import Brand from "@/pages/Brand/index.jsx";
 import Area from "@/pages/Area/index.jsx";
 import Line from "@/pages/Line/index.jsx";
+import Maker from "@/pages/Maker/index.jsx";
+import WaytoPay from "@/pages/WayToPay/index.jsx";
 
 function Router() {
   const routes = [
@@ -42,6 +44,13 @@ function Router() {
         {
           path: "/area",
           element: <Area />,
+        },
+        {
+          path: "/maker",
+          element: <Maker />,
+        },{
+          path: "/waytopay",
+          element: <WaytoPay />,
         }
           ]
     },

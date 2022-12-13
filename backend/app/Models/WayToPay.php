@@ -8,12 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 
-class Line extends Model
+class WayToPay extends Model
 {
     use HasFactory, Notifiable;
-    protected $table = 'line';
-    protected $primaryKey = 'line_ID';
-    protected $fillable = array('line_Name', 'line_Description','line_NameImage', 'line_StatusID','line_CreationDate');
+    protected $table = 'waytopay';
+    protected $primaryKey = 'waytopay_ID';
+    protected $fillable = array('waytopay_Name', 'waytopay_Description','waytopay_NameImage', 'waytopay_StatusID','waytopay_CreationDate');
     public $timestamps = false;
     public static $rules = array();
 }

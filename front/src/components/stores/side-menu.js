@@ -44,6 +44,16 @@ const sideMenu = atom({
             pathname: "/area",
             title: "Areas",
           },
+          {
+            icon: "",
+            pathname: "/maker",
+            title: "Fabricantes",
+          },
+          {
+            icon: "",
+            pathname: "/waytopay",
+            title: "Forma de Pago",
+          },
         ],
       },
     ],

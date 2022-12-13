@@ -19,6 +19,7 @@ const Index = () => {
     const [line_CreationDate, setLineCreationDate] = useState('');
     const [line_ApprovedStatus, setLine_ApprovedStatus] = useState('1');
     const [formType, setFormType] = useState('list');
+    const [img, setImg] = useState('');
     /*Server Side*/
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -99,7 +100,11 @@ const Index = () => {
     const handleOnClickRegister = async (e) => {
         e.preventDefault();
         const endpoint = `${env.apiURL}registerLine`
-        await axios.post(endpoint, {line_Name: line_Name, line_Description: line_Description, line_StatusID: '1'})
+        await axios.post(endpoint, {line_Name: line_Name, line_Description: line_Description, line_StatusID: '1',img:img},{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },}
+        )
             .then(function (response) {
                 window.location.reload();
             })
@@ -111,7 +116,11 @@ const Index = () => {
     const handleOnClickUpdate = async (e) => {
         e.preventDefault();
         const endpoint = `${env.apiURL}updateLine`
-        await axios.post(endpoint, {line_ID:dataxLine, line_Name: line_Name, line_Description: line_Description})
+        await axios.post(endpoint, {line_ID:dataxLine, line_Name: line_Name, line_Description: line_Description,img:img},{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },}
+        )
             .then(function (response) {
                 window.location.reload();
             })
@@ -145,6 +154,17 @@ const Index = () => {
     };
     console.log(line_ApprovedStatus);
 
+    const handleOnClickModalImage = async (imageName,lineName,lineDescription) => {
+        Swal.fire({
+            title: lineName,
+            text: lineDescription,
+            /* imageAlt: 'Custom image',*/
+            imageUrl: env.URL + imageName,
+            imageWidth: 500,
+            imageHeight: 300,
+        })
+    }
+
     return (
         <div>
             { (formType === 'list') ?
@@ -164,7 +184,7 @@ const Index = () => {
                 />
                     {data.length != 0 ?
                         <DataTable
-                            columns={columns(actionDelete,actionEdit)}
+                            columns={columns(actionDelete,actionEdit,handleOnClickModalImage)}
                             data={data}
                             progressPending={loading}
                             progressComponent={<Preload/>}
@@ -188,6 +208,8 @@ const Index = () => {
                           setLine_Description={setLine_Description}
                           DescriptionAgain={DescriptionAgain}
                           setDescriptionAgain={setDescriptionAgain}
+                          img={img}
+                          setImg={setImg}
                           setFormType={setFormType}
                           setLine_ApprovedStatus={setLine_ApprovedStatus}
                     />
@@ -199,6 +221,8 @@ const Index = () => {
                               setLine_Description={setLine_Description}
                               DescriptionAgain={DescriptionAgain}
                               setDescriptionAgain={setDescriptionAgain}
+                              img={img}
+                              setImg={setImg}
                               setFormType={setFormType}
                               setLine_ApprovedStatus={setLine_ApprovedStatus}
                         />
