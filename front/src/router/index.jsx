@@ -10,6 +10,10 @@ import Area from "@/pages/Area/index.jsx";
 import Line from "@/pages/Line/index.jsx";
 import Maker from "@/pages/Maker/index.jsx";
 import WaytoPay from "@/pages/WayToPay/index.jsx";
+import Establishment from "@/pages/Establishment/index.jsx";
+import TypeQualification from "@/pages/TypeQualification/index.jsx";
+import UnitMeasure from "@/pages/UnitMeasure/index.jsx";
+import Position from "@/pages/Position/index.jsx";
 
 function Router() {
   const routes = [
@@ -51,6 +55,18 @@ function Router() {
         },{
           path: "/waytopay",
           element: <WaytoPay />,
+        },{
+          path: "/establishment",
+          element: <Establishment />,
+        },{
+          path: "/typequalification",
+          element: <TypeQualification />,
+        },{
+          path: "/unitmeasure",
+          element: <UnitMeasure />,
+        },{
+          path: "/position",
+          element: <Position />,
         }
           ]
     },

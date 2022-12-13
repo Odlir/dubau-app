@@ -180,7 +180,7 @@ const Index = () => {
                     handleOnClickClean={handleOnClickClean}
                     actionAdd={actionAdd}
                 />
-                    {data.length != 0 ?
+                   { data.length != 0 ?
                         <DataTable
                             columns={columns(actionDelete,actionEdit,handleOnClickModalImage)}
                             data={data}
@@ -192,8 +192,22 @@ const Index = () => {
                             onChangeRowsPerPage={handlePerRowsChange}
                             onChangePage={handlePageChange}
                         />
-                        :
-                        <Preload/>
+                          :
+                       <>
+
+                           <DataTable
+                               columns={columns(actionDelete,actionEdit,handleOnClickModalImage)}
+                               data={data}
+                               progressPending={loading}
+                               progressComponent={<Preload/>}
+                               noDataComponent={'No existen registros en esta tabla'}
+                               pagination
+                               paginationServer
+                               paginationTotalRows={totalRows}
+                               onChangeRowsPerPage={handlePerRowsChange}
+                               onChangePage={handlePageChange}
+                           />
+                       </>
                     }
                 </>
                     :

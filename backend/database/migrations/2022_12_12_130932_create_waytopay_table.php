@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id('waytopay_ID');
             $table->string('waytopay_Name')->nullable();
             $table->string('waytopay_Description')->nullable();
-            $table->string('waytopay_NameImage')->nullable();
             $table->dateTime('waytopay_CreationDate')->nullable();
             $table->string('waytopay_CreationUser')->nullable();
             $table->dateTime('waytopay_ModificationDate')->nullable();

@@ -14,9 +14,14 @@ const columns = ( actionDelete,actionEdit,handleOnClickModalImage) => {
             selector: row => row.maker_NameImage,
             cell: (selector) =>
                 <div className={'w-10 h-10 image-fit zoom-in -ml-5'}>
-                    <img src={env.URL + selector.maker_NameImage} className={'tooltip rounded-full'}
-                         width={60} onClick={(e) => handleOnClickModalImage(selector.maker_NameImage,selector.maker_Name,selector.maker_Description)}
-                    />
+                    {selector.maker_NameImage == '' ?
+                        <p></p>
+                        :
+                        <img src={env.URL + selector.maker_NameImage} className={'tooltip rounded-full'}
+                             width={60}
+                             onClick={(e) => handleOnClickModalImage(selector.maker_NameImage, selector.maker_Name, selector.maker_Description)}
+                        />
+                    }
                 </div>
         },
         {

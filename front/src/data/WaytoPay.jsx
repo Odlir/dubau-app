@@ -10,16 +10,6 @@ const columns = ( actionDelete,actionEdit,handleOnClickModalImage) => {
             width: "4rem",
         },
         {
-            name: 'Imagen',
-            selector: row => row.waytopay_NameImage,
-            cell: (selector) =>
-                <div className={'w-10 h-10 image-fit zoom-in -ml-5'}>
-                    <img src={env.URL + selector.waytopay_NameImage} className={'tooltip rounded-full'}
-                         width={60} onClick={(e) => handleOnClickModalImage(selector.waytopay_NameImage,selector.waytopay_Name,selector.waytopay_Description)}
-                    />
-                </div>
-        },
-        {
             name: 'Forma de Pago',
             selector: row => row.waytopay_Name,
         },

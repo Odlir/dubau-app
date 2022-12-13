@@ -54,6 +54,26 @@ const sideMenu = atom({
             pathname: "/waytopay",
             title: "Forma de Pago",
           },
+          {
+            icon: "",
+            pathname: "/establishment",
+            title: "Establecimiento",
+          },
+          {
+            icon: "",
+            pathname: "/typequalification",
+            title: "Tipo de Calificacion",
+          },
+          {
+            icon: "",
+            pathname: "/unitmeasure",
+            title: "Unidad de Medida",
+          },
+          {
+            icon: "",
+            pathname: "/position",
+            title: "Cargo",
+          },
         ],
       },
     ],

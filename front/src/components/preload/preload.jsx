@@ -1,8 +1,10 @@
 import React from 'react'
+import Input from "@/components/Input/Input.jsx";
 
-const preload = () => {
+const preload = (props) => {
+    const {className} = props
     return (
-        <div className="loader">
+        <div className={className} >
             <div className="dot">
             </div>
             <div className="dot">
@@ -17,5 +19,10 @@ const preload = () => {
     );
 
 };
+
+preload.defaultProps = {
+    className:"loader"
+};
+
 
 export default preload;

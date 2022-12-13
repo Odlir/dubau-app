@@ -3,21 +3,21 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import {env} from "@/env.js";
 import DataTable from 'react-data-table-component';
-import columns from '../../data/Area.jsx';
+import columns from '../../data/TypeQualification.jsx';
 import Preload from "@/components/preload/preload";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
-import Add  from '../Area/add.jsx'
+import Add  from '../TypeQualification/add.jsx'
 import List from "../../components/layouts/list/index.jsx";
 
 const Index = () => {
     const navigate = useNavigate()
 
-    const [area_Name, setArea_Name] = useState('');
-    const [area_Description, setArea_Description] = useState('');
+    const [typequalification_Name, setTypeQualification_Name] = useState('');
+    const [typequalification_Description, setTypeQualification_Description] = useState('');
     const [DescriptionAgain, setDescriptionAgain] = useState('');
-    const [area_CreationDate, setAreaCreationDate] = useState('');
-    const [area_ApprovedStatus, setArea_ApprovedStatus] = useState('1');
+    const [typequalification_CreationDate, setTypeQualificationCreationDate] = useState('');
+    const [typequalification_ApprovedStatus, setTypeQualification_ApprovedStatus] = useState('1');
     const [formType, setFormType] = useState('list');
     /*Server Side*/
     const [data, setData] = useState([]);
@@ -25,11 +25,11 @@ const Index = () => {
     const [totalRows, setTotalRows] = useState(0);
     const [perPage, setPerPage] = useState(10);
     const [page_, setPage_] = useState(1);
-    const [dataxArea, setdataxArea] = useState('');
+    const [dataxTypeQualification, setdataxTypeQualification] = useState('');
 
-    const fetchAreas = async page => {
+    const fetchTypeQualifications = async page => {
         setLoading(true);
-        const endpoint = `${env.apiURL}listArea`;
+        const endpoint = `${env.apiURL}listTypeQualification`;
         const response = await axios.get(`${endpoint}?page=${page}&per_page=${perPage}`);
         setData(response.data.data);
         setPage_(response.data.page);
@@ -38,7 +38,7 @@ const Index = () => {
     };
 
     const handlePageChange = page => {
-        fetchAreas(page);
+        fetchTypeQualifications(page);
     };
 
     const handlePerRowsChange = (rows) => {
@@ -47,14 +47,14 @@ const Index = () => {
     };
 
     useEffect(() => {
-        fetchAreas(page_);
+        fetchTypeQualifications(page_);
     }, []);
 
     useEffect(() => {
-        fetchAreas(page_);
+        fetchTypeQualifications(page_);
     }, [perPage]);
 
-    const actionDelete = async (area_ID) => {
+    const actionDelete = async (typequalification_ID) => {
         Swal.fire({
             title: 'Desea realizar esta accion?',
             text: "No podra revertir los cambios!",
@@ -65,15 +65,15 @@ const Index = () => {
             confirmButtonText: 'Si, Eliminar!'
         }).then((result) => {
             if (result.isConfirmed) {
-                const endpoint = `${env.apiURL}deleteArea`;
-                axios.post(endpoint, {area_ID: area_ID, area_StatusID: 0})
+                const endpoint = `${env.apiURL}deleteTypeQualification`;
+                axios.post(endpoint, {typequalification_ID: typequalification_ID, typequalification_StatusID: 0})
                     .then(function (response) {
                         Swal.fire(
                             'Eliminado!',
                             'Se ha eliminado Correctamente.',
                             'success'
                         ).then((result) => {
-                            fetchAreas(page_);
+                            fetchTypeQualifications(page_);
                         });
                     })
                     .catch(error => {
@@ -84,12 +84,12 @@ const Index = () => {
         })
     }
 
-    const actionEdit = async (area_ID) => {
-        const endpoint = `${env.apiURL}listXArea`;
-        const response = await axios.get(`${endpoint}?area_ID=${area_ID}`);
-        setdataxArea(response.data.area_ID);
-        setArea_Name(response.data.area_Name);
-        setArea_Description(response.data.area_Description);
+    const actionEdit = async (typequalification_ID) => {
+        const endpoint = `${env.apiURL}listXTypeQualification`;
+        const response = await axios.get(`${endpoint}?typequalification_ID=${typequalification_ID}`);
+        setdataxTypeQualification(response.data.typequalification_ID);
+        setTypeQualification_Name(response.data.typequalification_Name);
+        setTypeQualification_Description(response.data.typequalification_Description);
         setFormType('edit');
     }
     const actionAdd = async () => {
@@ -98,8 +98,12 @@ const Index = () => {
 
     const handleOnClickRegister = async (e) => {
         e.preventDefault();
-        const endpoint = `${env.apiURL}registerArea`
-        await axios.post(endpoint, {area_Name: area_Name, area_Description: area_Description, area_StatusID: '1'})
+        const endpoint = `${env.apiURL}registerTypeQualification`
+        await axios.post(endpoint, {typequalification_Name: typequalification_Name, typequalification_Description: typequalification_Description, typequalification_StatusID: '1'},{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },}
+        )
             .then(function (response) {
                 window.location.reload();
             })
@@ -110,8 +114,12 @@ const Index = () => {
 
     const handleOnClickUpdate = async (e) => {
         e.preventDefault();
-        const endpoint = `${env.apiURL}updateArea`
-        await axios.post(endpoint, {area_ID:dataxArea, area_Name: area_Name, area_Description: area_Description})
+        const endpoint = `${env.apiURL}updateTypeQualification`
+        await axios.post(endpoint, {typequalification_ID:dataxTypeQualification, typequalification_Name: typequalification_Name, typequalification_Description: typequalification_Description},{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },}
+        )
             .then(function (response) {
                 window.location.reload();
             })
@@ -121,13 +129,13 @@ const Index = () => {
     }
 
     const captureType = (e) => {
-        setArea_ApprovedStatus(e.target.value);
+        setTypeQualification_ApprovedStatus(e.target.value);
     }
 
     const handleOnClickSearch = async page => {
         setLoading(true);
-        const endpoint = `${env.apiURL}listArea`;
-        const response = await axios.get(`${endpoint}?page=${page_}&per_page=${perPage}&area_Name=${area_Name}&area_CreationDate=${area_CreationDate}`);
+        const endpoint = `${env.apiURL}listTypeQualification`;
+        const response = await axios.get(`${endpoint}?page=${page_}&per_page=${perPage}&typequalification_Name=${typequalification_Name}&typequalification_CreationDate=${typequalification_CreationDate}`);
         setData(response.data.data);
         setPage_(response.data.page);
         setTotalRows(response.data.total);
@@ -136,48 +144,61 @@ const Index = () => {
 
     const handleOnClickClean= async page => {
         setLoading(true);
-        setArea_Name('');
-        setArea_Description('');
-        setArea_ApprovedStatus('');
-        setAreaCreationDate('');
-        fetchAreas(1);
+        setTypeQualification_Name('');
+        setTypeQualification_Description('');
+        setTypeQualification_ApprovedStatus('');
+        setTypeQualificationCreationDate('');
+        fetchTypeQualifications(1);
         setLoading(false);
     };
-    console.log(area_ApprovedStatus);
+    console.log(typequalification_ApprovedStatus);
+
+    const handleOnClickModalImage = async (imageName,typequalificationName,typequalificationDescription) => {
+        Swal.fire({
+            title: typequalificationName,
+            text: typequalificationDescription,
+            /* imageAlt: 'Custom image',*/
+            imageUrl: env.URL + imageName,
+            imageWidth: 500,
+            imageHeight: 300,
+        })
+    }
 
     return (
         <div>
             { (formType === 'list') ?
                 <>
                 <List
-                    nameSection={'Area'}
+                    nameSection={'Tipo de Calificacion'}
                     dataType={'text'}
-                    dataSearch1={area_Name}
-                    setdataSearch1={setArea_Name}
+                    dataSearch1={typequalification_Name}
+                    setdataSearch1={setTypeQualification_Name}
                     dataType2={'date'}
-                    dataSearch2={area_CreationDate}
-                    setdataSearch2={setAreaCreationDate}
+                    dataSearch2={typequalification_CreationDate}
+                    setdataSearch2={setTypeQualificationCreationDate}
                     captureType={captureType}
                     handleOnClickSearch={handleOnClickSearch}
                     handleOnClickClean={handleOnClickClean}
                     actionAdd={actionAdd}
                 />
                     {data.length != 0 ?
-                        <DataTable
-                            columns={columns(actionDelete,actionEdit)}
-                            data={data}
-                            progressPending={loading}
-                            progressComponent={<Preload/>}
-                            pagination
-                            paginationServer
-                            paginationTotalRows={totalRows}
-                            onChangeRowsPerPage={handlePerRowsChange}
-                            onChangePage={handlePageChange}
-                        />
+                        <>
+                            <DataTable
+                                columns={columns(actionDelete,actionEdit,handleOnClickModalImage)}
+                                data={data}
+                                progressPending={loading}
+                                progressComponent={<Preload/>}
+                                pagination
+                                paginationServer
+                                paginationTotalRows={totalRows}
+                                onChangeRowsPerPage={handlePerRowsChange}
+                                onChangePage={handlePageChange}
+                            />
+                        </>
                         :
                         <>
                             <DataTable
-                                columns={columns(actionDelete,actionEdit)}
+                                columns={columns(actionDelete,actionEdit,handleOnClickModalImage)}
                                 data={data}
                                 progressPending={loading}
                                 progressComponent={<Preload/>}
@@ -190,30 +211,31 @@ const Index = () => {
                             />
                         </>
                     }
+
                 </>
                     :
                 <>
                     { (formType === 'register') ?
                     <Add  handleOnClickRegister={handleOnClickRegister}
-                          area_Name={area_Name}
-                          setArea_Name={setArea_Name}
-                          area_Description={area_Description}
-                          setArea_Description={setArea_Description}
+                          typequalification_Name={typequalification_Name}
+                          setTypeQualification_Name={setTypeQualification_Name}
+                          typequalification_Description={typequalification_Description}
+                          setTypeQualification_Description={setTypeQualification_Description}
                           DescriptionAgain={DescriptionAgain}
                           setDescriptionAgain={setDescriptionAgain}
                           setFormType={setFormType}
-                          setArea_ApprovedStatus={setArea_ApprovedStatus}
+                          setTypeQualification_ApprovedStatus={setTypeQualification_ApprovedStatus}
                     />
                     :
                         <Add  handleOnClickRegister={handleOnClickUpdate}
-                              area_Name={area_Name}
-                              setArea_Name={setArea_Name}
-                              area_Description={area_Description}
-                              setArea_Description={setArea_Description}
+                              typequalification_Name={typequalification_Name}
+                              setTypeQualification_Name={setTypeQualification_Name}
+                              typequalification_Description={typequalification_Description}
+                              setTypeQualification_Description={setTypeQualification_Description}
                               DescriptionAgain={DescriptionAgain}
                               setDescriptionAgain={setDescriptionAgain}
                               setFormType={setFormType}
-                              setArea_ApprovedStatus={setArea_ApprovedStatus}
+                              setTypeQualification_ApprovedStatus={setTypeQualification_ApprovedStatus}
                         />
                     }
                     </>

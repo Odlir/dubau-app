@@ -80,23 +80,11 @@ class WayToPayController extends Controller
                     'waytopay_Name' => $request->waytopay_Name,
                 ]);
         }else{
-            /*Image upload*/
-            $routeImg = '';
-            $files = $request->img;
-            $routeDestination ='images/waytopay';
-            if ($request->hasFile('img')) {
-                foreach ($files as $file) {
-                    $file_name = $file->getClientOriginalName();
-                    $routeImg = 'images/waytopay/' . $file_name;
-                    $file->move($routeDestination, $file_name);
-                }
-            }
-            /*Image upload*/
+
             WaytoPay::where('waytopay_ID', $request->waytopay_ID)
                 ->update([
                     'waytopay_Name' => $request->waytopay_Name,
                     'waytopay_Description' => $request->waytopay_Description,
-                    'waytopay_NameImage' => $routeImg
                 ]);
         }
     }
@@ -119,23 +107,11 @@ class WayToPayController extends Controller
         ]);
 
         \DB::transaction(function () use ($request) {
-            /*Image upload*/
-            $routeImg = '';
-            $files = $request->img;
-            $routeDestination ='images/waytopay';
-            if ($request->hasFile('img')) {
-                foreach ($files as $file) {
-                    $file_name = $file->getClientOriginalName();
-                    $routeImg = 'images/waytopay/' . $file_name;
-                    $file->move($routeDestination, $file_name);
-                }
-            }
-            /*Image upload*/
+
         $waytopay = WaytoPay::create([
             'waytopay_ID' => 1,
             'waytopay_Name' => $request->waytopay_Name,
             'waytopay_Description' => $request->waytopay_Description,
-            'waytopay_NameImage' => $routeImg,
             'waytopay_CreationDate' => date('Y-m-d H:i:s'),
             'waytopay_StatusID' => $request->waytopay_StatusID,
         ]);

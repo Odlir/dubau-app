@@ -11,42 +11,45 @@ import {Lucide} from "@/components/base-components/index.js";
 import Input from "../../components/Input/Input.jsx";
 import PasswordChecklist from "react-password-checklist"
 
-const Add =  (props) => {
+const Add = (props) => {
     const {
         handleOnClickRegister,
         setFormType,
-        area_Name,
-        setArea_Name,
-        area_Description,
-        setArea_Description
+        unitmeasure_Name,
+        setUnitMeasure_Name,
+        unitmeasure_Description,
+        setUnitMeasure_Description,
+        img,
+        setImg
     } = props;
 
     const handleOnClickList = () => {
-        setArea_Name('');
-        setArea_Description('');
+        setUnitMeasure_Name('');
+        setUnitMeasure_Description('');
         setFormType('list');
     }
 
     return (
         <div>
             <h2 className="intro-y text-lg font-medium mt-10">
-                Añadir Areas
+                Añadir Unidad de Medida
             </h2>
             <div className="intro-y box p-5 mt-5">
-                <div className={"flex"} >
+                <div className={"flex"}>
                     <div className=" w-6/12">
-                        <div  className="border w-full border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                        <div className="border w-full border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                             <div
                                 className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Area
+                                <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/>Unidad de Medida
                                 Info
                             </div>
                             <div className="mt-5">
-                                <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                <div
+                                    className="form-inunitmeasure items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
                                     <div className="form-label xl:w-64 xl:!mr-10">
                                         <div className="text-left">
                                             <div className="flex items-center">
-                                                <div className="font-medium">Nombre Area</div>
+                                                <div className="font-medium">Nombre Unidad de Medida</div>
                                                 <div
                                                     className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
                                                     Required
@@ -58,15 +61,17 @@ const Add =  (props) => {
                                         </div>
                                     </div>
                                     <div className="w-full mt-3 xl:mt-0 flex-1">
-                                        <Input dataType={'text'} dataName={'emaidasl'} dataId={'emadsil'} className={'form-control'}
-                                               dataPlaceholder={'Name Area'} dataValue={area_Name}
-                                               dataOnchange={setArea_Name}/>
+                                        <Input dataType={'text'} dataName={'email'} dataId={'email'}
+                                               className={'form-control'}
+                                               dataPlaceholder={'Name Unidad de Medida'} dataValue={unitmeasure_Name}
+                                               dataOnchange={setUnitMeasure_Name}/>
                                         <div className="form-help text-right">
                                             Maximum character 0/50
                                         </div>
                                     </div>
                                 </div>
-                                <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                <div
+                                    className="form-inunitmeasure items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
                                     <div className="form-label xl:w-64 xl:!mr-10">
                                         <div className="text-left">
                                             <div className="flex items-center">
@@ -79,9 +84,11 @@ const Add =  (props) => {
                                         </div>
                                     </div>
                                     <div className="w-full mt-3 xl:mt-0 flex-1">
-                                        <Input dataType={'text'} dataName={'emailldsal'} dataId={'emdsailll'} className={'form-control'}
-                                               dataPlaceholder={'Este Area es exclusivo para ....'} dataValue={area_Description}
-                                               dataOnchange={setArea_Description}/>
+                                        <Input dataType={'text'} dataName={'emailll'} dataId={'emailll'}
+                                               className={'form-control'}
+                                               dataPlaceholder={'Este Unidad de Medida es exclusivo para ....'}
+                                               dataValue={unitmeasure_Description}
+                                               dataOnchange={setUnitMeasure_Description}/>
                                         <div className="form-help text-right">
                                             Maximum character 0/50
                                         </div>
@@ -94,11 +101,10 @@ const Add =  (props) => {
                     <div className="border w-6/12 border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                         <div
                             className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                            <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Area
+                            <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Unidad de Medida
                             Config
                         </div>
                         <div className="mt-5">
-
                         </div>
                     </div>
                 </div>

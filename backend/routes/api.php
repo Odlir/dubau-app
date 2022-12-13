@@ -9,6 +9,10 @@ use App\Http\Controllers\LineController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\MakerController;
 use App\Http\Controllers\WayToPayController;
+use App\Http\Controllers\EstablishmentController;
+use App\Http\Controllers\TypeQualificationController;
+use App\Http\Controllers\UnitMeasureController;
+use App\Http\Controllers\PositionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -104,4 +108,39 @@ Route::controller(WayToPayController::class)->group(function () {
     Route::get('listXWaytoPay', 'listXWaytoPay');
     Route::post('deleteWaytoPay', 'deleteWaytoPay');
     Route::post('updateWaytoPay', 'updateWaytoPay');
+});
+
+Route::controller(EstablishmentController::class)->group(function () {
+    Route::post('loginEstablishment', 'loginEstablishment');
+    Route::post('registerEstablishment', 'registerEstablishment');
+    Route::get('listEstablishment', 'listEstablishment');
+    Route::get('listXEstablishment', 'listXEstablishment');
+    Route::post('deleteEstablishment', 'deleteEstablishment');
+    Route::post('updateEstablishment', 'updateEstablishment');
+});
+
+Route::controller(TypeQualificationController::class)->group(function () {
+    Route::post('loginTypeQualification', 'loginTypeQualification');
+    Route::post('registerTypeQualification', 'registerTypeQualification');
+    Route::get('listTypeQualification', 'listTypeQualification');
+    Route::get('listXTypeQualification', 'listXTypeQualification');
+    Route::post('deleteTypeQualification', 'deleteTypeQualification');
+    Route::post('updateTypeQualification', 'updateTypeQualification');
+});
+
+Route::controller(UnitMeasureController::class)->group(function () {
+    Route::post('loginUnitMeasure', 'loginUnitMeasure');
+    Route::post('registerUnitMeasure', 'registerUnitMeasure');
+    Route::get('listUnitMeasure', 'listUnitMeasure');
+    Route::get('listXUnitMeasure', 'listXUnitMeasure');
+    Route::post('deleteUnitMeasure', 'deleteUnitMeasure');
+    Route::post('updateUnitMeasure', 'updateUnitMeasure');
+});
+Route::controller(PositionController::class)->group(function () {
+    Route::post('loginPosition', 'loginPosition');
+    Route::post('registerPosition', 'registerPosition');
+    Route::get('listPosition', 'listPosition');
+    Route::get('listXPosition', 'listXPosition');
+    Route::post('deletePosition', 'deletePosition');
+    Route::post('updatePosition', 'updatePosition');
 });

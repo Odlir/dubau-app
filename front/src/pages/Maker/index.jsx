@@ -195,7 +195,20 @@ const Index = () => {
                             onChangePage={handlePageChange}
                         />
                         :
-                        <Preload/>
+                        <>
+                            <DataTable
+                                columns={columns(actionDelete,actionEdit,handleOnClickModalImage)}
+                                data={data}
+                                progressPending={loading}
+                                progressComponent={<Preload/>}
+                                noDataComponent={'No existen registros en esta tabla'}
+                                pagination
+                                paginationServer
+                                paginationTotalRows={totalRows}
+                                onChangeRowsPerPage={handlePerRowsChange}
+                                onChangePage={handlePageChange}
+                            />
+                        </>
                     }
                 </>
                     :

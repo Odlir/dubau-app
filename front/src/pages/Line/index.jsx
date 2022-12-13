@@ -170,7 +170,7 @@ const Index = () => {
             { (formType === 'list') ?
                 <>
                 <List
-                    nameSection={'Linea'}
+                    nameSection={'Lineas'}
                     dataType={'text'}
                     dataSearch1={line_Name}
                     setdataSearch1={setLine_Name}
@@ -183,19 +183,35 @@ const Index = () => {
                     actionAdd={actionAdd}
                 />
                     {data.length != 0 ?
-                        <DataTable
-                            columns={columns(actionDelete,actionEdit,handleOnClickModalImage)}
-                            data={data}
-                            progressPending={loading}
-                            progressComponent={<Preload/>}
-                            pagination
-                            paginationServer
-                            paginationTotalRows={totalRows}
-                            onChangeRowsPerPage={handlePerRowsChange}
-                            onChangePage={handlePageChange}
-                        />
+                        <>
+
+                            <DataTable
+                                columns={columns(actionDelete,actionEdit,handleOnClickModalImage)}
+                                data={data}
+                                progressPending={loading}
+                                progressComponent={<Preload/>}
+                                pagination
+                                paginationServer
+                                paginationTotalRows={totalRows}
+                                onChangeRowsPerPage={handlePerRowsChange}
+                                onChangePage={handlePageChange}
+                            />
+                        </>
                         :
-                        <Preload/>
+                        <>
+                            <DataTable
+                                columns={columns(actionDelete,actionEdit)}
+                                data={data}
+                                progressPending={loading}
+                                progressComponent={<Preload/>}
+                                noDataComponent={'No existen registros en esta tabla'}
+                                pagination
+                                paginationServer
+                                paginationTotalRows={totalRows}
+                                onChangeRowsPerPage={handlePerRowsChange}
+                                onChangePage={handlePageChange}
+                            />
+                        </>
                     }
                 </>
                     :

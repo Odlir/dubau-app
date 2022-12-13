@@ -19,7 +19,6 @@ const Index = () => {
     const [waytopay_CreationDate, setWaytoPayCreationDate] = useState('');
     const [waytopay_ApprovedStatus, setWaytoPay_ApprovedStatus] = useState('1');
     const [formType, setFormType] = useState('list');
-    const [img, setImg] = useState('');
     /*Server Side*/
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -100,7 +99,7 @@ const Index = () => {
     const handleOnClickRegister = async (e) => {
         e.preventDefault();
         const endpoint = `${env.apiURL}registerWaytoPay`
-        await axios.post(endpoint, {waytopay_Name: waytopay_Name, waytopay_Description: waytopay_Description, waytopay_StatusID: '1',img:img},{
+        await axios.post(endpoint, {waytopay_Name: waytopay_Name, waytopay_Description: waytopay_Description, waytopay_StatusID: '1'},{
             headers: {
                 'Content-Type': 'multipart/form-data',
             },}
@@ -116,7 +115,7 @@ const Index = () => {
     const handleOnClickUpdate = async (e) => {
         e.preventDefault();
         const endpoint = `${env.apiURL}updateWaytoPay`
-        await axios.post(endpoint, {waytopay_ID:dataxWaytoPay, waytopay_Name: waytopay_Name, waytopay_Description: waytopay_Description,img:img},{
+        await axios.post(endpoint, {waytopay_ID:dataxWaytoPay, waytopay_Name: waytopay_Name, waytopay_Description: waytopay_Description},{
             headers: {
                 'Content-Type': 'multipart/form-data',
             },}
@@ -195,7 +194,20 @@ const Index = () => {
                             onChangePage={handlePageChange}
                         />
                         :
-                        <Preload/>
+                        <>
+                            <DataTable
+                                columns={columns(actionDelete,actionEdit,handleOnClickModalImage)}
+                                data={data}
+                                progressPending={loading}
+                                progressComponent={<Preload/>}
+                                noDataComponent={'No existen registros en esta tabla'}
+                                pagination
+                                paginationServer
+                                paginationTotalRows={totalRows}
+                                onChangeRowsPerPage={handlePerRowsChange}
+                                onChangePage={handlePageChange}
+                            />
+                        </>
                     }
                 </>
                     :
@@ -208,8 +220,6 @@ const Index = () => {
                           setWaytoPay_Description={setWaytoPay_Description}
                           DescriptionAgain={DescriptionAgain}
                           setDescriptionAgain={setDescriptionAgain}
-                          img={img}
-                          setImg={setImg}
                           setFormType={setFormType}
                           setWaytoPay_ApprovedStatus={setWaytoPay_ApprovedStatus}
                     />
@@ -221,8 +231,7 @@ const Index = () => {
                               setWaytoPay_Description={setWaytoPay_Description}
                               DescriptionAgain={DescriptionAgain}
                               setDescriptionAgain={setDescriptionAgain}
-                              img={img}
-                              setImg={setImg}
+
                               setFormType={setFormType}
                               setWaytoPay_ApprovedStatus={setWaytoPay_ApprovedStatus}
                         />
