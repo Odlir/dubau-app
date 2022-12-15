@@ -112,9 +112,14 @@ function Main(props) {
               <DropdownMenu className="w-56">
                 <DropdownContent className="bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
                   <DropdownDivider className="border-white/[0.08]" />
-                  <DropdownItem className="hover:bg-white/5">
-                    <Lucide icon="User" className="w-4 h-4 mr-2" /> Profile
-                  </DropdownItem>
+
+                    <Link
+                        to="/profile"
+                        className="logo  hidden md:flex xl:w-[180px] block"
+                    >
+                    <Lucide to="/profile" icon="User" className="w-4 h-4 mr-2" /> Profile
+                    </Link>
+
                   <DropdownItem className="hover:bg-white/5">
                     <Lucide icon="Edit" className="w-4 h-4 mr-2" /> Add Account
                   </DropdownItem>

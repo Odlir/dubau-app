@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'list', 'verifyUser', 'deleteUser','listXUser','updateUser','listSearchUser']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'list', 'verifyUser', 'deleteUser','listXUser','updateUser','listSearchUser','updatePersonAndUser']]);
     }
 
     public function list()
@@ -191,9 +191,14 @@ class AuthController extends Controller
 
     public function me()
     {
+        $dataUser = Auth::user();
+        $person_ID= $dataUser["person_ID"];
+        $dataPerson = Person::where('person_ID', $person_ID)->first();
+
         return response()->json([
             'status' => 'success',
             'user' => Auth::user(),
+            'person' => $dataPerson,
         ]);
     }
 
@@ -207,6 +212,29 @@ class AuthController extends Controller
                 'type' => 'bearer',
             ]
         ]);
+    }
+
+    public function updatePersonAndUser(Request $request)
+    {
+        \DB::transaction(function () use ($request) {
+            Person::where('person_ID', $request->person_ID)
+                ->update([
+                    'person_Name' => $request->person_Name,
+                    'person_LastNamePaternal' =>$request->person_LastNamePaternal,
+                    'person_LastNameMaternal' => $request->person_LastNameMaternal,
+                    'person_Email' => $request->person_Email,
+                    'person_Direction' => $request->person_Direction,
+                    'person_Phone' => $request->person_Phone,
+                    'person_CellPhone' => $request->person_CellPhone,
+                ]);
+
+            User::where('person_ID', $request->user_ID)
+                ->update([
+                    'user_Name' => $request->user_Name,
+                ]);
+
+        });
+
     }
 
 }

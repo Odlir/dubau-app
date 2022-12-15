@@ -80,7 +80,6 @@ const Index = () => {
                     .catch(error => {
                         alert('Operacion no completada')
                     })
-
             }
         })
     }

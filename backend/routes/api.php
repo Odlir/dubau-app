@@ -52,6 +52,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('deleteUser', 'deleteUser');
     Route::get('listXUser', 'listXUser');
     Route::post('updateUser', 'updateUser');
+    Route::post('updatePersonAndUser', 'updatePersonAndUser');
     Route::get('listSearchUsuario', 'listSearchUsuario');
 });
 
