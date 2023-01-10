@@ -169,7 +169,7 @@ const Index = () => {
             { (formType === 'list') ?
                 <>
                 <List
-                    nameSection={'Tipo de Calificacion'}
+                    nameSection={'Tipo Calificacion'}
                     dataType={'text'}
                     dataSearch1={typequalification_Name}
                     setdataSearch1={setTypeQualification_Name}

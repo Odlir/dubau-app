@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(statusMaritalSeeder::class);
         $this->call(TypeDocumentSeeder::class);
         $this->call(UbigeousSeeder::class);
+        $this->call(UnitMeasureSeeder::class);
     }
 }

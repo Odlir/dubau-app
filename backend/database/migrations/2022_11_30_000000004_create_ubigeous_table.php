@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('ubigeous_DepartmentID')->nullable();
             $table->string('ubigeous_ProvinceID')->nullable();
             $table->string('ubigeous_DistrictID')->nullable();
-            $table->string('ubigeous_Description')->nullable();
+            $table->integer('ubigeous_RealityID')->comment('actuality ubigeous')->nullable();
+            $table->integer('ubigeous_Order')->comment('not function')->nullable();
             $table->dateTime('ubigeous_CreationDate')->nullable();
             $table->string('ubigeous_CreationUser')->nullable();
             $table->dateTime('ubigeous_ModificationDate')->nullable();
