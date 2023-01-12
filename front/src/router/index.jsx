@@ -15,6 +15,7 @@ import TypeQualification from "@/pages/TypeQualification/index.jsx";
 import UnitMeasure from "@/pages/UnitMeasure/index.jsx";
 import Position from "@/pages/Position/index.jsx";
 import Profile from "@/pages/Profile/index.jsx";
+import Staff from "@/pages/Staff/index.jsx";
 
 function Router() {
   const routes = [
@@ -71,6 +72,9 @@ function Router() {
         },{
           path: "/profile",
           element: <Profile />,
+        },{
+          path: "/staff",
+          element: <Staff />,
         }
           ]
     },

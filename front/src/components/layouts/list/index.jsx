@@ -59,7 +59,8 @@ const Index = (props) => {
                     <div className="hidden md:block mx-auto text-slate-500"></div>
                     <button className="btn btn-facebook shadow-md mr-2" onClick={handleOnClickSearch}>Buscar
                     </button>
-                    <button className="btn btn-close shadow-md mr-2" onClick={handleOnClickClean}>X Limpiar
+                    <button className="btn btn-close shadow-md mr-2" onClick={handleOnClickClean}>
+                           <i class="fas fa-broom"></i><p align={'right:10rem'}> Limpiar</p>Limpiar
                     </button>
                     <button className="btn btn-primary shadow-md mr-2" onClick={actionAdd}>Nuevo {nameSection}
                     </button>

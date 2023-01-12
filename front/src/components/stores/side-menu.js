@@ -76,6 +76,17 @@ const sideMenu = atom({
           },*/
         ],
       },
+      {
+        icon: "Box",
+        title: "Principal",
+        subMenu: [
+          {
+            icon: "",
+            pathname: "/staff",
+            title: "Personal",
+          },
+        ]
+      },
     ],
   },
 });

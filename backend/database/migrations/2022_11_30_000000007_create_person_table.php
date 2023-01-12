@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('person_LastNameMaternal')->nullable();
             $table->string('person_Gender')->nullable();
             $table->string('person_RUC')->nullable();
-            $table->string('person_NumberDocumentID')->nullable();
+            $table->string('person_DNI')->nullable();
             $table->string('person_DateBirth')->nullable();
             $table->string('person_Direction')->nullable();
             $table->string('person_Phone')->nullable();

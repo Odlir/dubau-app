@@ -13,6 +13,8 @@ use App\Http\Controllers\EstablishmentController;
 use App\Http\Controllers\TypeQualificationController;
 use App\Http\Controllers\UnitMeasureController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\StaffController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -144,4 +146,12 @@ Route::controller(PositionController::class)->group(function () {
     Route::get('listXPosition', 'listXPosition');
     Route::post('deletePosition', 'deletePosition');
     Route::post('updatePosition', 'updatePosition');
+});
+Route::controller(StaffController::class)->group(function () {
+    Route::post('loginStaff', 'loginStaff');
+    Route::post('registerStaff', 'registerStaff');
+    Route::get('listPStaff', 'listStaff');
+    Route::get('listXStaff', 'listXStaff');
+    Route::post('deleteStaff', 'deleteStaff');
+    Route::post('updateStaff', 'updateStaff');
 });

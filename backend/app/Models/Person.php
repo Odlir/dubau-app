@@ -26,7 +26,7 @@ class Person extends Model
         'person_LastNameMaternal',
         'person_Gender',
         'person_RUC',
-        'person_NumberDocumentID',
+        'person_DNI',
         'person_DateBirth',
         'person_Direction',
         'person_Phone',
