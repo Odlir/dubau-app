@@ -60,7 +60,7 @@ const Index = (props) => {
                     <button className="btn btn-facebook shadow-md mr-2" onClick={handleOnClickSearch}>Buscar
                     </button>
                     <button className="btn btn-close shadow-md mr-2" onClick={handleOnClickClean}>
-                           <i class="fas fa-broom"></i><p align={'right:10rem'}> Limpiar</p>Limpiar
+                           <i class="fas fa-broom"></i><p align={'right:10rem'}> Limpiar</p>
                     </button>
                     <button className="btn btn-primary shadow-md mr-2" onClick={actionAdd}>Nuevo {nameSection}
                     </button>

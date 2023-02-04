@@ -13,7 +13,7 @@ class Staff extends Model
     use HasFactory, Notifiable;
     protected $table = 'staff';
     protected $primaryKey = 'staff_ID';
-    protected $fillable = array('person_ID', 'position_ID','staff_StartDate','staff_finalDate', 'staff_ContractNumber','staff_StatusID','staff_CreationDate','staff_NameImage');
+    protected $fillable = array('person_ID', 'position_ID','staff_StartDate','staff_finalDate', 'staff_ContractNumber','staff_StatusID','staff_CreationDate');
     public $timestamps = false;
     public static $rules = array();
 }

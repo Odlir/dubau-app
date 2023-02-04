@@ -30,7 +30,7 @@ class StaffController extends Controller
             $auto_increment = ($page - 1) * $per_page;
         }
 
-        $data = Staff::where('staff_StatusID', '=', '1')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+        $data = Staff::where('staff_StatusID', '=', '1')->join('person', 'staff.person_ID', '=', 'person.person_ID')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
             $row->auto_increment = $auto_increment + $index + 1;
         });
 
@@ -58,7 +58,7 @@ class StaffController extends Controller
                     $auto_increment = ($page - 1) * $per_page;
                 }
 
-                $data = Staff::where('staff_StatusID', '=', '1')->where('staff_Name','LIKE','%'. $person_Name . '%')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+                $data = Staff::where('staff_StatusID', '=', '1')->where('person_Name','LIKE','%'. $person_Name . '%')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
                     $row->auto_increment = $auto_increment + $index + 1;});
             }
         }
@@ -111,34 +111,44 @@ class StaffController extends Controller
     {
         $request->validate([
             'person_Name' => 'required|string|max:255',
-            'person_LastNamePaternal' => 'required|string|min:2',
-            'person_LastNameMaternal' => 'required|string|min:2',
-            'staff_StatusID' => 'required|string|min:1',
+            'person_LastNamePaternal' => 'required|string|min:1',
+            'person_LastNameMaternal' => 'required|string|min:1',
+            'person_DateBirth' => 'required|string|min:1',
+            'person_Direction' => 'required|string|min:1',
+            'person_Phone' => 'required|string|min:1',
+            'person_CellPhone' => 'required|string|min:1',
+            'person_Email' => 'required|string|min:1',
+            'person_WebSite' => 'required|string|min:1',
         ]);
 
 
         \DB::transaction(function () use ($request) {
             $person = Person::create([
-                'nationality_ID' => '1',
-                'ubigeous_PlaceBirth' => '1',
-                'ubigeous_Home' => '1',
-                'statusmarital_ID' => '1',
-                'typedocument_ID' => '1',
-                'person_Name' => $request->person_Name,
+                'nationality_ID' => $request->nationality_ID,
+                'ubigeous_Home' => $request->ubigeous_Home,
+                'ubigeous_PlaceBirth' => $request->ubigeous_PlaceBirth,
+                'statusmarital_ID' => $request->statusmarital_ID,
+                'typedocument_ID' =>'1',
+                'person_DNI' => $request->numberDocument,
+                'person_Gender' => $request->person_Gender,
                 'person_LastNamePaternal' => $request->person_LastNamePaternal,
                 'person_LastNameMaternal' => $request->person_LastNameMaternal,
+                'person_DateBirth' => $request->person_DateBirth,
+                'person_Direction' => $request->person_Direction,
+                'person_Phone' => $request->person_Phone,
+                'person_CellPhone' => $request->person_CellPhone,
+                'person_Email' => $request->person_Email,
+                'person_WebSite' => $request->person_WebSite,
                 'person_CreationDate' => date('Y-m-d H:i:s'),
-                'person_ApprovedStatus' => '1',
                 'person_StatusID' => '1'
             ]);
-            $user = User::create([
+            $staff = Staff::create([
                 'person_ID' => $person->person_ID,
-                'position_ID' => $person->position_ID,
+                'position_ID' => $request->position_ID,
                 'staff_StartDate' => $request->staff_StartDate,
                 'staff_FinalDate' => $request->staff_FinalDate,
                 'staff_ContractNumber' => $request->staff_ContractNumber,
                 'staff_CreationDate' => date('Y-m-d H:i:s'),
-                'staff_ApprovedStatus' => $request->staff_ApprovedStatus,
                 'staff_StatusID' => '1',
             ]);
 

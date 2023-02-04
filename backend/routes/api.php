@@ -150,7 +150,7 @@ Route::controller(PositionController::class)->group(function () {
 Route::controller(StaffController::class)->group(function () {
     Route::post('loginStaff', 'loginStaff');
     Route::post('registerStaff', 'registerStaff');
-    Route::get('listPStaff', 'listStaff');
+    Route::get('listStaff', 'listStaff');
     Route::get('listXStaff', 'listXStaff');
     Route::post('deleteStaff', 'deleteStaff');
     Route::post('updateStaff', 'updateStaff');
