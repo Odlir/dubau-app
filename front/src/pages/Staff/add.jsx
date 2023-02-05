@@ -24,7 +24,7 @@ const Add =  (props) => {
         person_Email,
         person_WebSite,
         staff_StartDate,
-        staff_finalDate,
+        staff_FinalDate,
         staff_ContractNumber,
 
         ubigeous_PlaceBirth,
@@ -47,7 +47,7 @@ const Add =  (props) => {
         setPerson_Email,
         setPerson_WebSite,
         setStaff_StartDate,
-        setStaff_finalDate,
+        setStaff_FinalDate,
         setStaff_ContractNumber,
 
         setUbigeous_PlaceBirth,
@@ -74,9 +74,10 @@ const Add =  (props) => {
             <h2 className="intro-y text-lg font-medium mt-10">
                 Añadir Personal
             </h2>
-            <div className="intro-y box p-5 mt-5">
+
                 <div className={"flex"} >
                     <div className=" w-full">
+                        <div className="intro-y box p-5 mt-5">
                         <div  className="border w-full border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                             <div
                                 className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
@@ -301,9 +302,11 @@ const Add =  (props) => {
                             </div>
 
                         </div>
+                        </div>
                         <div className="mt-5 w-3/6 ">
 
                         </div>
+                            <div className="intro-y box p-5 mt-5">
                         <div  className="border w-full border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                             <div
                                 className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
@@ -506,7 +509,8 @@ const Add =  (props) => {
                                 </div>
                             </div>
                         </div>
-
+                            </div>
+                                <div className="intro-y box p-5 mt-5">
                         <div  className="border w-full border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                             <div
                                 className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
@@ -582,9 +586,9 @@ const Add =  (props) => {
                                             </div>
                                         </div>
                                         <div className="w-full mt-3 xl:mt-0 flex-1">
-                                            <Input dataType={'text'} dataName={'staff_finalDate'} dataId={'staff_finalDate'} className={'form-control'}
-                                                   dataPlaceholder={'Esta Personal es exclusivo para ....'} dataValue={staff_finalDate}
-                                                   dataOnchange={setStaff_finalDate}/>
+                                            <Input dataType={'text'} dataName={'staff_FinalDate'} dataId={'staff_FinalDate'} className={'form-control'}
+                                                   dataPlaceholder={'Esta Personal es exclusivo para ....'} dataValue={staff_FinalDate}
+                                                   dataOnchange={setStaff_FinalDate}/>
                                             <div className="form-help text-right">
                                                 Maximum character 0/50
                                             </div>
@@ -617,9 +621,9 @@ const Add =  (props) => {
 
                         </div>
                     </div>
-
+                    </div>
                 </div>
-
+                <div className="intro-y box p-5 mt-5">
                 <div className="flex justify-end flex-col md:flex-row gap-2 mt-5">
                     <Button
                         textName='Cancelar'

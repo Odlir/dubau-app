@@ -23,7 +23,7 @@ const Index = () => {
     const [person_Email, setPerson_Email] = useState('');
     const [person_WebSite, setPerson_WebSite] = useState('');
     const [staff_StartDate, setStaff_StartDate] = useState('');
-    const [staff_finalDate, setStaff_finalDate] = useState('');
+    const [staff_FinalDate, setStaff_FinalDate] = useState('');
     const [staff_ContractNumber, setStaff_ContractNumber] = useState('');
 
     const [ubigeous_PlaceBirth, setUbigeous_PlaceBirth] = useState('');
@@ -100,15 +100,32 @@ const Index = () => {
         })
     }
 
-    /*    const actionEdit = async (staff_ID) => {
+     const actionEdit = async (staff_ID) => {
             const endpoint = `${env.apiURL}listXStaff`;
             const response = await axios.get(`${endpoint}?staff_ID=${staff_ID}`);
             setdataxStaff(response.data.staff_ID);
-            setStaff_Name(response.data.staff_Name);
-            setStaff_Description(response.data.staff_Description);
+         setPerson_Name(response.data.person_Name);
+         setPerson_LastNamePaternal(response.data.person_LastNamePaternal);
+         setPerson_LastNameMaternal(response.data.person_LastNameMaternal);
+         setPerson_DateBirth(response.data.person_DateBirth);
+         setPerson_Direction(response.data.person_Direction);
+         setPerson_Phone(response.data.person_Phone);
+         setPerson_CellPhone(response.data.person_CellPhone);
+         setPerson_Email(response.data.person_Email);
+         setPerson_WebSite(response.data.person_WebSite);
+         setStaff_StartDate(response.data.staff_StartDate);
+         setStaff_FinalDate(response.data.staff_FinalDate);
+         setStaff_ContractNumber(response.data.staff_ContractNumber);
+         setUbigeous_PlaceBirth(response.data.ubigeous_PlaceBirth);
+         setNumberDocument(response.data.person_NumberDocumentID);
+         setPerson_Gender(response.data.person_Gender);
+         setStatusmarital_ID(response.data.statusmarital_ID);
+         setNationality_ID(response.data.nationality_ID);
+         setUbigeous_Home(response.data.ubigeous_Home);
+         setPosition_ID(response.data.position_ID);
             setFormType('edit');
         }
-       */
+
     const actionAdd = async () => {
         setFormType('register');
     }
@@ -126,7 +143,7 @@ const Index = () => {
             person_Email: person_Email,
             person_WebSite: person_WebSite,
             staff_StartDate: staff_StartDate,
-            staff_finalDate: staff_finalDate,
+            staff_FinalDate: staff_FinalDate,
             staff_ContractNumber: staff_ContractNumber,
 
             ubigeous_PlaceBirth: ubigeous_PlaceBirth,
@@ -166,7 +183,7 @@ const Index = () => {
             person_Email: person_Email,
             person_WebSite: person_WebSite,
             staff_StartDate: staff_StartDate,
-            staff_finalDate: staff_finalDate,
+            staff_FinalDate: staff_FinalDate,
             staff_ContractNumber: staff_ContractNumber,
 
             ubigeous_PlaceBirth: ubigeous_PlaceBirth,
@@ -243,7 +260,7 @@ const Index = () => {
                         setdataSearch1={setPerson_Name}
                         dataType2={'date'}
                         dataSearch2={staff_StartDate}
-                        setdataSearch2={staff_finalDate}
+                        setdataSearch2={staff_FinalDate}
                         captureType={captureType}
                         handleOnClickSearch={handleOnClickSearch}
                         handleOnClickClean={handleOnClickClean}
@@ -251,7 +268,7 @@ const Index = () => {
                     />}
                     {data.length != 0 ?
                        <DataTable
-                          columns={columns(actionDelete/*,actionEdit*/, handleOnClickModalImage)}
+                          columns={columns(actionDelete,actionEdit, handleOnClickModalImage)}
                             data={data}
                             progressPending={loading}
                             progressComponent={<Preload/>}
@@ -265,7 +282,7 @@ const Index = () => {
                         :
                         <>
 
-                           {/* <DataTable
+                           { <DataTable
                                 columns={columns(actionDelete, actionEdit, handleOnClickModalImage)}
                                 data={data}
                                 progressPending={loading}
@@ -276,7 +293,7 @@ const Index = () => {
                                 paginationTotalRows={totalRows}
                                 onChangeRowsPerPage={handlePerRowsChange}
                                 onChangePage={handlePageChange}
-                            />*/}
+                            />}
                         </>
                     }
                 </>
@@ -304,8 +321,8 @@ const Index = () => {
                              setPerson_WebSite={setPerson_WebSite}
                              staff_StartDate={staff_StartDate}
                              setStaff_StartDate={setStaff_StartDate}
-                             staff_finalDate={staff_finalDate}
-                             setStaff_finalDate={setStaff_finalDate}
+                             staff_FinalDate={staff_FinalDate}
+                             setStaff_FinalDate={setStaff_FinalDate}
                              staff_ContractNumber={staff_ContractNumber}
                              setStaff_ContractNumber={setStaff_ContractNumber}
 
@@ -350,8 +367,8 @@ const Index = () => {
                              person_WebSite={person_WebSite}
                              setPerson_WebSite={setPerson_WebSite}
                              staff_StartDate={staff_StartDate}
-                             staff_finalDate={staff_finalDate}
-                             setStaff_finalDate={setStaff_finalDate}
+                             staff_FinalDate={staff_FinalDate}
+                             setStaff_FinalDate={setStaff_FinalDate}
                              staff_ContractNumber={staff_ContractNumber}
                              setStaff_ContractNumber={setStaff_ContractNumber}
 
