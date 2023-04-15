@@ -96,6 +96,11 @@ const sideMenu = atom({
             pathname: "/staff3",
             title: "Proveedor",
           },
+          {
+            icon: "",
+            pathname: "/businessEntity",
+            title: "Persona",
+          },
         ]
       },
     ],
