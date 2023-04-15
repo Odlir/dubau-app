@@ -120,6 +120,9 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/lcobucci/jwt" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/namshi/jose" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/psr/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/guzzlehttp/uri-template" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/symfony/yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/stella-maris/clock" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -155,3 +155,21 @@ Route::controller(StaffController::class)->group(function () {
     Route::post('deleteStaff', 'deleteStaff');
     Route::post('updateStaff', 'updateStaff');
 });
+
+Route::controller(StaffController::class)->group(function () {
+    Route::post('loginStaff2', 'loginStaff2');
+    Route::post('registerStaff2', 'registerStaff2');
+    Route::get('listStaff2', 'listStaff2');
+    Route::get('listXStaff2', 'listXStaff2');
+    Route::post('deleteStaff2', 'deleteStaff2');
+    Route::post('updateStaff2', 'updateStaff2');
+});
+
+Route::controller(StaffController::class)->group(function () {
+    Route::post('loginStaff3', 'loginStaff3');
+    Route::post('registerStaff3', 'registerStaff3');
+    Route::get('listStaff3', 'listStaff3');
+    Route::get('listXStaff3', 'listXStaff3');
+    Route::post('deleteStaff3', 'deleteStaff3');
+    Route::post('updateStaff3', 'updateStaff3');
+});

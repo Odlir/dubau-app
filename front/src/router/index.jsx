@@ -16,6 +16,9 @@ import UnitMeasure from "@/pages/UnitMeasure/index.jsx";
 import Position from "@/pages/Position/index.jsx";
 import Profile from "@/pages/Profile/index.jsx";
 import Staff from "@/pages/Staff/index.jsx";
+import Staff2 from "@/pages/Staff2/index.jsx";
+import Staff3 from "@/pages/Staff3/index.jsx";
+import BusinessEntity from "@/pages/businessEntity/index.jsx";
 
 function Router() {
   const routes = [
@@ -75,6 +78,18 @@ function Router() {
         },{
           path: "/staff",
           element: <Staff />,
+        }
+        ,{
+          path: "/staff2",
+          element: <Staff2 />,
+        },
+        {
+          path: "/staff3",
+          element: <Staff3 />,
+        },
+        {
+          path: "/businessEntity",
+          element: <BusinessEntity />,
         }
           ]
     },
