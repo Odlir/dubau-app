@@ -22,6 +22,7 @@ import BusinessEntity from "@/pages/businessEntity/index.jsx";
 import Category from "@/pages/category/index.jsx";
 
 import PaymentCondition from "@/pages/paymentcondition/index.jsx";
+import CommercialSection from "@/pages/commercialSection/index.jsx";
 
 
 function Router() {
@@ -100,6 +101,9 @@ function Router() {
         },{
           path: "/paymentcondition",
           element: <PaymentCondition />,
+        },{
+          path: "/commercialSection",
+          element: <CommercialSection />,
         }
           ]
     },

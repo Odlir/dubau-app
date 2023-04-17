@@ -16,6 +16,7 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentConditionController;
+use App\Http\Controllers\CommercialSectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -191,4 +192,13 @@ Route::controller(PaymentConditionController::class)->group(function () {
     Route::get('listXPaymentCondition', 'listXPaymentCondition');
     Route::post('deletePaymentCondition', 'deletePaymentCondition');
     Route::post('updatePaymentCondition', 'updatePaymentCondition');
+});
+
+
+Route::controller(CommercialSectionController::class)->group(function () {
+    Route::post('registerCommercialSection', 'registerCommercialSection');
+    Route::get('listCommercialSection', 'listCommercialSection');
+    Route::get('listXCommercialSection', 'listXCommercialSection');
+    Route::post('deleteCommercialSection', 'deleteCommercialSection');
+    Route::post('updateCommercialSection', 'updateCommercialSection');
 });

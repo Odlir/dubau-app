@@ -79,7 +79,11 @@ const sideMenu = atom({
             pathname: "/paymentcondition",
             title: "Condicion de Pago",
           },
-
+          {
+            icon: "",
+            pathname: "/commercialSection",
+            title: "Sector Comercial",
+          },
           /*
           {
             icon: "",
