@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BusinessEntity;
 use Illuminate\Contracts\Validation\ValidatorAwareRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Staff;
+use App\Models\Customer;
+use App\Models\Supplier;
 use App\Models\Person;
 use Illuminate\Support\Facades\DB;
 
@@ -165,15 +168,24 @@ class businessEntityController extends Controller
             ]);
 
             $staff = Staff::create([
-                'type_person_id' => $request->type_person_id,
-                'company_id' => 0,
-                'person_id' => $person->person_ID,
-                'commercial_section' => $person->commercial_section_id,
-                'created_by' => 'Ivan',
-                'created_in' => date('Y-m-d'),
-                'status' => 1
+                'person_ID' => $person->person_ID,
+                'position_ID' => $request->position_ID,
+                'staff_StartDate' => $request->staff_StartDate,
+                'staff_FinalDate' => $request->staff_FinalDate,
+                'staff_ContractNumber' => $request->staff_ContractNumber,
+                'staff_CreationDate' => date('Y-m-d H:i:s'),
+                'staff_StatusID' => '1',
             ]);
 
+             BusinessEntity::create([
+                'customer_id' => $customer->customer_id,
+                'supplier_id' => $supplier->supplier_id,
+                'staff_ID' => $staff->staff_ID,
+                'created_by' => 'Ivan',
+                'created_in' => date('Y-m-d H:i:s'),
+                'status_dinamic' => '1',
+                'status' => '1',
+            ]);
         });
 
     }

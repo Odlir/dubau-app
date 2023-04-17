@@ -478,13 +478,13 @@ const Add = (props) => {
                                                     <label className="form-label">Apellido Paterno</label>
                                                     <input type="text" className="datepicker form-control"
                                                            id="post-form-2"
-                                                           data-single-mode="true" placeholder=" name"/>
+                                                           data-single-mode="true" placeholder=" last name"/>
                                                 </div>
                                                 <div className="mt-3">
                                                     <label className="form-label">Apellido Materno</label>
                                                     <input type="text" className="datepicker form-control"
                                                            id="post-form-2"
-                                                           data-single-mode="true" placeholder=" name"/>
+                                                           data-single-mode="true" placeholder=" mother's last name"/>
                                                 </div>
                                             </div>
                                             <div className="mt-5 w-1/5">
@@ -493,7 +493,7 @@ const Add = (props) => {
 
 
                                                 <div className="mt-3">
-                                                    <label className="form-label">Nacionalidad</label>
+                                                    <label className="form-label">Pais de Origen</label>
                                                     <div className="dropdown">
                                                         <select
                                                             className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
