@@ -10,7 +10,7 @@ use App\Models\Staff;
 use App\Models\Person;
 use Illuminate\Support\Facades\DB;
 
-class StaffController extends Controller
+class businessEntityController extends Controller
 {
     public function __construct()
     {
@@ -142,14 +142,36 @@ class StaffController extends Controller
                 'person_CreationDate' => date('Y-m-d H:i:s'),
                 'person_StatusID' => '1'
             ]);
+            $customer = Customer::create([
+                'type_person_id' => $request->type_person_id,
+                'company_id' => 0,
+                'person_id' => $person->person_ID,
+                'category_id' => $request->category_id,
+                'waytopay_id' => $request->waytopay_id,
+                'credit_line_id' => $request->credit_line_id,
+                'created_by' => 'Ivan',
+                'created_in' => date('Y-m-d'),
+                'status' => 1
+            ]);
+
+            $supplier = Supplier::create([
+                'type_person_id' => $request->type_person_id,
+                'company_id' => 0,
+                'person_id' => $person->person_ID,
+                'commercial_section' => $person->commercial_section_id,
+                'created_by' => 'Ivan',
+                'created_in' => date('Y-m-d'),
+                'status' => 1
+            ]);
+
             $staff = Staff::create([
-                'person_ID' => $person->person_ID,
-                'position_ID' => $request->position_ID,
-                'staff_StartDate' => $request->staff_StartDate,
-                'staff_FinalDate' => $request->staff_FinalDate,
-                'staff_ContractNumber' => $request->staff_ContractNumber,
-                'staff_CreationDate' => date('Y-m-d H:i:s'),
-                'staff_StatusID' => '1',
+                'type_person_id' => $request->type_person_id,
+                'company_id' => 0,
+                'person_id' => $person->person_ID,
+                'commercial_section' => $person->commercial_section_id,
+                'created_by' => 'Ivan',
+                'created_in' => date('Y-m-d'),
+                'status' => 1
             ]);
 
         });

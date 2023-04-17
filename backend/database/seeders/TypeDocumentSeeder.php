@@ -29,7 +29,11 @@ class TypeDocumentSeeder extends Seeder
             'typedocument_Initial' => 'C.E.',
             'typedocument_StatusID' => '1'
         ]);
-
-
+        Typedocument::create([
+            'typedocument_ID' => 3,
+            'typedocument_Name' => 'Registro Unico de Contribuyentes',
+            'typedocument_Initial' => 'R.U.C',
+            'typedocument_StatusID' => '1'
+        ]);
     }
 }

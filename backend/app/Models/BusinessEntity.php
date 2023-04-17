@@ -8,12 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 
-class Staff extends Model
+class BusinessEntity extends Model
 {
     use HasFactory, Notifiable;
-    protected $table = 'staff';
-    protected $primaryKey = 'staff_ID';
-    protected $fillable = array('person_ID', 'position_ID','staff_StartDate','staff_finalDate', 'staff_ContractNumber','staff_StatusID','staff_CreationDate');
+
+    protected $table = 'business_entity';
+    protected $primaryKey = 'business_entity_ID';
+    protected $fillable = array('customer_id', 'supplier_id', 'staff_id', 'created_by' , 'created_in' ,'status_dinamic' ,'status');
     public $timestamps = false;
     public static $rules = array();
+
 }

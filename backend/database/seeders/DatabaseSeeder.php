@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TypeDocumentSeeder::class);
         $this->call(UbigeousSeeder::class);
         $this->call(UnitMeasureSeeder::class);
+        $this->call(TypePersonSeeder::class);
     }
 }
