@@ -68,7 +68,19 @@ const sideMenu = atom({
             icon: "",
             pathname: "/unitmeasure",
             title: "Unidad de Medida",
-          },/*
+          },
+          {
+            icon: "",
+            pathname: "/category",
+            title: "Categoria",
+          },
+          {
+            icon: "",
+            pathname: "/paymentcondition",
+            title: "Condicion de Pago",
+          },
+
+          /*
           {
             icon: "",
             pathname: "/position",

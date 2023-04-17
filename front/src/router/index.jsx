@@ -19,6 +19,10 @@ import Staff from "@/pages/Staff/index.jsx";
 import Staff2 from "@/pages/Staff2/index.jsx";
 import Staff3 from "@/pages/Staff3/index.jsx";
 import BusinessEntity from "@/pages/businessEntity/index.jsx";
+import Category from "@/pages/category/index.jsx";
+
+import PaymentCondition from "@/pages/paymentcondition/index.jsx";
+
 
 function Router() {
   const routes = [
@@ -90,6 +94,12 @@ function Router() {
         {
           path: "/businessEntity",
           element: <BusinessEntity />,
+        },{
+          path: "/category",
+          element: <Category />,
+        },{
+          path: "/paymentcondition",
+          element: <PaymentCondition />,
         }
           ]
     },

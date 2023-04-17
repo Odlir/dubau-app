@@ -111,10 +111,26 @@ const Add = (props) => {
         {value: 'Proveedor', label: 'Proveedor'},
         {value: 'Personal', label: 'Personal'}
     ]
+
+    const options2 = [
+        {value: 'A 15 DIAS', label: 'A 15 DIAS'},
+        {value: 'A 30 DIAS', label: 'A 30 DIAS'},
+        {value: 'A 50 DIAS', label: 'A 50 DIAS'},
+        {value: 'A 90 DIAS', label: 'A 90 DIAS'},
+        {value: 'A 120 DIAS', label: 'A 120 DIAS'},
+        {value: 'A 150 DIAS', label: 'A 150 DIAS'}
+
+    ]
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [selectedOptions2, setSelectedOptions2] = useState([]);
 
     const handleChange = (selected) => {
         setSelectedOptions(selected);
+        // Lógica para procesar las opciones seleccionadas
+        console.log('Opciones seleccionadas:', selected);
+    };
+    const handleChange2 = (selected) => {
+        setSelectedOptions2(selected);
         // Lógica para procesar las opciones seleccionadas
         console.log('Opciones seleccionadas:', selected);
     };
@@ -416,16 +432,20 @@ const Add = (props) => {
                                             <div className="mt-5 w-1/5">
                                             </div>
                                             <div className="mt-5 w-2/4">
+
                                                 <div className="mt-3">
-                                                    <label className="form-label">Forma de Pago</label>
-                                                    <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                                            <option>CONTADO</option>
-                                                            <option>CREDITO</option>
-                                                            <option>LETRA</option>
-                                                            <option>TRANSFERENCIA</option>
-                                                        </select>
+                                                    <label className="form-label">Condiciones</label>
+                                                    <div className="dropdown z-40">
+                                                        <Select
+                                                            options={options2}
+                                                            closeMenuOnSelect={false}
+                                                            value={selectedOptions2}
+                                                            onChange={handleChange2}
+                                                            isMulti
+
+                                                            className="w-full"
+
+                                                        />
                                                     </div>
                                                 </div>
 

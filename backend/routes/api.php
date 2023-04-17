@@ -14,6 +14,8 @@ use App\Http\Controllers\TypeQualificationController;
 use App\Http\Controllers\UnitMeasureController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PaymentConditionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -172,4 +174,21 @@ Route::controller(StaffController::class)->group(function () {
     Route::get('listXStaff3', 'listXStaff3');
     Route::post('deleteStaff3', 'deleteStaff3');
     Route::post('updateStaff3', 'updateStaff3');
+});
+
+
+Route::controller(CategoryController::class)->group(function () {
+    Route::post('registerCategory', 'registerCategory');
+    Route::get('listCategory', 'listCategory');
+    Route::get('listXCategory', 'listXCategory');
+    Route::post('deleteCategory', 'deleteCategory');
+    Route::post('updateCategory', 'updateCategory');
+});
+
+Route::controller(PaymentConditionController::class)->group(function () {
+    Route::post('registerPaymentCondition', 'registerPaymentCondition');
+    Route::get('listPaymentCondition', 'listPaymentCondition');
+    Route::get('listXPaymentCondition', 'listXPaymentCondition');
+    Route::post('deletePaymentCondition', 'deletePaymentCondition');
+    Route::post('updatePaymentCondition', 'updatePaymentCondition');
 });
