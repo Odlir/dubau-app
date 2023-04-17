@@ -10,7 +10,6 @@ import 'sweetalert2/src/sweetalert2.scss';
 import {Lucide} from "@/components/base-components/index.js";
 import Input from "../../components/Input/Input.jsx";
 import PasswordChecklist from "react-password-checklist";
-import Select from 'react-select'
 
 
 const Add =  (props) => {
@@ -112,12 +111,7 @@ const Add =  (props) => {
                             <option>Cliente</option>
                             <option>Personal</option>
                         </select>
-                        <div>
-                            <label>Basic</label>
-                            <div className="mt-2 z-10">
-                                <Select options={options} />
-                            </div>
-                        </div>
+
 
                     </div>
 
@@ -126,47 +120,131 @@ const Add =  (props) => {
                             <ul className="post__tabs nav nav-tabs flex-col sm:flex-row bg-slate-200 dark:bg-darkmode-800"
                                 role="tablist">
                                 <li className="nav-item">
-                                    <button title="Fill in the article content" data-tw-toggle="tab"
-                                            data-tw-target="#content"
+                                    <button title="Fill in the article content" data-toggle="tab"
+                                            data-target="#targetGeneral"
                                             className="nav-link tooltip w-full sm:w-40 py-4 active" id="content-tab"
-                                            role="tab" aria-controls="content" aria-selected="true"><i
+                                            role="tab" aria-controls="content" ><i
                                         data-lucide="file-text" className="w-4 h-4 mr-2"></i> General
                                     </button>
                                 </li>
                                 <li className="nav-item">
-                                    <button title="Adjust the meta title" data-tw-toggle="tab"
-                                            data-tw-target="#meta-title"
+                                    <button title="Adjust the meta title" data-toggle="tab"
+                                            data-target="#targetCliente"
                                             className="nav-link tooltip w-full sm:w-40 py-4" id="meta-title-tab"
-                                            role="tab" aria-selected="false"><i data-lucide="code"
-                                                                                className="w-4 h-4 mr-2"></i> Cliente
+                                            role="tab"   aria-hidden="true" >
+                                        <i data-lucide="code" className="w-4 h-4 mr-2"></i> Cliente
                                     </button>
                                 </li>
                                 <li className="nav-item">
                                     <button title="Use search keywords" data-tw-toggle="tab" data-tw-target="#keywords"
                                             className="nav-link tooltip w-full sm:w-40 py-4" id="keywords-tab"
-                                            role="tab" aria-selected="false"><i data-lucide="align-left"
+                                            role="tab" ><i data-lucide="align-left"
                                                                                 className="w-4 h-4 mr-2"></i> Proveedor
                                     </button>
                                 </li>
                                 <li className="nav-item">
                                     <button title="Use search keywords" data-tw-toggle="tab" data-tw-target="#keywords"
                                             className="nav-link tooltip w-full sm:w-40 py-4" id="keywords-tab"
-                                            role="tab" aria-selected="false"><i data-lucide="align-left"
+                                            role="tab" ><i data-lucide="align-left"
                                                                                 className="w-4 h-4 mr-2"></i> Personal
                                     </button>
                                 </li>
                             </ul>
-                            <div className="post__content tab-content">
+                            <div className="post__content tab-content"  id="targetGeneral">
                                 <div id="content" className="tab-pane p-5 active" role="tabpanel"
                                      aria-labelledby="content-tab">
+                                    <div className="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 w-full ">
+
+                                        <div
+                                            className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"></i> Data
+                                        </div>
+                                        <div className="flex">
+                                            <div className="mt-5 w-2/4">
+                                                <div className="mt-3">
+                                                    <label className="form-label">Nombres</label>
+                                                    <input type="text" className="datepicker form-control" id="post-form-2"
+                                                           data-single-mode="true" placeholder=" name " />
+                                                </div>
+                                                <div className="mt-3">
+                                                    <label className="form-label">Apellido Paterno</label>
+                                                    <input type="text" className="datepicker form-control" id="post-form-2"
+                                                           data-single-mode="true" placeholder=" 00000000" />
+                                                </div>
+                                                <div className="mt-3">
+                                                    <label className="form-label">Apellido Materno</label>
+                                                    <input type="text" className="datepicker form-control" id="post-form-2"
+                                                           data-single-mode="true" placeholder=" 00000000" />
+                                                </div>
+                                            </div>
+                                            <div className="mt-5 w-1/5">
+                                            </div>
+                                            <div className="mt-5 w-2/4">
+
+
+                                                <div className="mt-3">
+                                                    <label className="form-label">Nacionalidad</label>
+                                                    <div className="dropdown">
+                                                        <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                                            <option>PERU</option>
+                                                            <option>VENEZUELA</option>
+                                                            <option>ECUADOR</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-3">
+                                                    <label className="form-label">Sexo</label>
+                                                    <div className="dropdown">
+                                                        <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                                            <option>MASCULINO</option>
+                                                            <option>FEMENINO</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-3">
+                                                    <label className="form-label">Estado Civil</label>
+                                                    <div className="dropdown">
+                                                        <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                                            <option>CASADO</option>
+                                                            <option>CONVIVIENTE</option>
+                                                            <option>DIVORCIADO</option>
+                                                            <option>NO REGISTRADO</option>
+                                                            <option>SOLTERO</option>
+                                                            <option>VIUDO</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                                <div id="content" className="tab-pane p-5 active" role="tabpanel"
+                                     aria-labelledby="content-tab">
+
                                     <div className="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                         <div
                                             className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"></i> Text Content
+                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"></i> Contacto
                                         </div>
                                         <div className="mt-5">
-                                            <div className="editor">
-                                                <p>Content of the editor.</p>
+                                            <div className="mt-3">
+                                                <label className="form-label">Telefono</label>
+                                                <input type="text" className="intro-y form-control py-3 px-4 box pr-10" placeholder=" (01) 0000" />
+                                            </div>
+                                            <div className="mt-3">
+                                                <label className="form-label">Celular</label>
+                                                <input type="text" className="intro-y form-control py-3 px-4 box pr-10" placeholder="999999999" />
+                                            </div>
+                                            <div className="mt-3">
+                                                <label className="form-label">Correo</label>
+                                                <input type="text" className="intro-y form-control py-3 px-4 box pr-10" placeholder="example@gmail.com" />
+                                            </div>
+                                            <div className="mt-3">
+                                                <label className="form-label">Sitio Web</label>
+                                                <input type="text" className="intro-y form-control py-3 px-4 box pr-10" placeholder="www.example.com" />
                                             </div>
                                         </div>
                                     </div>
@@ -177,52 +255,71 @@ const Add =  (props) => {
 
                 <div className="col-span-12 lg:col-span-4">
                     <div className="intro-y box p-5">
-                        <div>
-                            <label className="form-label">Written By</label>
+                        <div className="mt-3">
+                            <label className="form-label">Tipo Persona</label>
+                            <div className="dropdown">
+                                <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                    <option>P. Natural</option>
+                                    <option>P. Juridica</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="mt-3">
+                            <label className="form-label">Tipo Documento</label>
+                            <div className="dropdown">
+                                <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                    <option>DNI</option>
+                                    <option>C.E</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <label htmlFor="post-form-2" className="form-label">Número de Documento</label>
+                            <input type="text" className="datepicker form-control" id="post-form-2"
+                                   data-single-mode="true" placeholder=" 00000000" />
+                        </div>
+                        <div className="mt-3">
+                            <label className="form-label">Departamento</label>
 
 
                             <div className="dropdown">
                                 <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                    <option>LIMA</option>
+                                    <option>JUNIN</option>
+                                    <option>TACNA</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="mt-3">
+                            <label className="form-label">Provincia</label>
+
+
+                            <div className="dropdown">
+                                <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                    <option>LIMA</option>
+                                    <option>YAUYOS</option>
                                 </select>
                             </div>
                         </div>
                         <div className="mt-3">
-                            <label htmlFor="post-form-2" className="form-label">Post Date</label>
+                            <label className="form-label">Distrito</label>
+
+
+                            <div className="dropdown">
+                                <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                    <option>LIMA</option>
+                                    <option>YAUYOS</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <label htmlFor="post-form-2" className="form-label">Direccion</label>
                             <input type="text" className="datepicker form-control" id="post-form-2"
-                                   data-single-mode="true" />
-                        </div>
-                        <div className="mt-3">
-                            <label htmlFor="post-form-3" className="form-label">Categories</label>
-                            <select data-placeholder="Select categories" className="tom-select w-full" id="post-form-3"
-                                    multiple>
-                                <option value="1" selected>Horror</option>
-                                <option value="2">Sci-fi</option>
-                                <option value="3" selected>Action</option>
-                                <option value="4">Drama</option>
-                                <option value="5">Comedy</option>
-                            </select>
-                        </div>
-                        <div className="mt-3">
-                            <label htmlFor="post-form-4" className="form-label">Tags</label>
-                            <select data-placeholder="Select your favorite actors" className="tom-select w-full"
-                                    id="post-form-4" multiple>
-                                <option value="1" selected>Leonardo DiCaprio</option>
-                                <option value="2">Johnny Deep</option>
-                                <option value="3" selected>Robert Downey, Jr</option>
-                                <option value="4">Samuel L. Jackson</option>
-                                <option value="5">Morgan Freeman</option>
-                            </select>
-                        </div>
-                        <div className="form-check form-switch flex flex-col items-start mt-3">
-                            <label htmlFor="post-form-5" className="form-check-label ml-0 mb-2">Published</label>
-                            <input id="post-form-5" className="form-check-input" type="checkbox" />
-                        </div>
-                        <div className="form-check form-switch flex flex-col items-start mt-3">
-                            <label htmlFor="post-form-6" className="form-check-label ml-0 mb-2">Show Author Name</label>
-                            <input id="post-form-6" className="form-check-input" type="checkbox" />
+                                   data-single-mode="true" placeholder=" Av. Los Algarrobos" />
                         </div>
                     </div>
                 </div>
