@@ -70,13 +70,16 @@ const Add = (props) => {
     };
 
 
-
     const [selectMultiple, setSelectMultiple] = useState(["1", "3"]);
     const [select, setSelect] = useState("1");
     const [showDiv, setShowDiv] = useState(true);
     const [showDivCliente, setShowDivCliente] = useState(false);
     const [showDivProveedor, setShowDivProveedor] = useState(false);
     const [showDivPersonal, setShowDivPersonal] = useState(false);
+
+    const [showNavCliente, setShowNavCliente] = useState(false);
+    const [showNavProveedor, setShowNavProveedor] = useState(false);
+    const [showNavPersonal, setShowNavPersonal] = useState(false);
 
     const general = () => {
         setShowDiv(true);
@@ -104,10 +107,56 @@ const Add = (props) => {
     };
 
     const options = [
-        { value: 'Cliente', label: 'Cliente' },
-        { value: 'Proveedor', label: 'Proveedor' },
-        { value: 'Personal', label: 'Personal' }
+        {value: 'Cliente', label: 'Cliente'},
+        {value: 'Proveedor', label: 'Proveedor'},
+        {value: 'Personal', label: 'Personal'}
     ]
+    const [selectedOptions, setSelectedOptions] = useState([]);
+
+    const handleChange = (selected) => {
+        setSelectedOptions(selected);
+        // Lógica para procesar las opciones seleccionadas
+        console.log('Opciones seleccionadas:', selected);
+    };
+
+
+    useEffect(() => {
+        /*      const lista = selectedOptions.map((elemento) => {
+                    console.log(elemento);
+                    if (elemento.label === 'Cliente') {
+                        return setShowNavCliente(true);
+                    } else if (elemento.label === 'Proveedor') {
+                        return setShowNavProveedor(true);
+                    } else if (elemento.label === 'Personal') {
+                        return setShowNavPersonal(true);
+                    }
+
+                });*/
+        console.log(selectedOptions);
+        const clienteLabel = selectedOptions.some(cliente => cliente.label === 'Cliente');
+        if(clienteLabel){
+            setShowNavCliente(true);
+        }else{
+            setShowNavCliente(false);
+        }
+
+        const proveedorLabel = selectedOptions.some(proveedor => proveedor.label === 'Proveedor');
+        if(proveedorLabel){
+            setShowNavProveedor(true);
+        }else{
+            setShowNavProveedor(false);
+        }
+
+        const personalLabel = selectedOptions.some(personal => personal.label === 'Personal');
+        if(personalLabel){
+            setShowNavPersonal(true);
+        }else{
+            setShowNavPersonal(false);
+        }
+
+    });
+
+
 
     return (
 
@@ -137,18 +186,20 @@ const Add = (props) => {
 
                     <div className={"flex z-10"}>
                         <p className={"flex w-10"}>Tipo: </p><p></p>
-                        <select
-                            className="dropdown-toggle btn w-40 btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex ">
-                            <option>Proveedor</option>
-                            <option>Cliente</option>
-                            <option>Personal</option>
-                        </select>
+                        <div className="w-2/5">
+                            <Select
+                                options={options}
+                                closeMenuOnSelect={false}
+                                value={selectedOptions}
+                                onChange={handleChange}
+                                isMulti
 
-                        <Select
-                            closeMenuOnSelect={false}
-                            isMulti
-                            options={options}
-                        />
+                                className="w-full"
+
+                            />
+
+                        </div>
+
 
                     </div>
 
@@ -162,27 +213,36 @@ const Add = (props) => {
                                     data-lucide="file-text" className="w-4 h-4 mr-2"></i> General
                                 </button>
                             </li>
-                            <li className="nav-item">
-                                <button title=""
-                                        className="nav-link tooltip w-full sm:w-40 py-4" id="meta-title-tab"
-                                        role="tab" aria-hidden="true" onClick={cliente}>
-                                    <i data-lucide="code" className="w-4 h-4 mr-2"></i> Cliente
-                                </button>
-                            </li>
-                            <li className="nav-item">
-                                <button title="Use search keywords" data-toggle="tab" data-target="#keywords"
-                                        className="nav-link tooltip w-full sm:w-40 py-4" id="keywords-tab"
-                                        role="tab" onClick={proveedor}><i data-lucide="align-left"
-                                                                          className="w-4 h-4 mr-2"></i> Proveedor
-                                </button>
-                            </li>
-                            <li className="nav-item">
-                                <button title="Use search keywords" data-toggle="tab" data-target="#keywords"
-                                        className="nav-link tooltip w-full sm:w-40 py-4" id="keywords-tab"
-                                        role="tab" onClick={personal}><i data-lucide="align-left"
-                                                                         className="w-4 h-4 mr-2"></i> Personal
-                                </button>
-                            </li>
+                            {showNavCliente &&
+                                <li className="nav-item">
+                                    <button title=""
+                                            className="nav-link tooltip w-full sm:w-40 py-4" id="meta-title-tab"
+                                            role="tab" aria-hidden="true" onClick={cliente}>
+                                        <i data-lucide="code" className="w-4 h-4 mr-2"></i> Cliente
+                                    </button>
+                                </li>}
+                            {showNavProveedor &&
+                                <div>
+                                    <li className="nav-item">
+                                        <button title="Use search keywords" data-toggle="tab" data-target="#keywords"
+                                                className="nav-link tooltip w-full sm:w-40 py-4" id="keywords-tab"
+                                                role="tab" onClick={proveedor}><i data-lucide="align-left"
+                                                                                  className="w-4 h-4 mr-2"></i> Proveedor
+                                        </button>
+                                    </li>
+                                </div>
+                            }
+                            {showNavPersonal &&
+                                <div>
+                                    <li className="nav-item">
+                                        <button title="Use search keywords" data-toggle="tab" data-target="#keywords"
+                                                className="nav-link tooltip w-full sm:w-40 py-4" id="keywords-tab"
+                                                role="tab" onClick={personal}><i data-lucide="align-left"
+                                                                                 className="w-4 h-4 mr-2"></i> Personal
+                                        </button>
+                                    </li>
+                                </div>
+                            }
                         </ul>
                         {showDivProveedor &&
                             <div className="post__content tab-content" id="targetGeneral">
