@@ -31,5 +31,6 @@ class TypePersonSeeder extends Seeder
         ]);
 
 
+
     }
 }

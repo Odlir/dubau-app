@@ -1,14 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import DataTable from 'react-data-table-component';
-import {env} from "@/env.js";
-import columns from '../../data/Users.jsx';
-import Preload from "@/components/preload/preload";
 import Button from "@/components/Button/Button.jsx";
-import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import Input from "../../components/Input/Input.jsx";
-import PasswordChecklist from "react-password-checklist";
 import Select from 'react-select';
 
 const Add = (props) => {
@@ -36,6 +29,12 @@ const Add = (props) => {
         position_ID,
         formType,
 
+        customer_id,
+        supplier_id,
+        staff_id,
+
+        nationalityContainer,
+
         setHandleOnClickRegister,
         setPerson_Name,
         setPerson_LastNamePaternal,
@@ -57,15 +56,20 @@ const Add = (props) => {
         setNationality_ID,
         setUbigeous_Home,
         setPosition_ID,
-
         setFormType,
-        img,
-        setImg
+        setNationalityContainer,
+        setCustomer_id,
+        setSupplier_id,
+        setStaff_id,
+        selectedOptionsNaturality,
+        setSelectedOptionsNaturality,
+        selectedOptionsNaturalitys,
+        setSelectedOptionsNaturalitys,
+
     } = props;
 
     const handleOnClickList = () => {
-        setStaff_Name('');
-        setStaff_Description('');
+
         setFormType('list');
     };
 
@@ -80,6 +84,8 @@ const Add = (props) => {
     const [showNavCliente, setShowNavCliente] = useState(false);
     const [showNavProveedor, setShowNavProveedor] = useState(false);
     const [showNavPersonal, setShowNavPersonal] = useState(false);
+
+    const [optionPerson, setOptionPerson] = useState([]);
 
     const general = () => {
         setShowDiv(true);
@@ -106,9 +112,18 @@ const Add = (props) => {
         setShowDivPersonal(true);
     };
 
+
+    const optionsNaturality = nationalityContainer.map(obj => {
+
+        return console.log(setSelectedOptionsNaturalitys);
+//            return {value: obj.nationality_ID, label: obj.nationality_Name};
+
+    });
+
+
     const options = [
-        {value: 'Cliente', label: 'Cliente'},
-        {value: 'Proveedor', label: 'Proveedor'},
+        {value: 'Cliente', label: 'Cliente', isSelected: true},
+        {value: 'Proveedor', label: 'Proveedor', isSelected: true},
         {value: 'Personal', label: 'Personal'}
     ]
 
@@ -121,58 +136,109 @@ const Add = (props) => {
         {value: 'A 150 DIAS', label: 'A 150 DIAS'}
 
     ]
-    const [selectedOptions, setSelectedOptions] = useState([]);
+
+    /*   console.log(customer_id, supplier_id, staff_id)
+   */
+    let defaultSelectedOptions = [];
+    if (formType === 'edit') {
+        if (customer_id > 0 && supplier_id > 0 && staff_id > 0) {
+            defaultSelectedOptions = [
+                options[0],
+                options[1],
+                options[2],
+            ];
+        }
+
+        if (customer_id > 0 && supplier_id > 0 && staff_id === 0) {
+            defaultSelectedOptions = [
+                options[0],
+                options[1],
+            ];
+        }
+
+        if (customer_id > 0 && supplier_id === 0 && staff_id > 0) {
+            defaultSelectedOptions = [
+                options[0],
+                options[2],
+            ];
+        }
+
+        if (customer_id === 0 && supplier_id === 0 && staff_id === 0) {
+            defaultSelectedOptions = [];
+        }
+
+        if (customer_id > 0 && supplier_id === 0 && staff_id === 0) {
+            defaultSelectedOptions = [
+                options[0],
+            ];
+        }
+
+        if (customer_id === 0 && supplier_id > 0 && staff_id === 0) {
+            defaultSelectedOptions = [
+                options[1],
+            ];
+        }
+
+        if (customer_id === 0 && supplier_id === 0 && staff_id > 0) {
+            defaultSelectedOptions = [
+                options[2],
+            ];
+        }
+
+    }
+
+
+    const [selectedOptions, setSelectedOptions] = useState(defaultSelectedOptions);
+
+
     const [selectedOptions2, setSelectedOptions2] = useState([]);
+
+    const [selectedOptionsNaturalityy, setSelectedOptionsNaturalityy] = useState([]);
 
     const handleChange = (selected) => {
         setSelectedOptions(selected);
-        // Lógica para procesar las opciones seleccionadas
-        console.log('Opciones seleccionadas:', selected);
     };
     const handleChange2 = (selected) => {
         setSelectedOptions2(selected);
-        // Lógica para procesar las opciones seleccionadas
-        console.log('Opciones seleccionadas:', selected);
+    };
+
+    const handleChange3 = (selected) => {
+        setSelectedOptionsNaturalityy(selected);
+        setSelectedOptionsNaturality(selected.value);
     };
 
 
     useEffect(() => {
-        /*      const lista = selectedOptions.map((elemento) => {
-                    console.log(elemento);
-                    if (elemento.label === 'Cliente') {
-                        return setShowNavCliente(true);
-                    } else if (elemento.label === 'Proveedor') {
-                        return setShowNavProveedor(true);
-                    } else if (elemento.label === 'Personal') {
-                        return setShowNavPersonal(true);
-                    }
 
-                });*/
-        console.log(selectedOptions);
         const clienteLabel = selectedOptions.some(cliente => cliente.label === 'Cliente');
-        if(clienteLabel){
+        if (clienteLabel) {
             setShowNavCliente(true);
-        }else{
+        } else {
             setShowNavCliente(false);
         }
 
         const proveedorLabel = selectedOptions.some(proveedor => proveedor.label === 'Proveedor');
-        if(proveedorLabel){
+        if (proveedorLabel) {
             setShowNavProveedor(true);
-        }else{
+        } else {
             setShowNavProveedor(false);
         }
 
         const personalLabel = selectedOptions.some(personal => personal.label === 'Personal');
-        if(personalLabel){
+        if (personalLabel) {
             setShowNavPersonal(true);
-        }else{
+        } else {
             setShowNavPersonal(false);
         }
 
     });
+    const customStyles = {
+        control: (provided) => ({
+            ...provided,
+            textAlign: 'center',
+        }),
 
-
+    };
 
     return (
 
@@ -208,6 +274,7 @@ const Add = (props) => {
                                 closeMenuOnSelect={false}
                                 value={selectedOptions}
                                 onChange={handleChange}
+
                                 isMulti
 
                                 className="w-full"
@@ -471,36 +538,39 @@ const Add = (props) => {
                                                 <div className="mt-3">
                                                     <label className="form-label">Nombres</label>
                                                     <input type="text" className="datepicker form-control"
-                                                           id="post-form-2"
-                                                           data-single-mode="true" placeholder=" name "/>
+                                                           id="post-form-2" value={person_Name}
+                                                           data-single-mode="true" placeholder=" name "
+                                                           onChange={(e) => setPerson_Name(e.target.value)}/>
                                                 </div>
                                                 <div className="mt-3">
                                                     <label className="form-label">Apellido Paterno</label>
                                                     <input type="text" className="datepicker form-control"
-                                                           id="post-form-2"
-                                                           data-single-mode="true" placeholder=" last name"/>
+                                                           id="post-form-2" value={person_LastNamePaternal}
+                                                           data-single-mode="true" placeholder=" last name"
+                                                           onChange={(e) => setPerson_LastNamePaternal(e.target.value)}/>
                                                 </div>
                                                 <div className="mt-3">
                                                     <label className="form-label">Apellido Materno</label>
                                                     <input type="text" className="datepicker form-control"
-                                                           id="post-form-2"
-                                                           data-single-mode="true" placeholder=" mother's last name"/>
+                                                           id="post-form-2" value={person_LastNameMaternal}
+                                                           data-single-mode="true" placeholder=" mother's last name"
+                                                           onChange={(e) => setPerson_LastNameMaternal(e.target.value)}/>
                                                 </div>
                                             </div>
                                             <div className="mt-5 w-1/5">
                                             </div>
                                             <div className="mt-5 w-2/4">
 
-
                                                 <div className="mt-3">
                                                     <label className="form-label">Pais de Origen</label>
-                                                    <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                                            <option>PERU</option>
-                                                            <option>VENEZUELA</option>
-                                                            <option>ECUADOR</option>
-                                                        </select>
+                                                    <div className="dropdown ">
+                                                        <Select
+                                                            styles={customStyles}
+                                                            options={optionsNaturality}
+                                                            value={selectedOptionsNaturalityy}
+                                                            onChange={handleChange3}
+                                                            className="w-full"
+                                                        />
                                                     </div>
                                                 </div>
                                                 <div className="mt-3">
@@ -508,6 +578,7 @@ const Add = (props) => {
                                                     <div className="dropdown">
                                                         <select
                                                             className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+
                                                             <option>MASCULINO</option>
                                                             <option>FEMENINO</option>
                                                         </select>
@@ -516,15 +587,13 @@ const Add = (props) => {
                                                 <div className="mt-3">
                                                     <label className="form-label">Estado Civil</label>
                                                     <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                                            <option>CASADO</option>
-                                                            <option>CONVIVIENTE</option>
-                                                            <option>DIVORCIADO</option>
-                                                            <option>NO REGISTRADO</option>
-                                                            <option>SOLTERO</option>
-                                                            <option>VIUDO</option>
-                                                        </select>
+                                                        {/*<Select
+                                                            styles={customStyles}
+                                                            options={optionsNaturality}
+                                                            value={selectedOptionsNaturalityy}
+                                                            onChange={handleChange3}
+                                                            className="w-full"
+                                                        />*/}
                                                     </div>
                                                 </div>
                                             </div>
@@ -543,33 +612,56 @@ const Add = (props) => {
                                         <div className="mt-5">
                                             <div className="mt-3">
                                                 <label className="form-label">Telefono</label>
-                                                <input type="text" className="intro-y form-control py-3 px-4 box pr-10"
-                                                       placeholder=" (01) 0000"/>
+                                                <Input dataType={'text'} dataName={'phone'} dataId={'phone'}
+                                                       className={'form-control'}
+                                                       dataPlaceholder={'01 - 0000 - 0'}
+                                                       dataValue={person_Phone}
+                                                       dataOnchange={setPerson_Phone}/>
                                             </div>
                                             <div className="mt-3">
                                                 <label className="form-label">Celular</label>
-                                                <input type="text" className="intro-y form-control py-3 px-4 box pr-10"
-                                                       placeholder="999999999"/>
+                                                <Input dataType={'text'} dataName={'cellphone'} dataId={'cellphone'}
+                                                       className={'form-control'}
+                                                       dataPlaceholder={'999999999'}
+                                                       dataValue={person_CellPhone}
+                                                       dataOnchange={setPerson_CellPhone}
+                                                />
                                             </div>
                                             <div className="mt-3">
                                                 <label className="form-label">Correo</label>
-                                                <input type="text" className="intro-y form-control py-3 px-4 box pr-10"
-                                                       placeholder="example@gmail.com"/>
+                                                <Input dataType={'text'} dataName={'cellphone'} dataId={'cellphone'}
+                                                       className={'form-control'}
+                                                       dataPlaceholder={'example@example.com'}
+                                                       dataValue={person_Email}
+                                                       dataOnchange={setPerson_Email}
+                                                />
                                             </div>
                                             <div className="mt-3">
                                                 <label className="form-label">Sitio Web</label>
-                                                <input type="text" className="intro-y form-control py-3 px-4 box pr-10"
-                                                       placeholder="www.example.com"/>
+                                                <Input dataType={'text'} dataName={'cellphone'} dataId={'cellphone'}
+                                                       className={'form-control'}
+                                                       dataPlaceholder={'www.example.com'}
+                                                       dataValue={person_WebSite}
+                                                       dataOnchange={setPerson_WebSite}
+                                                />
                                             </div>
                                             <div className="mt-3">
                                                 <label className="form-label">Numero de Cuenta S/.</label>
-                                                <input type="text" className="intro-y form-control py-3 px-4 box pr-10"
-                                                       placeholder="000-00000-000"/>
+                                                <Input dataType={'text'} dataName={'cellphone'} dataId={'cellphone'}
+                                                       className={'form-control'}
+                                                       dataPlaceholder={'00 - 000 - 0'}
+                                                    /*            dataValue={person_Phone}
+                                                                dataOnchange={setPerson_Phone}*/
+                                                />
                                             </div>
                                             <div className="mt-3">
                                                 <label className="form-label">Numero de Cuenta $.</label>
-                                                <input type="text" className="intro-y form-control py-3 px-4 box pr-10"
-                                                       placeholder="000-00000-000"/>
+                                                <Input dataType={'text'} dataName={'cellphone'} dataId={'cellphone'}
+                                                       className={'form-control'}
+                                                       dataPlaceholder={'00 - 0000 - 0'}
+                                                    /*    dataValue={person_Phone}
+                                                        dataOnchange={setPerson_}*/
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -599,14 +691,19 @@ const Add = (props) => {
                                     className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
                                     <option>DNI</option>
                                     <option>C.E</option>
+                                    <option>R.U.C</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="mt-3">
+                        <div className="mt-3">
                             <label htmlFor="post-form-2" className="form-label">Número de Documento</label>
-                            <input type="text" className="datepicker form-control" id="post-form-2"
-                                   data-single-mode="true" placeholder=" 00000000"/>
+                            <Input dataType={'text'} dataName={'cellphone'} dataId={'cellphone'}
+                                   className={'form-control'}
+                                   dataPlaceholder={'000000000'}
+                                   dataValue={numberDocument}
+                                   dataOnchange={setNumberDocument}
+                            />
                         </div>
                         <div className="mt-3">
                             <label className="form-label">Departamento</label>
@@ -647,14 +744,17 @@ const Add = (props) => {
                             </div>
                         </div>
 
-                        <div class="mt-3">
+                        <div className="mt-3">
                             <label htmlFor="post-form-2" className="form-label">Direccion</label>
-                            <input type="text" className="datepicker form-control" id="post-form-2"
-                                   data-single-mode="true" placeholder=" Av. Los Algarrobos"/>
+                            <Input dataType={'text'} dataName={'direction'} dataId={'direction'}
+                                   className={'form-control'}
+                                   dataPlaceholder={'Av. Los Algarrobos'}
+                                   dataValue={person_Direction}
+                                   dataOnchange={setPerson_Direction}
+                            />
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 

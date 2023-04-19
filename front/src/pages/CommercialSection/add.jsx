@@ -30,7 +30,7 @@ const Add =  (props) => {
     return (
         <div>
             <h2 className="intro-y text-lg font-medium mt-10">
-                Añadir CommercialSections
+                Añadir Sector
             </h2>
             <div className="intro-y box p-5 mt-5">
                 <div className={"flex"} >

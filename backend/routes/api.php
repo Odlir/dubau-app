@@ -17,6 +17,7 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentConditionController;
 use App\Http\Controllers\CommercialSectionController;
+use App\Http\Controllers\businessEntityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -201,4 +202,14 @@ Route::controller(CommercialSectionController::class)->group(function () {
     Route::get('listXCommercialSection', 'listXCommercialSection');
     Route::post('deleteCommercialSection', 'deleteCommercialSection');
     Route::post('updateCommercialSection', 'updateCommercialSection');
+});
+
+
+Route::controller(businessEntityController::class)->group(function () {
+    Route::post('registerBusinessEntity', 'registerBusinessEntity');
+    Route::get('listBusinessEntity', 'listBusinessEntity');
+    Route::get('listXBusinessEntity', 'listXBusinessEntity');
+    Route::post('deleteBusinessEntity', 'deleteBusinessEntity');
+    Route::post('updateBusinessEntity', 'updateBusinessEntity');
+    Route::get('listNationality', 'listNationality');
 });

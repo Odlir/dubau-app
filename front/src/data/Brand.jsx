@@ -1,6 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import {Lucide} from "@/components/base-components/index.js";
-import {env} from "@/env.js";
+import React from 'react';
 
 let number = 20;
 const columns = (actionDelete, actionEdit, handleOnClickModalImage) => {
@@ -41,7 +39,7 @@ const columns = (actionDelete, actionEdit, handleOnClickModalImage) => {
             selector: row => row.staff_finalDate,
         },
     ];
-}
+};
 
 
 export default columns;

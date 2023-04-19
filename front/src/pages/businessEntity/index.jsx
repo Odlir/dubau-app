@@ -9,6 +9,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import Add from '../businessEntity/add.jsx'
 import List from "../../components/layouts/list/index.jsx";
+import businessEntity from "../../data/businessEntity.jsx";
 
 const Index = () => {
     const navigate = useNavigate()
@@ -22,9 +23,9 @@ const Index = () => {
     const [person_CellPhone, setPerson_CellPhone] = useState('');
     const [person_Email, setPerson_Email] = useState('');
     const [person_WebSite, setPerson_WebSite] = useState('');
-    const [businessEntity_StartDate, setbusinessEntity_StartDate] = useState('');
-    const [businessEntity_finalDate, setbusinessEntity_finalDate] = useState('');
-    const [businessEntity_ContractNumber, setbusinessEntity_ContractNumber] = useState('');
+    const [staff_StartDate, setStaff_StartDate] = useState('');
+    const [staff_finalDate, setStaff_finalDate] = useState('');
+    const [staff_ContractNumber, setStaff_ContractNumber] = useState('');
 
     const [ubigeous_PlaceBirth, setUbigeous_PlaceBirth] = useState('');
     const [numberDocument, setNumberDocument] = useState('');
@@ -33,9 +34,14 @@ const Index = () => {
     const [nationality_ID, setNationality_ID] = useState('');
     const [ubigeous_Home, setUbigeous_Home] = useState('');
     const [position_ID, setPosition_ID] = useState('');
+    const [business_entity_id, setBusiness_entity_id] = useState('');
+
+    const [customer_id, setCustomer_id] = useState('');
+    const [supplier_id, setSupplier_id] = useState('');
+    const [staff_id, setStaff_id] = useState('');
 
     const [formType, setFormType] = useState('list');
-    const [img, setImg] = useState('');
+
     /*Server Side*/
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -43,13 +49,14 @@ const Index = () => {
     const [perPage, setPerPage] = useState(10);
     const [page_, setPage_] = useState(1);
     const [dataxbusinessEntity, setdataxbusinessEntity] = useState('');
+    const [selectedOptionsNaturality, setSelectedOptionsNaturality] = useState('');
+    const [selectedOptionsNaturalitys, setSelectedOptionsNaturalitys] = useState('');
 
     const fetchbusinessEntitys = async page => {
 
         setLoading(true);
         const endpoint = `${env.apiURL}listBusinessEntity`;
         const response = await axios.get(`${endpoint}?page=${page}&per_page=${perPage}`);
-        console.log(response);
         setData(response.data.data);
         setPage_(response.data.page);
         setTotalRows(response.data.total);
@@ -73,7 +80,7 @@ const Index = () => {
         fetchbusinessEntitys(page_);
     }, [perPage]);
 
-    const actionDelete = async (businessEntity_ID) => {
+    const actionDelete = async (businessEntity_id) => {
         Swal.fire({
             title: 'Desea realizar esta accion?',
             text: "No podra revertir los cambios!",
@@ -85,7 +92,7 @@ const Index = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 const endpoint = `${env.apiURL}deletebusinessEntity`;
-                axios.post(endpoint, {businessEntity_ID: businessEntity_ID, businessEntity_StatusID: 0})
+                axios.post(endpoint, {businessEntity_ID: businessEntity_id, businessEntity_StatusID: 0})
                     .then(function (response) {
                         Swal.fire(
                             'Eliminado!',
@@ -101,22 +108,58 @@ const Index = () => {
             }
         })
     }
+    const [nationalityContainer, setNationalityContainer] = useState([]);
+      const actionEdit = async (business_entity_idd) => {
+            const endpoint = `${env.apiURL}listXBusinessEntity`;
+            const response = await axios.get(`${endpoint}?business_entity_id=${business_entity_idd}`);
 
-    /*    const actionEdit = async (businessEntity_ID) => {
-            const endpoint = `${env.apiURL}listXbusinessEntity`;
-            const response = await axios.get(`${endpoint}?businessEntity_ID=${businessEntity_ID}`);
-            setdataxbusinessEntity(response.data.businessEntity_ID);
-            setbusinessEntity_Name(response.data.businessEntity_Name);
-            setbusinessEntity_Description(response.data.businessEntity_Description);
-            setFormType('edit');
+          setBusiness_entity_id(business_entity_idd);
+            setdataxbusinessEntity(response.data.business_entity_idd);
+          setPerson_Name(response.data.person_Name);
+          setPerson_LastNamePaternal(response.data.person_LastNamePaternal);
+          setPerson_LastNameMaternal(response.data.person_LastNameMaternal);
+          setPerson_DateBirth(response.data.person_DateBirth);
+          setPerson_Direction(response.data.person_Direction);
+          setPerson_Phone(response.data.person_Phone);
+          setPerson_CellPhone(response.data.person_CellPhone);
+          setPerson_Email(response.data.person_Email);
+          setPerson_WebSite(response.data.person_WebSite);
+        /*  setStaff_StartDate(response.data.staff_StartDate);
+          setStaff_FinalDate(response.data.staff_FinalDate);
+          setStaff_ContractNumber(response.data.staff_ContractNumber);*/
+          setUbigeous_PlaceBirth(response.data.ubigeous_PlaceBirth);
+          setNumberDocument(response.data.person_NumberDocumentID);
+          setPerson_Gender(response.data.person_Gender);
+          setStatusmarital_ID(response.data.statusmarital_ID);
+          setNationality_ID(response.data.nationality_ID);
+          setUbigeous_Home(response.data.ubigeous_Home);
+          setPosition_ID(response.data.position_ID);
+
+          setCustomer_id(response.data.customer_id);
+          setSupplier_id(response.data.supplier_id);
+          setStaff_id(response.data.staff_id);
+          setSelectedOptionsNaturality(response.data.nationality_ID);
+          setSelectedOptionsNaturalitys(response.data.nationality_ID);
+          const endpoint2 = `${env.apiURL}listNationality`;
+          const response2 = await axios.get(`${endpoint2}`);
+          setNationalityContainer(response2.data)
+
+          setFormType('edit');
         }
-       */
+
+
     const actionAdd = async () => {
         setFormType('register');
+        const endpoint = `${env.apiURL}listNationality`;
+        const response = await axios.get(`${endpoint}`);
+        setNationalityContainer(response.data)
     }
+
     const handleOnClickRegister = async (e) => {
-        e.preventDefault();
-        const endpoint = `${env.apiURL}registerbusinessEntity`
+
+          e.preventDefault();
+
+        const endpoint = `${env.apiURL}registerBusinessEntity`
         await axios.post(endpoint, {
             person_Name: person_Name,
             person_LastNamePaternal: person_LastNamePaternal,
@@ -127,26 +170,26 @@ const Index = () => {
             person_CellPhone: person_CellPhone,
             person_Email: person_Email,
             person_WebSite: person_WebSite,
-            businessEntity_StartDate: businessEntity_StartDate,
-            businessEntity_finalDate: businessEntity_finalDate,
-            businessEntity_ContractNumber: businessEntity_ContractNumber,
+            staff_StartDate: staff_StartDate,
+            staff_finalDate: staff_finalDate,
+            staff_ContractNumber: staff_ContractNumber,
 
             ubigeous_PlaceBirth: ubigeous_PlaceBirth,
             numberDocument: numberDocument,
             person_Gender: person_Gender,
             statusmarital_ID: statusmarital_ID,
-            nationality_ID: nationality_ID,
+            nationality_ID: selectedOptionsNaturality,
+
             ubigeous_Home: ubigeous_Home,
             position_ID: position_ID,
             businessEntity_StatusID: '1',
-            img: img
         }, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         })
             .then(function (response) {
-                window.location.reload();
+              //  window.location.reload();
             })
             .catch(error => {
                 alert('Debe completar correctamente sus datos')
@@ -155,10 +198,14 @@ const Index = () => {
 
     const handleOnClickUpdate = async (e) => {
         e.preventDefault();
-        const endpoint = `${env.apiURL}updatebusinessEntity`
+        const endpoint = `${env.apiURL}updateBusinessEntity`
         await axios.post(endpoint, {
             businessEntity_ID: dataxbusinessEntity,
-            erson_Name: person_Name,
+            business_entity_id: business_entity_id,
+            staff_ID: staff_id,
+            customer_id: customer_id,
+            supplier_id: supplier_id,
+            person_Name: person_Name,
             person_LastNamePaternal: person_LastNamePaternal,
             person_LastNameMaternal: person_LastNameMaternal,
             person_DateBirth: person_DateBirth,
@@ -167,10 +214,9 @@ const Index = () => {
             person_CellPhone: person_CellPhone,
             person_Email: person_Email,
             person_WebSite: person_WebSite,
-            businessEntity_StartDate: businessEntity_StartDate,
-            businessEntity_finalDate: businessEntity_finalDate,
-            businessEntity_ContractNumber: businessEntity_ContractNumber,
-
+            staff_StartDate: staff_StartDate,
+            staff_finalDate: staff_finalDate,
+            staff_ContractNumber: staff_ContractNumber,
             ubigeous_PlaceBirth: ubigeous_PlaceBirth,
             numberDocument: numberDocument,
             person_Gender: person_Gender,
@@ -180,7 +226,7 @@ const Index = () => {
             position_ID: position_ID,
 
             businessEntity_StatusID: '1',
-            img: img
+
         }, {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -200,7 +246,7 @@ const Index = () => {
 
     const handleOnClickSearch = async page => {
         setLoading(true);
-        const endpoint = `${env.apiURL}listbusinessEntity`;
+        const endpoint = `${env.apiURL}listBusinessEntity`;
         const response = await axios.get(`${endpoint}
         ?page=${page_}
         &per_page=${perPage}
@@ -243,8 +289,8 @@ const Index = () => {
                         dataSearch1={person_Name}
                         setdataSearch1={setPerson_Name}
                         dataType2={'date'}
-                        dataSearch2={businessEntity_StartDate}
-                        setdataSearch2={businessEntity_finalDate}
+                        dataSearch2={staff_StartDate}
+                        setdataSearch2={staff_finalDate}
                         captureType={captureType}
                         handleOnClickSearch={handleOnClickSearch}
                         handleOnClickClean={handleOnClickClean}
@@ -252,7 +298,7 @@ const Index = () => {
                     />}
                     {data.length != 0 ?
                        <DataTable
-                          columns={columns(actionDelete/*,actionEdit*/, handleOnClickModalImage)}
+                          columns={columns(actionDelete,actionEdit, handleOnClickModalImage)}
                             data={data}
                             progressPending={loading}
                             progressComponent={<Preload/>}
@@ -303,12 +349,12 @@ const Index = () => {
                              setPerson_Email={setPerson_Email}
                              person_WebSite={person_WebSite}
                              setPerson_WebSite={setPerson_WebSite}
-                             businessEntity_StartDate={businessEntity_StartDate}
-                             setbusinessEntity_StartDate={setbusinessEntity_StartDate}
-                             businessEntity_finalDate={businessEntity_finalDate}
-                             setbusinessEntity_finalDate={setbusinessEntity_finalDate}
-                             businessEntity_ContractNumber={businessEntity_ContractNumber}
-                             setbusinessEntity_ContractNumber={setbusinessEntity_ContractNumber}
+                             staff_StartDate={staff_StartDate}
+                             setStaff_StartDate={setStaff_StartDate}
+                             staff_finalDate={staff_finalDate}
+                             setStaff_finalDate={setStaff_finalDate}
+                             staff_ContractNumber={staff_ContractNumber}
+                             setStaff_ContractNumber={setStaff_ContractNumber}
 
                              ubigeous_PlaceBirth={ubigeous_PlaceBirth}
                              setUbigeous_PlaceBirth={setUbigeous_PlaceBirth}
@@ -324,10 +370,24 @@ const Index = () => {
                              setUbigeous_Home={setUbigeous_Home}
                              position_ID={position_ID}
                              setPosition_ID={setPosition_ID}
-
-                             img={img}
-                             setImg={setImg}
+                             formType={formType}
                              setFormType={setFormType}
+
+                             customer_id={customer_id}
+                             setCustomer_id={setCustomer_id}
+                             supplier_id={supplier_id}
+                             setSupplier_id={setSupplier_id}
+                             staff_id={staff_id}
+                             setStaff_id={setStaff_id}
+
+                             nationalityContainer={nationalityContainer}
+                             setNationalityContainer={setNationalityContainer}
+                             selectedOptionsNaturality={selectedOptionsNaturality}
+                             setSelectedOptionsNaturality={setSelectedOptionsNaturality}
+
+                             selectedOptionsNaturalitys={selectedOptionsNaturalitys}
+                             setSelectedOptionsNaturalitys={setSelectedOptionsNaturalitys}
+
                              /*setbusinessEntity_ApprovedStatus={setbusinessEntity_ApprovedStatus}*/
                         />
                         :
@@ -350,11 +410,12 @@ const Index = () => {
                              setPerson_Email={setPerson_Email}
                              person_WebSite={person_WebSite}
                              setPerson_WebSite={setPerson_WebSite}
-                             businessEntity_StartDate={businessEntity_StartDate}
-                             businessEntity_finalDate={businessEntity_finalDate}
-                             setbusinessEntity_finalDate={setbusinessEntity_finalDate}
-                             businessEntity_ContractNumber={businessEntity_ContractNumber}
-                             setbusinessEntity_ContractNumber={setbusinessEntity_ContractNumber}
+                             staff_StartDate={staff_StartDate}
+                             setStaff_StartDate={setStaff_StartDate}
+                             staff_finalDate={staff_finalDate}
+                             setStaff_finalDate={setStaff_finalDate}
+                             staff_ContractNumber={staff_ContractNumber}
+                             setStaff_ContractNumber={setStaff_ContractNumber}
 
                              ubigeous_PlaceBirth={ubigeous_PlaceBirth}
                              setUbigeous_PlaceBirth={setUbigeous_PlaceBirth}
@@ -370,9 +431,21 @@ const Index = () => {
                              setUbigeous_Home={setUbigeous_Home}
                              position_ID={position_ID}
                              setPosition_ID={setPosition_ID}
-                             img={img}
-                             setImg={setImg}
+                             formType={formType}
                              setFormType={setFormType}
+
+                             customer_id={customer_id}
+                             setCustomer_id={setCustomer_id}
+                             supplier_id={supplier_id}
+                             setSupplier_id={setSupplier_id}
+                             staff_id={staff_id}
+                             setStaff_id={setStaff_id}
+
+                             nationalityContainer={nationalityContainer}
+                             setNationalityContainer={setNationalityContainer}
+                             selectedOptionsNaturalitys={selectedOptionsNaturalitys}
+                             setSelectedOptionsNaturalitys={setSelectedOptionsNaturalitys}
+
                             /* setbusinessEntity_ApprovedStatus={setbusinessEntity_ApprovedStatus}*/
                         />
                     }

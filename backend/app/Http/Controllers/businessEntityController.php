@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BusinessEntity;
+use App\Models\Nationality;
 use Illuminate\Contracts\Validation\ValidatorAwareRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,10 +18,10 @@ class businessEntityController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['registerStaff', 'listStaff','listXStaff','deleteStaff','updateStaff']]);
+        $this->middleware('auth:api', ['except' => ['registerBusinessEntity', 'listBusinessEntity','listXBusinessEntity','deleteStaff','updateBusinessEntity','listNationality']]);
     }
 
-    public function listStaff()
+    public function listBusinessEntity()
     {
         $page = $_GET["page"];
         $per_page = $_GET["per_page"];
@@ -33,7 +34,11 @@ class businessEntityController extends Controller
             $auto_increment = ($page - 1) * $per_page;
         }
 
-        $data = Staff::where('staff_StatusID', '=', '1')->join('person', 'staff.person_ID', '=', 'person.person_ID')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+        $data = BusinessEntity::where('business_entity.status', '=', '1')
+            ->join('customer', 'business_entity.customer_id', '=', 'customer.customer_id')
+            ->join('person', 'person.person_id', '=', 'customer.person_ID')
+            ->paginate($per_page)
+            ->each(function ($row, $index) use ($auto_increment) {
             $row->auto_increment = $auto_increment + $index + 1;
         });
 
@@ -76,63 +81,44 @@ class businessEntityController extends Controller
         return response()->json($objContenedorListStaff, 200);
     }
 
-    public function listXStaff()
+    public function listXBusinessEntity(Request $request)
     {
-        $staff_ID = $_GET["staff_ID"];
-        $staff = Staff::where('staff_ID', $staff_ID)->first();
-        return response()->json($staff, 200);
+        $business_entity_id =  $request->business_entity_id;
+
+       $business_entity = BusinessEntity::where('business_entity_id', $business_entity_id)->join('customer', 'business_entity.customer_id', '=', 'customer.customer_id')->join('person', 'person.person_id', '=', 'customer.person_ID')->first();
+        return response()->json($business_entity, 200);
     }
 
-    public function updateStaff(Request $request)
+    public function listNationality(Request $request)
     {
-        if($request->staff_ContractNumber == ''){
-            Staff::where('staff_ID', $request->staff_ID)
-                ->update([
-                    'staff_StartDate' => $request->staff_StartDate,
-                ]);
-        }else{
-            Staff::where('staff_ID', $request->staff_ID)
-                ->update([
-                    'staff_Name' => $request->staff_Name,
-                    'staff_StartDate' => $request->staff_StartDate,
-                    'staff_finalDate' => $request->staff_finalDate,
-                    'staff_ContractNumber' => $request->staff_ContractNumber
-                ]);
-        }
-    }
-
-    public function deleteStaff(Request $request)
-    {
-        Staff::where('staff_ID', $request->staff_ID)
-            ->update([
-                'staff_StatusID' => $request->staff_StatusID
-            ]);
+        $nationality = Nationality::all();
+        return response()->json($nationality, 200);
     }
 
 
-    public function registerStaff(Request $request)
+    public function updateBusinessEntity(Request $request)
     {
-        $request->validate([
-            'person_Name' => 'required|string|max:255',
-            'person_LastNamePaternal' => 'required|string|min:1',
-            'person_LastNameMaternal' => 'required|string|min:1',
-            'person_DateBirth' => 'required|string|min:1',
-            'person_Direction' => 'required|string|min:1',
-            'person_Phone' => 'required|string|min:1',
-            'person_CellPhone' => 'required|string|min:1',
-            'person_Email' => 'required|string|min:1',
-            'person_WebSite' => 'required|string|min:1',
-        ]);
-
 
         \DB::transaction(function () use ($request) {
-            $person = Person::create([
+        Staff::where('staff_id', $request->staff_id)
+            ->update([
+                'position_ID' => $request->position_ID,
+                'staff_StartDate' => $request->staff_StartDate,
+                'staff_FinalDate' => $request->staff_FinalDate,
+                'staff_ContractNumber' => $request->staff_ContractNumber,
+                'staff_CreationDate' => date('Y-m-d H:i:s'),
+                'staff_StatusID' => '1',
+            ]);
+
+        Person::where('staff_id', $request->staff_id)->join()
+            ->update([
                 'nationality_ID' => $request->nationality_ID,
                 'ubigeous_Home' => $request->ubigeous_Home,
                 'ubigeous_PlaceBirth' => $request->ubigeous_PlaceBirth,
                 'statusmarital_ID' => $request->statusmarital_ID,
-                'typedocument_ID' =>'1',
-                'person_DNI' => $request->numberDocument,
+                'typedocument_ID' => '1',
+                'person_Name' => $request->person_Name,
+                'person_NumberDocumentID' => $request->numberDocument,
                 'person_Gender' => $request->person_Gender,
                 'person_LastNamePaternal' => $request->person_LastNamePaternal,
                 'person_LastNameMaternal' => $request->person_LastNameMaternal,
@@ -145,19 +131,68 @@ class businessEntityController extends Controller
                 'person_CreationDate' => date('Y-m-d H:i:s'),
                 'person_StatusID' => '1'
             ]);
+        });
+    }
+
+    public function deleteStaff(Request $request)
+    {
+        Staff::where('staff_ID', $request->staff_ID)
+            ->update([
+                'staff_StatusID' => $request->staff_StatusID
+            ]);
+    }
+
+
+    public function registerBusinessEntity(Request $request)
+    {
+
+/*               $request->validate([
+            'person_Name' => 'required|string|max:255',
+            'person_LastNamePaternal' => 'required|string|min:1',
+            'person_LastNameMaternal' => 'required|string|min:1',
+            'person_DateBirth' => 'required|string|min:1',
+            'person_Direction' => 'required|string|min:1',
+            'person_Phone' => 'required|string|min:1',
+            'person_CellPhone' => 'required|string|min:1',
+            'person_Email' => 'required|string|min:1',
+            'person_WebSite' => 'required|string|min:1',
+        ]);*/
+
+
+        \DB::transaction(function () use ($request) {
+            $person = Person::create([
+                'nationality_ID' => $request->nationality_ID,
+                'ubigeous_Home' => 10101,
+                'ubigeous_PlaceBirth' => 10101,
+                'statusmarital_ID' => 1,
+                'typedocument_ID' =>1,
+                'person_DNI' => $request->numberDocument,
+                'person_Gender' => $request->person_Gender,
+                'person_Name' => $request->person_Name,
+                'person_LastNamePaternal' => $request->person_LastNamePaternal,
+                'person_LastNameMaternal' => $request->person_LastNameMaternal,
+                'person_DateBirth' => $request->person_DateBirth,
+                'person_Direction' => $request->person_Direction,
+                'person_Phone' => $request->person_Phone,
+                'person_CellPhone' => $request->person_CellPhone,
+                'person_Email' => $request->person_Email,
+                'person_WebSite' => $request->person_WebSite,
+                'person_CreationDate' => date('Y-m-d H:i:s'),
+                'person_StatusID' => '1'
+            ]);
             $customer = Customer::create([
-                'type_person_id' => $request->type_person_id,
+                'type_person_id' => '1',
                 'company_id' => 0,
                 'person_id' => $person->person_ID,
-                'category_id' => $request->category_id,
-                'waytopay_id' => $request->waytopay_id,
-                'credit_line_id' => $request->credit_line_id,
-                'created_by' => 'Ivan',
+                'category_id' => 0,
+                'waytopay_id' => 0,
+                'credit_line_id' => 1000,
+                'created_by' => 1,
                 'created_in' => date('Y-m-d'),
                 'status' => 1
             ]);
 
-            $supplier = Supplier::create([
+         /*   $supplier = Supplier::create([
                 'type_person_id' => $request->type_person_id,
                 'company_id' => 0,
                 'person_id' => $person->person_ID,
@@ -175,12 +210,12 @@ class businessEntityController extends Controller
                 'staff_ContractNumber' => $request->staff_ContractNumber,
                 'staff_CreationDate' => date('Y-m-d H:i:s'),
                 'staff_StatusID' => '1',
-            ]);
+            ]);*/
 
              BusinessEntity::create([
                 'customer_id' => $customer->customer_id,
-                'supplier_id' => $supplier->supplier_id,
-                'staff_ID' => $staff->staff_ID,
+                'supplier_id' => 0,
+                'staff_id' => 0,
                 'created_by' => 'Ivan',
                 'created_in' => date('Y-m-d H:i:s'),
                 'status_dinamic' => '1',

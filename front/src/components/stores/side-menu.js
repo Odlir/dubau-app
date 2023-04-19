@@ -96,7 +96,7 @@ const sideMenu = atom({
         icon: "Box",
         title: "Principal",
         subMenu: [
-          {
+        /*  {
             icon: "",
             pathname: "/staff",
             title: "Personal",
@@ -111,7 +111,7 @@ const sideMenu = atom({
             icon: "",
             pathname: "/staff3",
             title: "Proveedor",
-          },
+          },*/
           {
             icon: "",
             pathname: "/businessEntity",

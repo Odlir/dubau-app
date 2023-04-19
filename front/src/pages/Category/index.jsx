@@ -150,7 +150,7 @@ const Index = () => {
             { (formType === 'list') ?
                 <>
                 <List
-                    nameSection={'Rol'}
+                    nameSection={'Categoria'}
                     dataType={'text'}
                     dataSearch1={category_Name}
                     setdataSearch1={setCategory_Name}
