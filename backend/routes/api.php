@@ -1,23 +1,23 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\LineController;
 use App\Http\Controllers\AreaController;
-use App\Http\Controllers\MakerController;
-use App\Http\Controllers\WayToPayController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\businessEntityController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommercialSectionController;
 use App\Http\Controllers\EstablishmentController;
+use App\Http\Controllers\LineController;
+use App\Http\Controllers\MakerController;
+use App\Http\Controllers\PaymentConditionController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TypeQualificationController;
 use App\Http\Controllers\UnitMeasureController;
-use App\Http\Controllers\PositionController;
-use App\Http\Controllers\StaffController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\PaymentConditionController;
-use App\Http\Controllers\CommercialSectionController;
-use App\Http\Controllers\businessEntityController;
+use App\Http\Controllers\WayToPayController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -212,4 +212,7 @@ Route::controller(businessEntityController::class)->group(function () {
     Route::post('deleteBusinessEntity', 'deleteBusinessEntity');
     Route::post('updateBusinessEntity', 'updateBusinessEntity');
     Route::get('listNationality', 'listNationality');
+    Route::get('listTypeDocument', 'listTypeDocument');
+    Route::get('listTypeQualification', 'listTypeQualification');
+    Route::get('listCategorys', 'listCategorys');
 });
