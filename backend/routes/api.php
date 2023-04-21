@@ -215,4 +215,6 @@ Route::controller(businessEntityController::class)->group(function () {
     Route::get('listTypeDocument', 'listTypeDocument');
     Route::get('listTypeQualification', 'listTypeQualification');
     Route::get('listCategorys', 'listCategorys');
+    Route::get('listWaytoPays', 'listWaytoPays');
+    Route::get('listPaymentConditions', 'listPaymentConditions');
 });

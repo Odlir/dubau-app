@@ -43,6 +43,7 @@ function Index() {
     const [typedocument_ID, setTypedocument_ID] = useState('');
     const [person_DNI, setPerson_DNI] = useState('');
     const [person_RUC, setPerson_RUC] = useState('');
+    const [creditLine, setCreditLine] = useState('');
 
     const [formType, setFormType] = useState('list');
 
@@ -125,6 +126,7 @@ function Index() {
         setBusiness_entity_id(business_entity_idd);
         setdataxbusinessEntity(response.data.business_entity_idd);
         setPerson_Name(response.data.person_Name);
+        setCreditLine(response.data.creditLine);
         setPerson_LastNamePaternal(response.data.person_LastNamePaternal);
         setPerson_LastNameMaternal(response.data.person_LastNameMaternal);
         setPerson_DateBirth(response.data.person_DateBirth);
@@ -167,15 +169,15 @@ function Index() {
         const response4 = await axios.get(`${endpoint4}`);
         setTypeQualificationContainer(response4.data);
 
-        const endpoint5 = `${env.apiURL}listCategory`;
+        const endpoint5 = `${env.apiURL}listCategorys`;
         const response5 = await axios.get(`${endpoint5}`);
         setCategoryContainer(response5.data);
 
-        const endpoint6 = `${env.apiURL}listWaytoPay`;
+        const endpoint6 = `${env.apiURL}listWaytoPays`;
         const response6 = await axios.get(`${endpoint6}`);
         setWaytopayContainer(response6.data);
 
-        const endpoint7 = `${env.apiURL}listPaymentCondition`;
+        const endpoint7 = `${env.apiURL}listPaymentConditions`;
         const response7 = await axios.get(`${endpoint7}`);
         setPaymentConditionContainer(response7.data);
         setFormType('edit');
@@ -471,6 +473,9 @@ function Index() {
                              waytopayContainer={waytopayContainer}
                              paymentConditionContainer={paymentConditionContainer}
 
+                             creditLine={creditLine}
+                             setCreditLine={setCreditLine}
+
                             /* setbusinessEntity_ApprovedStatus={setbusinessEntity_ApprovedStatus} */
                         />
                         :
@@ -538,6 +543,19 @@ function Index() {
                              setSelectedOptionsNaturalitys={setSelectedOptionsNaturalitys}
                              typeDocumentContainer={typeDocumentContainer}
                              setTypeDocumentContainer={setTypeDocumentContainer}
+
+
+                             setTypeQualificationContainer={setTypeQualificationContainer}
+                             setCategoryContainer={setCategoryContainer}
+                             setWaytopayContainer={setWaytopayContainer}
+                             setPaymentConditionContainer={setPaymentConditionContainer}
+
+                             typeQualificationContainer={typeQualificationContainer}
+                             categoryContainer={categoryContainer}
+                             waytopayContainer={waytopayContainer}
+                             paymentConditionContainer={paymentConditionContainer}
+                             creditLine={creditLine}
+                             setCreditLine={setCreditLine}
 
                             /* setbusinessEntity_ApprovedStatus={setbusinessEntity_ApprovedStatus} */
                         />

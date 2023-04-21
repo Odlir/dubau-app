@@ -78,7 +78,19 @@ function Add(props) {
         setPerson_DNI,
 
         person_RUC,
-        setPerson_RUC
+        setPerson_RUC,
+
+        typeQualificationContainer,
+        setWaytopayContainer,
+        categoryContainer,
+        setPaymentConditionContainer,
+
+        setTypeQualificationContainer,
+        waytopayContainer,
+        setCategoryContainer,
+        paymentConditionContainer,
+        creditLine,
+        setCreditLine
 
     } = props;
 
@@ -133,6 +145,34 @@ function Add(props) {
             value: obj.nationality_ID,
             label: obj.nationality_Name
         })
+    );
+
+    const optionsTypeDocument = typeDocumentContainer.map(obj =>
+        ({
+            value: obj.typedocument_ID,
+            label: obj.typedocument_Initial,
+        }),
+    );
+
+    const optionsTypeQualificationContainer = typeQualificationContainer.map(obj =>
+        ({
+            value: obj.typedocument_ID,
+            label: obj.typedocument_Initial,
+        }),
+    );
+
+    const optionsCategoryContainer = categoryContainer.map(obj =>
+        ({
+            value: obj.typedocument_ID,
+            label: obj.typedocument_Initial,
+        }),
+    );
+
+    const optionsTypeDocument = typeDocumentContainer.map(obj =>
+        ({
+            value: obj.typedocument_ID,
+            label: obj.typedocument_Initial,
+        }),
     );
 
     const optionsTypeDocument = typeDocumentContainer.map(obj =>

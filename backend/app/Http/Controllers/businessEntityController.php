@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\BusinessEntity;
+use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Nationality;
+use App\Models\PaymentCondition;
 use App\Models\Person;
 use App\Models\Staff;
 use App\Models\TypeDocument;
 use App\Models\TypeQualification;
+use App\Models\WayToPay;
 use DB;
 use Illuminate\Http\Request;
 use stdClass;
@@ -17,7 +20,7 @@ class businessEntityController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['registerBusinessEntity', 'listBusinessEntity', 'listXBusinessEntity', 'deleteBusinessEntity', 'updateBusinessEntity', 'listNationality', 'listTypeDocument', 'listTypeQualification']]);
+        $this->middleware('auth:api', ['except' => ['registerBusinessEntity', 'listBusinessEntity', 'listXBusinessEntity', 'deleteBusinessEntity', 'updateBusinessEntity', 'listNationality', 'listTypeDocument', 'listTypeQualification', 'listCategorys', 'listWaytoPays', 'listPaymentConditions']]);
     }
 
     public function listBusinessEntity()
@@ -109,13 +112,24 @@ class businessEntityController extends Controller
         return response()->json($typeDocument, 200);
     }
 
-    public function listCategory(Request $request)
+    public function listCategorys(Request $request)
     {
         $typeDocument = Category::all();
         return response()->json($typeDocument, 200);
     }
 
+    public function listWaytoPays(Request $request)
+    {
+        $typeDocument = WayToPay::all();
+        return response()->json($typeDocument, 200);
+    }
 
+    public function listPaymentConditions(Request $request)
+    {
+        $typeDocument = PaymentCondition::all();
+        return response()->json($typeDocument, 200);
+    }
+    
     public function updateBusinessEntity(Request $request)
     {
         DB::transaction(function () use ($request) {
