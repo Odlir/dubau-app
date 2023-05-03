@@ -81,18 +81,12 @@ class ProductServiceTypeController extends Controller
 
     public function updateProductServiceType(Request $request)
     {
-        if ($request->product_service_type_Description == '') {
-            ProductServiceType::where('product_service_type_id', $request->product_service_type_id)
-                ->update([
-                    'name' => $request->name,
-                ]);
-        } else {
-            ProductServiceType::where('product_service_type_id', $request->product_service_type_id)
-                ->update([
-                    'name' => $request->name,
-                    'type' => $request->type
-                ]);
-        }
+        ProductServiceType::where('product_service_type_id', $request->product_service_type_id)
+            ->update([
+                'name' => $request->name,
+                'type' => $request->type,
+
+            ]);
     }
 
     public function deleteProductServiceType(Request $request)
@@ -113,7 +107,6 @@ class ProductServiceTypeController extends Controller
 
         DB::transaction(function () use ($request) {
             $product_service_type = ProductServiceType::create([
-                'product_service_type_id' => 1,
                 'name' => $request->name,
                 'type' => $request->type,
                 'created_in' => date('Y-m-d H:i:s'),

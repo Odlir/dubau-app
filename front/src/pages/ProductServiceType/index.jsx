@@ -17,7 +17,7 @@ function Index() {
     const [type, setType] = useState('');
     const [DescriptionAgain, setDescriptionAgain] = useState('');
     const [created_in, setCreated_in] = useState('');
-    const [category_ApprovedStatus, setProductServiceType_ApprovedStatus] = useState('1');
+    const [status, setStatus] = useState('1');
     const [formType, setFormType] = useState('list');
     /* Server Side */
     const [data, setData] = useState([]);
@@ -54,7 +54,7 @@ function Index() {
         fetchProductServiceTypes(page_);
     }, [perPage]);
 
-    const actionDelete = async (product_service_type) => {
+    const actionDelete = async (product_service_type_id) => {
         Swal.fire({
             title: 'Desea realizar esta accion?',
             text: "No podra revertir los cambios!",
@@ -66,7 +66,7 @@ function Index() {
         }).then((result) => {
             if (result.isConfirmed) {
                 const endpoint = `${env.apiURL}deleteProductServiceType`;
-                axios.post(endpoint, {product_service_type, status: 0})
+                axios.post(endpoint, {product_service_type_id, status: 0})
                     .then((response) => {
                         Swal.fire(
                             'Eliminado!',
@@ -84,10 +84,10 @@ function Index() {
         });
     };
 
-    const actionEdit = async (product_service_type) => {
+    const actionEdit = async (product_service_type_id) => {
         const endpoint = `${env.apiURL}listXProductServiceType`;
-        const response = await axios.get(`${endpoint}?product_service_type=${product_service_type}`);
-        setdataxProductServiceType(response.data.product_service_type);
+        const response = await axios.get(`${endpoint}?product_service_type_id=${product_service_type_id}`);
+        setdataxProductServiceType(response.data.product_service_type_id);
         setName(response.data.name);
         setType(response.data.type);
         setFormType('edit');
@@ -111,7 +111,7 @@ function Index() {
     const handleOnClickUpdate = async (e) => {
         e.preventDefault();
         const endpoint = `${env.apiURL}updateProductServiceType`;
-        await axios.post(endpoint, {product_service_type: dataxProductServiceType, name, type})
+        await axios.post(endpoint, {product_service_type_id: dataxProductServiceType, name, type})
             .then((response) => {
                 window.location.reload();
             })
@@ -121,7 +121,7 @@ function Index() {
     };
 
     const captureType = (e) => {
-        setProductServiceType_ApprovedStatus(e.target.value);
+        setStatus(e.target.value);
     };
 
     const handleOnClickSearch = async page => {
@@ -138,12 +138,12 @@ function Index() {
         setLoading(true);
         setName('');
         setType('');
-        setProductServiceType_ApprovedStatus('');
+        setStatus('');
         setCreated_in('');
         fetchProductServiceTypes(1);
         setLoading(false);
     };
-    console.log(category_ApprovedStatus);
+    console.log(status);
 
     return (
         <div>

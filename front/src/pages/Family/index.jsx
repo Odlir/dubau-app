@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {env} from "@/env.js";
-import columns from '../../data/Inventory.jsx';
+import columns from '../../data/Family.jsx';
 import Preload from "@/components/preload/preload";
 import 'sweetalert2/src/sweetalert2.scss';
 import Add from "./add.jsx";
@@ -14,10 +14,13 @@ function Index() {
     const navigate = useNavigate();
 
     const [name, setName] = useState('');
-    const [start_date, setStart_date] = useState('');
-    const [final_date, setFinal_date] = useState('');
+    const [internal_code, setInternalCode] = useState('');
+    const [user_code, setUserCode] = useState('');
+    const [percentage, setPercentage] = useState('');
+    const [type, setType] = useState('');
+    const [DescriptionAgain, setDescriptionAgain] = useState('');
     const [created_in, setCreated_in] = useState('');
-    const [category_ApprovedStatus, setInventory_ApprovedStatus] = useState('1');
+    const [status, setStatus] = useState('1');
     const [formType, setFormType] = useState('list');
     /* Server Side */
     const [data, setData] = useState([]);
@@ -25,11 +28,16 @@ function Index() {
     const [totalRows, setTotalRows] = useState(0);
     const [perPage, setPerPage] = useState(10);
     const [page_, setPage_] = useState(1);
-    const [dataxInventory, setdataxInventory] = useState('');
+    const [dataxFamily, setdataxFamily] = useState('');
+    const [category_id, setCategory_id] = useState('');
+    const [categoryContainer, setCategoryContainer] = useState('');
+    const [coin_id, setCoin_id] = useState('');
+    const [profit_by_family_percentage, setProfit_by_family_percentage] = useState('');
 
-    const fetchInventorys = async page => {
+    const [inputElements, setInputElements] = useState([]);
+    const fetchFamilys = async page => {
         setLoading(true);
-        const endpoint = `${env.apiURL}listInventory`;
+        const endpoint = `${env.apiURL}listFamily`;
         const response = await axios.get(`${endpoint}?page=${page}&per_page=${perPage}`);
         setData(response.data.data);
         setPage_(response.data.page);
@@ -38,7 +46,7 @@ function Index() {
     };
 
     const handlePageChange = page => {
-        fetchInventorys(page);
+        fetchFamilys(page);
     };
 
     const handlePerRowsChange = (rows) => {
@@ -47,14 +55,14 @@ function Index() {
     };
 
     useEffect(() => {
-        fetchInventorys(page_);
+        fetchFamilys(page_);
     }, []);
 
     useEffect(() => {
-        fetchInventorys(page_);
+        fetchFamilys(page_);
     }, [perPage]);
 
-    const actionDelete = async (inventory_id) => {
+    const actionDelete = async (family_id) => {
         Swal.fire({
             title: 'Desea realizar esta accion?',
             text: "No podra revertir los cambios!",
@@ -65,15 +73,15 @@ function Index() {
             confirmButtonText: 'Si, Eliminar!'
         }).then((result) => {
             if (result.isConfirmed) {
-                const endpoint = `${env.apiURL}deleteInventory`;
-                axios.post(endpoint, {inventory_id, status: 0})
+                const endpoint = `${env.apiURL}deleteFamily`;
+                axios.post(endpoint, {family_id, status: 0})
                     .then((response) => {
                         Swal.fire(
                             'Eliminado!',
                             'Se ha eliminado Correctamente.',
                             'success'
                         ).then((result) => {
-                            fetchInventorys(page_);
+                            fetchFamilys(page_);
                         });
                     })
                     .catch(error => {
@@ -84,36 +92,43 @@ function Index() {
         });
     };
 
-    const actionEdit = async (inventory_id) => {
-        const endpoint = `${env.apiURL}listXInventory`;
-        const response = await axios.get(`${endpoint}?inventory_id=${inventory_id}`);
-        setdataxInventory(response.data.inventory_id);
+    const actionEdit = async (family_id) => {
+        const endpoint = `${env.apiURL}listXFamily`;
+        const response = await axios.get(`${endpoint}?family_id=${family_id}`);
+        setdataxFamily(response.data.family_id);
         setName(response.data.name);
-        setStart_date(response.data.start_date);
-        setFinal_date(response.data.final_date);
-
+        setInternalCode(response.data.internal_code);
+        setUserCode(response.data.user_code);
+        setPercentage(response.data.percentage);
+        setType(response.data.type);
         setFormType('edit');
     };
     const actionAdd = async () => {
+
+        const endpoint5 = `${env.apiURL}listCategorys`;
+        const response5 = await axios.get(`${endpoint5}`);
+        setCategoryContainer(response5.data);
+
         setFormType('register');
     };
 
     const handleOnClickRegister = async (e) => {
         e.preventDefault();
-        const endpoint = `${env.apiURL}registerInventory`;
-        await axios.post(endpoint, {name, start_date, final_date, status: '1'})
+        console.log(inputElements);
+        /*     const endpoint = `${env.apiURL}registerFamily`;
+        await axios.post(endpoint, {name, internal_code, user_code, percentage, type, status: '1'})
             .then((response) => {
                 window.location.reload();
             })
             .catch(error => {
                 alert('Debe completar correctamente sus datos');
-            });
+            }); */
     };
 
     const handleOnClickUpdate = async (e) => {
         e.preventDefault();
-        const endpoint = `${env.apiURL}updateInventory`;
-        await axios.post(endpoint, {inventory_id: dataxInventory, name, start_date, final_date})
+        const endpoint = `${env.apiURL}updateFamily`;
+        await axios.post(endpoint, {family_id: dataxFamily, name, percentage, internal_code, user_code, type})
             .then((response) => {
                 window.location.reload();
             })
@@ -123,12 +138,12 @@ function Index() {
     };
 
     const captureType = (e) => {
-        setInventory_ApprovedStatus(e.target.value);
+        setStatus(e.target.value);
     };
 
     const handleOnClickSearch = async page => {
         setLoading(true);
-        const endpoint = `${env.apiURL}listInventory`;
+        const endpoint = `${env.apiURL}listFamily`;
         const response = await axios.get(`${endpoint}?page=${page_}&per_page=${perPage}&name=${name}&created_in=${created_in}`);
         setData(response.data.data);
         setPage_(response.data.page);
@@ -139,19 +154,20 @@ function Index() {
     const handleOnClickClean = async page => {
         setLoading(true);
         setName('');
-        setInventory_ApprovedStatus('');
+        setType('');
+        setStatus('');
         setCreated_in('');
-        fetchInventorys(1);
+        fetchFamilys(1);
         setLoading(false);
     };
-    console.log(category_ApprovedStatus);
+    console.log(status);
 
     return (
         <div>
             {(formType === 'list') ?
                 <>
                     <List
-                        nameSection="Inventario"
+                        nameSection="Familia"
                         dataType="text"
                         dataSearch1={name}
                         setdataSearch1={setName}
@@ -196,24 +212,41 @@ function Index() {
                         <Add handleOnClickRegister={handleOnClickRegister}
                              name={name}
                              setName={setName}
-
-                             start_date={start_date}
-                             final_date={final_date}
-                             setStart_date={setStart_date}
-                             setFinal_date={setFinal_date}
+                             internal_code={internal_code}
+                             setInternalCode={setInternalCode}
+                             user_code={user_code}
+                             setUserCode={setUserCode}
+                             percentage={percentage}
+                             setPercentage={setPercentage}
+                             type={type}
+                             setType={setType}
+                             DescriptionAgain={DescriptionAgain}
+                             setDescriptionAgain={setDescriptionAgain}
+                             categoryContainer={categoryContainer}
+                             setCategoryContainer={setCategoryContainer}
                              setFormType={setFormType}
-
+                             inputElements={inputElements}
+                             setInputElements={setInputElements}
                         />
                         :
                         <Add handleOnClickRegister={handleOnClickUpdate}
                              name={name}
                              setName={setName}
-                             start_date={start_date}
-                             final_date={final_date}
-                             setStart_date={setStart_date}
-                             setFinal_date={setFinal_date}
+                             internal_code={internal_code}
+                             setInternalCode={setInternalCode}
+                             user_code={user_code}
+                             setUserCode={setUserCode}
+                             percentage={percentage}
+                             setPercentage={setPercentage}
+                             type={type}
+                             setType={setType}
+                             DescriptionAgain={DescriptionAgain}
+                             setDescriptionAgain={setDescriptionAgain}
+                             categoryContainer={categoryContainer}
+                             setCategoryContainer={setCategoryContainer}
                              setFormType={setFormType}
-
+                             inputElements={inputElements}
+                             setInputElements={setInputElements}
                         />
                     }
                 </>

@@ -63,56 +63,6 @@ function Add(props) {
                                         </div>
                                     </div>
                                 </div>
-                                <div
-                                    className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                    <div className="form-label xl:w-64 xl:!mr-10">
-                                        <div className="text-left">
-                                            <div className="flex items-center">
-                                                <div className="font-medium">Fecha Inicio</div>
-                                                <div
-                                                    className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                    Required
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="w-full mt-3 xl:mt-0 flex-1">
-                                        <Input dataType="text" dataName="0-0-2023" dataId="emailll"
-                                               className="form-control"
-                                               dataPlaceholder="0-0-2023"
-                                               dataValue={start_date}
-                                               dataOnchange={setStart_date}/>
-                                        <div className="form-help text-right">
-                                            Maximum character 0/50
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div
-                                    className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                    <div className="form-label xl:w-64 xl:!mr-10">
-                                        <div className="text-left">
-                                            <div className="flex items-center">
-                                                <div className="font-medium">Fecha Final</div>
-                                                <div
-                                                    className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                    Required
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="w-full mt-3 xl:mt-0 flex-1">
-                                        <Input dataType="text" dataName="0-0-2023" dataId="emailll"
-                                               className="form-control"
-                                               dataPlaceholder="0-0-2023"
-                                               dataValue={final_date}
-                                               dataOnchange={setFinal_date}/>
-                                        <div className="form-help text-right">
-                                            Maximum character 0/50
-                                        </div>
-                                    </div>
-                                </div>
-
 
                             </div>
                         </div>
@@ -124,32 +74,57 @@ function Add(props) {
                             <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Inventario
                             Config
                         </div>
-                        {/* <div className="mt-5">
-                            <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                <div className="form-label xl:w-64 xl:!mr-10">
-                                    <div className="text-left">
-                                        <div className="flex items-center">
-                                            <div className="font-medium">Acceso</div>
-                                            <div
-                                                className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                Required
-                                            </div>
+                        <div
+                            className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                            <div className="form-label xl:w-64 xl:!mr-10">
+                                <div className="text-left">
+                                    <div className="flex items-center">
+                                        <div className="font-medium">Fecha Inicio</div>
+                                        <div
+                                            className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                            Required
                                         </div>
-                                        <div className="leading-relaxed text-slate-500 text-xs mt-3">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full mt-3 xl:mt-0 flex-1">
-                                    <div className="w-full">
-                                        <select className="form-select w-full">
-                                            <option value="Gram (g)">Principal</option>
-                                            <option value="Kilogram (kg)">Almacen</option>
-                                            <option value="Kilogram (kg)">Ventas</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
-                        </div> */}
+                            <div className="w-full mt-3 xl:mt-0 flex-1">
+                                <Input dataType="date" dataName="0-0-2023" dataId="emailll"
+                                       className="form-control"
+                                       dataPlaceholder="0-0-2023"
+                                       dataValue={start_date}
+                                       dataOnchange={setStart_date}/>
+                                <div className="form-help text-right">
+                                    Maximum character 0/50
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                            <div className="form-label xl:w-64 xl:!mr-10">
+                                <div className="text-left">
+                                    <div className="flex items-center">
+                                        <div className="font-medium">Fecha Final</div>
+                                        <div
+                                            className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                            Required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="w-full mt-3 xl:mt-0 flex-1">
+                                <Input dataType="date" dataName="0-0-2023" dataId="emailll"
+                                       className="form-control"
+                                       dataPlaceholder="0-0-2023"
+                                       dataValue={final_date}
+                                       dataOnchange={setFinal_date}/>
+                                <div className="form-help text-right">
+                                    Maximum character 0/50
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
 

@@ -12,13 +12,17 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('inventory', function (Blueprint $table) {
-            $table->id('inventory_id');
+        Schema::create('family', function (Blueprint $table) {
+            $table->id('family_id');
             $table->string('name');
-            $table->date('start_date')->nullable();
-            $table->date('final_date')->nullable();
+            $table->integer('internal_code');
+            $table->integer('user_code');
+            $table->integer('percentage');
+            $table->integer('type')->comment('P Producto, S Servicio')->nullable();
             $table->integer('created_by')->nullable();
             $table->dateTime('created_in')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->dateTime('updated_in')->nullable();
             $table->integer('status')->comment('0 deleted, 1 actived')->nullable();
         });
     }
@@ -30,6 +34,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('inventory');
+        Schema::dropIfExists('family');
     }
 };

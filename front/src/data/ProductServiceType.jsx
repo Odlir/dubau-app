@@ -9,8 +9,14 @@ const columns = (actionDelete, actionEdit) => [
         width: "4rem",
     },
     {
-        name: 'Categoria',
+        name: 'Nombre',
         selector: row => row.name,
+    },
+    {
+        name: 'Tipo',
+        selector: row => row.type,
+        cell: (selector) =>
+            <p>{selector.type === 'P' ? 'PRODUCTO' : 'SERVICIO'}</p>,
     },
 
     {

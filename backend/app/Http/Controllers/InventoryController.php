@@ -81,19 +81,14 @@ class InventoryController extends Controller
 
     public function updateInventory(Request $request)
     {
-        if ($request->inventory_Description == '') {
-            Inventory::where('inventory_id', $request->inventory_id)
-                ->update([
-                    'name' => $request->name,
-                ]);
-        } else {
-            Inventory::where('inventory_id', $request->inventory_id)
-                ->update([
-                    'name' => $request->name,
-                    'start_date' => $request->start_date,
-                    'final_date' => $request->final_date,
-                ]);
-        }
+
+        Inventory::where('inventory_id', $request->inventory_id)
+            ->update([
+                'name' => $request->name,
+                'start_date' => $request->start_date,
+                'final_date' => $request->final_date,
+            ]);
+
     }
 
     public function deleteInventory(Request $request)
@@ -114,7 +109,6 @@ class InventoryController extends Controller
 
         DB::transaction(function () use ($request) {
             $inventory = Inventory::create([
-                'inventory_id' => 1,
                 'name' => $request->name,
                 'start_date' => $request->start_date,
                 'final_date' => $request->final_date,

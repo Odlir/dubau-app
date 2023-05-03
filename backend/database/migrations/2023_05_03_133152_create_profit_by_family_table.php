@@ -12,13 +12,16 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('inventory', function (Blueprint $table) {
-            $table->id('inventory_id');
-            $table->string('name');
-            $table->date('start_date')->nullable();
-            $table->date('final_date')->nullable();
+        Schema::create('profit_by_family', function (Blueprint $table) {
+            $table->id('profit_by_family_id');
+            $table->unsignedBigInteger('family_id');
+            $table->unsignedBigInteger('category_id');
+            $table->integer('coin_id')->comment('0 SOLES, 1 DOLARES')->nullable();
+            $table->integer('percentage');
             $table->integer('created_by')->nullable();
             $table->dateTime('created_in')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->dateTime('updated_in')->nullable();
             $table->integer('status')->comment('0 deleted, 1 actived')->nullable();
         });
     }
@@ -30,6 +33,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('inventory');
+        Schema::dropIfExists('profit_by_family');
     }
 };
