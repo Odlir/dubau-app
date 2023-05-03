@@ -7,10 +7,12 @@ use App\Http\Controllers\businessEntityController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommercialSectionController;
 use App\Http\Controllers\EstablishmentController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LineController;
 use App\Http\Controllers\MakerController;
 use App\Http\Controllers\PaymentConditionController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\ProductServiceTypeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TypeQualificationController;
@@ -213,8 +215,35 @@ Route::controller(businessEntityController::class)->group(function () {
     Route::post('updateBusinessEntity', 'updateBusinessEntity');
     Route::get('listNationality', 'listNationality');
     Route::get('listTypeDocument', 'listTypeDocument');
-    Route::get('listTypeQualification', 'listTypeQualification');
+    Route::get('listTypeQualifications', 'listTypeQualifications');
     Route::get('listCategorys', 'listCategorys');
     Route::get('listWaytoPays', 'listWaytoPays');
     Route::get('listPaymentConditions', 'listPaymentConditions');
+});
+
+
+Route::controller(CommercialSectionController::class)->group(function () {
+    Route::post('registerCommercialSection', 'registerCommercialSection');
+    Route::get('listCommercialSection', 'listCommercialSection');
+    Route::get('listXCommercialSection', 'listXCommercialSection');
+    Route::post('deleteCommercialSection', 'deleteCommercialSection');
+    Route::post('updateCommercialSection', 'updateCommercialSection');
+});
+
+
+Route::controller(ProductServiceTypeController::class)->group(function () {
+    Route::post('registerProductServiceType', 'registerProductServiceType');
+    Route::get('listProductServiceType', 'listProductServiceType');
+    Route::get('listXProductServiceType', 'listXProductServiceType');
+    Route::post('deleteProductServiceType', 'deleteProductServiceType');
+    Route::post('updateProductServiceType', 'updateProductServiceType');
+});
+
+
+Route::controller(InventoryController::class)->group(function () {
+    Route::post('registerInventory', 'registerInventory');
+    Route::get('listInventory', 'listInventory');
+    Route::get('listXInventory', 'listXInventory');
+    Route::post('deleteInventory', 'deleteInventory');
+    Route::post('updateInventory', 'updateInventory');
 });

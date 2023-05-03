@@ -23,6 +23,8 @@ import Category from "@/pages/category/index.jsx";
 import PaymentCondition from "@/pages/paymentcondition/index.jsx";
 import CommercialSection from "@/pages/commercialSection/index.jsx";
 
+import Inventory from "@/pages/Inventory";
+import ProductServiceType from "@/pages/ProductServiceType";
 
 function Router() {
     const routes = [
@@ -103,6 +105,12 @@ function Router() {
                 }, {
                     path: "/commercialSection",
                     element: <CommercialSection/>,
+                }, {
+                    path: "/productServiceType",
+                    element: <ProductServiceType/>,
+                }, {
+                    path: "/Inventory",
+                    element: <Inventory/>,
                 }
             ]
         },

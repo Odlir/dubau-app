@@ -57,6 +57,11 @@ function Index() {
     const [selectedOptionsNaturality, setSelectedOptionsNaturality] = useState('');
     const [selectedOptionsNaturalitys, setSelectedOptionsNaturalitys] = useState('');
 
+    const [typeQualification, setTypeQualification] = useState('');
+    const [category, setCategory] = useState('');
+    const [waytopay, setWaytopay] = useState('');
+    const [paymentCondition, setPaymentCondition] = useState('');
+
     const fetchbusinessEntitys = async page => {
 
         setLoading(true);
@@ -126,7 +131,7 @@ function Index() {
         setBusiness_entity_id(business_entity_idd);
         setdataxbusinessEntity(response.data.business_entity_idd);
         setPerson_Name(response.data.person_Name);
-        setCreditLine(response.data.creditLine);
+        setCreditLine(response.data.credit_line_id);
         setPerson_LastNamePaternal(response.data.person_LastNamePaternal);
         setPerson_LastNameMaternal(response.data.person_LastNameMaternal);
         setPerson_DateBirth(response.data.person_DateBirth);
@@ -154,6 +159,12 @@ function Index() {
         setStaff_id(response.data.staff_id);
         setSelectedOptionsNaturality(response.data.nationality_ID);
         setSelectedOptionsNaturalitys(response.data.nationality_ID);
+
+        setTypeQualification(response.data.typequalification_id);
+        setCategory(response.data.category_id);
+        setWaytopay(response.data.waytopay_id);
+        setPaymentCondition(response.data.payment_condition_id);
+
         setTypedocument_ID(response.data.typedocument_ID);
         setPerson_DNI(response.data.person_DNI);
         setPerson_RUC(response.data.person_RUC);
@@ -165,7 +176,7 @@ function Index() {
         const response3 = await axios.get(`${endpoint3}`);
         setTypeDocumentContainer(response3.data);
 
-        const endpoint4 = `${env.apiURL}listTypeQualification`;
+        const endpoint4 = `${env.apiURL}listTypeQualifications`;
         const response4 = await axios.get(`${endpoint4}`);
         setTypeQualificationContainer(response4.data);
 
@@ -241,6 +252,10 @@ function Index() {
             ubigeous_Home,
             position_ID,
             typedocument_ID,
+            creditLine,
+            typeQualification,
+            nationality_ID: paymentCondition,
+            nationality_ID: waytopay,
             businessEntity_StatusID: '1',
         }, {
             headers: {
@@ -453,6 +468,17 @@ function Index() {
 
                              selectedOptionsNaturalitys={selectedOptionsNaturalitys}
                              setSelectedOptionsNaturalitys={setSelectedOptionsNaturalitys}
+
+                             setTypeQualification={setTypeQualification}
+                             setCategory={setCategory}
+                             setWaytopay={setWaytopay}
+                             setPaymentCondition={setPaymentCondition}
+
+                             typeQualification={typeQualification}
+                             category={category}
+                             waytopay={waytopay}
+                             paymentCondition={paymentCondition}
+
                              typeDocumentContainer={typeDocumentContainer}
                              setTypeDocumentContainer={setTypeDocumentContainer}
 
@@ -557,13 +583,25 @@ function Index() {
                              creditLine={creditLine}
                              setCreditLine={setCreditLine}
 
+
+                             setTypeQualification={setTypeQualification}
+                             setCategory={setCategory}
+                             setWaytopay={setWaytopay}
+                             setPaymentCondition={setPaymentCondition}
+
+                             typeQualification={typeQualification}
+                             category={category}
+                             waytopay={waytopay}
+                             paymentCondition={paymentCondition}
+
                             /* setbusinessEntity_ApprovedStatus={setbusinessEntity_ApprovedStatus} */
                         />
                     }
                 </>
             }
         </div>
-    );
+    )
+        ;
 }
 
 export default Index;

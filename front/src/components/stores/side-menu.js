@@ -1,126 +1,143 @@
-import { atom } from "recoil";
+import {atom} from "recoil";
 
 const sideMenu = atom({
-  key: "sideMenu",
-  default: {
-    menu: [
-      {
-        icon: "Home",
-        title: "Dashboard",
-        subMenu: [
-          {
-            icon: "",
-            pathname: "/dashboard",
-            title: "View 1",
-          },
-        ],
-      },
-      {
-        icon: "Box",
-        title: "Mantenimientos",
-        subMenu: [
-          {
-            icon: "",
-            pathname: "/users",
-            title: "Usuarios",
-          },
-          {
-            icon: "",
-            pathname: "/roles",
-            title: "Roles",
-          },
-          {
-            icon: "",
-            pathname: "/brand",
-            title: "Marcas",
-          },
-          {
-            icon: "",
-            pathname: "/line",
-            title: "Lineas",
-          },
-          {
-            icon: "",
-            pathname: "/area",
-            title: "Areas",
-          },
-          {
-            icon: "",
-            pathname: "/maker",
-            title: "Fabricantes",
-          },
-          {
-            icon: "",
-            pathname: "/waytopay",
-            title: "Forma de Pago",
-          },
-          {
-            icon: "",
-            pathname: "/establishment",
-            title: "Establecimiento",
-          },
-          {
-            icon: "",
-            pathname: "/typequalification",
-            title: "Tipo de Calificacion",
-          },
-          {
-            icon: "",
-            pathname: "/unitmeasure",
-            title: "Unidad de Medida",
-          },
-          {
-            icon: "",
-            pathname: "/category",
-            title: "Categoria",
-          },
-          {
-            icon: "",
-            pathname: "/paymentcondition",
-            title: "Condicion de Pago",
-          },
-          {
-            icon: "",
-            pathname: "/commercialSection",
-            title: "Sector Comercial",
-          },
-          /*
-          {
-            icon: "",
-            pathname: "/position",
-            title: "Cargo",
-          },*/
-        ],
-      },
-      {
-        icon: "Box",
-        title: "Principal",
-        subMenu: [
-        /*  {
-            icon: "",
-            pathname: "/staff",
-            title: "Personal",
-          },
+    key: "sideMenu",
+    default: {
+        menu: [
+            {
+                icon: "Home",
+                title: "Dashboard",
+                subMenu: [
+                    {
+                        icon: "",
+                        pathname: "/dashboard",
+                        title: "View 1",
+                    },
+                ],
+            },
+            {
+                icon: "Box",
+                title: "Mantenimientos",
+                subMenu: [
+                    {
+                        icon: "",
+                        pathname: "/users",
+                        title: "Usuarios",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/roles",
+                        title: "Roles",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/brand",
+                        title: "Marcas",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/line",
+                        title: "Lineas",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/area",
+                        title: "Areas",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/maker",
+                        title: "Fabricantes",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/waytopay",
+                        title: "Forma de Pago",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/establishment",
+                        title: "Establecimiento",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/typequalification",
+                        title: "Tipo de Calificacion",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/unitmeasure",
+                        title: "Unidad de Medida",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/category",
+                        title: "Categoria",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/paymentcondition",
+                        title: "Condicion de Pago",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/commercialSection",
+                        title: "Sector Comercial",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/ProductServiceType",
+                        title: "Tipo de Producto / Servicio",
+                    },
 
-          {
-            icon: "",
-            pathname: "/staff2",
-            title: "Cliente",
-          },
-          {
-            icon: "",
-            pathname: "/staff3",
-            title: "Proveedor",
-          },*/
-          {
-            icon: "",
-            pathname: "/businessEntity",
-            title: "Persona",
-          },
-        ]
-      },
-    ],
-  },
+                    /*
+                    {
+                      icon: "",
+                      pathname: "/position",
+                      title: "Cargo",
+                    }, */
+                ],
+            },
+            {
+                icon: "Box",
+                title: "Principal",
+                subMenu: [
+                    /*  {
+                        icon: "",
+                        pathname: "/staff",
+                        title: "Personal",
+                      },
+            
+                      {
+                        icon: "",
+                        pathname: "/staff2",
+                        title: "Cliente",
+                      },
+                      {
+                        icon: "",
+                        pathname: "/staff3",
+                        title: "Proveedor",
+                      }, */
+                    {
+                        icon: "",
+                        pathname: "/businessEntity",
+                        title: "Persona",
+                    },
+                ]
+            },
+            {
+                icon: "Box",
+                title: "Almacen",
+                subMenu: [
+                    {
+                        icon: "",
+                        pathname: "/Inventory",
+                        title: "Inventario",
+                    },
+                ]
+            },
+        ],
+    },
 });
 
-export { sideMenu };
+export {sideMenu};

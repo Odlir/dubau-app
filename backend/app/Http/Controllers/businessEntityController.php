@@ -20,7 +20,7 @@ class businessEntityController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['registerBusinessEntity', 'listBusinessEntity', 'listXBusinessEntity', 'deleteBusinessEntity', 'updateBusinessEntity', 'listNationality', 'listTypeDocument', 'listTypeQualification', 'listCategorys', 'listWaytoPays', 'listPaymentConditions']]);
+        $this->middleware('auth:api', ['except' => ['registerBusinessEntity', 'listBusinessEntity', 'listXBusinessEntity', 'deleteBusinessEntity', 'updateBusinessEntity', 'listNationality', 'listTypeDocument', 'listTypeQualification', 'listCategorys', 'listWaytoPays', 'listPaymentConditions', 'listTypeQualifications']]);
     }
 
     public function listBusinessEntity()
@@ -89,7 +89,10 @@ class businessEntityController extends Controller
     {
         $business_entity_id = $request->business_entity_id;
 
-        $business_entity = BusinessEntity::where('business_entity_id', $business_entity_id)->join('customer', 'business_entity.customer_id', '=', 'customer.customer_id')->join('person', 'person.person_id', '=', 'customer.person_ID')->first();
+        $business_entity = BusinessEntity::where('business_entity_id', $business_entity_id)
+            ->join('customer', 'business_entity.customer_id', '=', 'customer.customer_id')
+            ->join('person', 'person.person_id', '=', 'customer.person_ID')
+            ->first();
         return response()->json($business_entity, 200);
     }
 
@@ -106,7 +109,7 @@ class businessEntityController extends Controller
         return response()->json($typeDocument, 200);
     }
 
-    public function listTypeQualification(Request $request)
+    public function listTypeQualifications(Request $request)
     {
         $typeDocument = TypeQualification::all();
         return response()->json($typeDocument, 200);
@@ -129,7 +132,7 @@ class businessEntityController extends Controller
         $typeDocument = PaymentCondition::all();
         return response()->json($typeDocument, 200);
     }
-    
+
     public function updateBusinessEntity(Request $request)
     {
         DB::transaction(function () use ($request) {

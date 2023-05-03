@@ -90,7 +90,16 @@ function Add(props) {
         setCategoryContainer,
         paymentConditionContainer,
         creditLine,
-        setCreditLine
+        setCreditLine,
+        setTypeQualification,
+        setCategory,
+        setWaytopay,
+        setPaymentCondition,
+
+        typeQualification,
+        category,
+        waytopay,
+        paymentCondition,
 
     } = props;
 
@@ -156,29 +165,29 @@ function Add(props) {
 
     const optionsTypeQualificationContainer = typeQualificationContainer.map(obj =>
         ({
-            value: obj.typedocument_ID,
-            label: obj.typedocument_Initial,
+            value: obj.typequalification_ID,
+            label: obj.typequalification_Name,
         }),
     );
 
     const optionsCategoryContainer = categoryContainer.map(obj =>
         ({
-            value: obj.typedocument_ID,
-            label: obj.typedocument_Initial,
+            value: obj.category_ID,
+            label: obj.category_Name,
         }),
     );
 
-    const optionsTypeDocument = typeDocumentContainer.map(obj =>
+    const optionsPaymentConditionContainer = paymentConditionContainer.map(obj =>
         ({
-            value: obj.typedocument_ID,
-            label: obj.typedocument_Initial,
+            value: obj.payment_condition_ID,
+            label: obj.payment_condition_Name,
         }),
     );
 
-    const optionsTypeDocument = typeDocumentContainer.map(obj =>
+    const optionsWaytoPay = waytopayContainer.map(obj =>
         ({
-            value: obj.typedocument_ID,
-            label: obj.typedocument_Initial,
+            value: obj.waytopay_ID,
+            label: obj.waytopay_Name,
         }),
     );
 
@@ -333,6 +342,25 @@ function Add(props) {
         label: obj.nationality_Name
     }) : '');
 
+    const defaultSelectedOptionsTypeQualification = typeQualificationContainer.map(obj => typeQualification === obj.typequalification_ID ? ({
+        value: obj.typequalification_ID,
+        label: obj.typequalification_Name
+    }) : '');
+
+    const defaultSelectedOptionsCategory = categoryContainer.map(obj => category === obj.category_ID ? ({
+        value: obj.category_ID,
+        label: obj.category_Name
+    }) : '');
+
+    const defaultSelectedOptionsWaytoPay = waytopayContainer.map(obj => waytopay === obj.waytopay_ID ? ({
+        value: obj.waytopay_ID,
+        label: obj.waytopay_Name
+    }) : '');
+
+    const defaultSelectedPaymentCondition = paymentConditionContainer.map(obj => paymentCondition === obj.payment_condition_ID ? ({
+        value: obj.payment_condition_ID,
+        label: obj.payment_condition_Name
+    }) : '');
 
     const [selectedOptions, setSelectedOptions] = useState(defaultSelectedOptions);
     const [selectedOptionsGender, setSelectedOptionsGender] = useState(defaultSelectedOptionsGender);
@@ -341,6 +369,10 @@ function Add(props) {
     const [selectedOptionsNaturalityy, setSelectedOptionsNaturalityy] = useState(defaultSelectedOptionsNationality);
     const [selectedOptionsTypeDocument, setSelectedOptionsTypeDocument] = useState();
     const [selectedOptionsStatusmarital, setSelectedOptionsStatusmarital] = useState(defaultSelectedOptionsStatusmarital);
+    const [selectedOptionsWaytopayContainer, setSelectedOptionsWaytopayContainer] = useState(defaultSelectedOptionsWaytoPay);
+    const [selectedOptionsCategoryContainer, setSelectedOptionsCategoryContainer] = useState(defaultSelectedOptionsCategory);
+    const [selectedOptionsPaymentConditionContainer, setSelectedOptionsPaymentConditionContainer] = useState(defaultSelectedPaymentCondition);
+    const [selectedOptionsTypeQualificationContainer, setSelectedOptionsTypeQualificationContainer] = useState(defaultSelectedOptionsTypeQualification);
 
     const handleChange = (selected) => {
         setSelectedOptions(selected);
@@ -372,6 +404,20 @@ function Add(props) {
     const handleChangeTypeDocument = (selected) => {
         setSelectedOptionsTypeDocument(selected);
     };
+
+    const handleChangeWaytopay = (selected) => {
+        setSelectedOptionsWaytopayContainer(selected);
+    };
+    const handleChangeCategory = (selected) => {
+        setSelectedOptionsCategoryContainer(selected);
+    };
+    const handleChangeTypeQualification = (selected) => {
+        setSelectedOptionsTypeQualificationContainer(selected);
+    };
+    const handleChangePaymentCondition = (selected) => {
+        setSelectedOptionsPaymentConditionContainer(selected);
+    };
+
 
     useEffect(() => {
 
@@ -617,49 +663,56 @@ function Add(props) {
                                                 <div className="mt-3">
                                                     <label className="form-label">Calificacion</label>
                                                     <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                                            <option>EXCELENTE</option>
-                                                            <option>BUENO</option>
-                                                            <option>REGULAR</option>
-                                                            <option>MALO</option>
-                                                            <option>SIN DESCUENTO</option>
-                                                        </select>
+                                                        <Select
+                                                            styles={customStyles}
+                                                            options={optionsTypeQualificationContainer}
+                                                            value={selectedOptionsTypeQualificationContainer}
+                                                            onChange={handleChangeTypeQualification}
+                                                            className="w-full"
+                                                        />
                                                     </div>
                                                 </div>
                                                 <div className="mt-3">
                                                     <label className="form-label">Linea de Credito</label>
                                                     <input type="text" className="datepicker form-control"
-                                                           id="post-form-2"
-                                                           data-single-mode="true" placeholder=" 0.00 "/>
+                                                           id="post-form-2" value={creditLine}
+                                                           data-single-mode="true" placeholder=" 0.00 "
+                                                           onChange={(e) => setCreditLine(e.target.value)}/>
                                                 </div>
                                                 <div className="mt-3">
                                                     <label className="form-label">Categoria</label>
                                                     <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                                            <option>DUBAU 01</option>
-                                                            <option>DUBAU 02</option>
-                                                            <option>DUBAU 03</option>
-                                                            <option>DUBAU 04</option>
-                                                            <option>DUBAU 05</option>
-                                                        </select>
+                                                        <Select
+                                                            styles={customStyles}
+                                                            options={optionsCategoryContainer}
+                                                            value={selectedOptionsCategoryContainer}
+                                                            onChange={handleChangeCategory}
+                                                            className="w-full"
+                                                        />
                                                     </div>
                                                 </div>
                                                 <div className="mt-3">
                                                     <label className="form-label">Forma de Pago</label>
                                                     <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                                            <option>CONTADO</option>
-                                                            <option>CREDITO</option>
-                                                            <option>LETRA</option>
-                                                            <option>TRANSFERENCIA</option>
-                                                        </select>
+                                                        <Select
+                                                            styles={customStyles}
+                                                            options={optionsWaytoPay}
+                                                            value={selectedOptionsWaytopayContainer}
+                                                            onChange={handleChangeWaytopay}
+                                                            className="w-full"
+                                                        />
                                                     </div>
                                                 </div>
+                                                <div className="mt-3"/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
 
                                             </div>
+
                                             <div className="mt-5 w-1/5"/>
                                             <div className="mt-5 w-2/4">
 
@@ -667,10 +720,10 @@ function Add(props) {
                                                     <label className="form-label">Condiciones</label>
                                                     <div className="dropdown z-40">
                                                         <Select
-                                                            options={options2}
+                                                            options={optionsPaymentConditionContainer}
                                                             closeMenuOnSelect={false}
-                                                            value={selectedOptions2}
-                                                            onChange={handleChange2}
+                                                            value={selectedOptionsPaymentConditionContainer}
+                                                            onChange={handleChangePaymentCondition}
                                                             isMulti
 
                                                             className="w-full"
