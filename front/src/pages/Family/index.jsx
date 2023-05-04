@@ -34,7 +34,9 @@ function Index() {
     const [coin_id, setCoin_id] = useState('');
     const [profit_by_family_percentage, setProfit_by_family_percentage] = useState('');
 
-    const [inputElements, setInputElements] = useState([]);
+    const [inputFields, setInputFields] = useState([
+        {id: '', name: '', coinSol: '', coinDollar: ''}
+    ]);
     const fetchFamilys = async page => {
         setLoading(true);
         const endpoint = `${env.apiURL}listFamily`;
@@ -101,6 +103,11 @@ function Index() {
         setUserCode(response.data.user_code);
         setPercentage(response.data.percentage);
         setType(response.data.type);
+
+        const endpoint2 = `${env.apiURL}listXProfitByFamily`;
+        const response2 = await axios.get(`${endpoint2}?family_id=${family_id}`);
+        console.log(response2);
+
         setFormType('edit');
     };
     const actionAdd = async () => {
@@ -114,15 +121,23 @@ function Index() {
 
     const handleOnClickRegister = async (e) => {
         e.preventDefault();
-        console.log(inputElements);
-        /*     const endpoint = `${env.apiURL}registerFamily`;
-        await axios.post(endpoint, {name, internal_code, user_code, percentage, type, status: '1'})
+
+        const endpoint = `${env.apiURL}registerFamily`;
+        await axios.post(endpoint, {
+            name,
+            internal_code,
+            user_code,
+            percentage,
+            profitByFamilyData: inputFields,
+            type,
+            status: '1'
+        })
             .then((response) => {
-                window.location.reload();
+                //   window.location.reload();
             })
             .catch(error => {
                 alert('Debe completar correctamente sus datos');
-            }); */
+            });
     };
 
     const handleOnClickUpdate = async (e) => {
@@ -225,8 +240,8 @@ function Index() {
                              categoryContainer={categoryContainer}
                              setCategoryContainer={setCategoryContainer}
                              setFormType={setFormType}
-                             inputElements={inputElements}
-                             setInputElements={setInputElements}
+                             inputFields={inputFields}
+                             setInputFields={setInputFields}
                         />
                         :
                         <Add handleOnClickRegister={handleOnClickUpdate}
@@ -245,8 +260,8 @@ function Index() {
                              categoryContainer={categoryContainer}
                              setCategoryContainer={setCategoryContainer}
                              setFormType={setFormType}
-                             inputElements={inputElements}
-                             setInputElements={setInputElements}
+                             inputFields={inputFields}
+                             setInputFields={setInputFields}
                         />
                     }
                 </>

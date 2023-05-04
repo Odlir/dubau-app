@@ -74,8 +74,9 @@ class ProfitByFamilyController extends Controller
 
     public function listXProfitByFamily()
     {
-        $profit_by_family_id = $_GET["profit_by_family_id"];
-        $product_service_type = ProfitByFamily::where('profit_by_family_id', $profit_by_family_id)->first();
+        $family_id = $_GET["family_id"];
+        $product_service_type = ProfitByFamily::all()->where('family_id', $family_id);
+
         return response()->json($product_service_type, 200);
     }
 

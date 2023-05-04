@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Family;
+use App\Models\ProfitByFamily;
 use DB;
 use Illuminate\Http\Request;
 use stdClass;
@@ -79,6 +80,7 @@ class FamilyController extends Controller
         return response()->json($product_service_type, 200);
     }
 
+
     public function updateFamily(Request $request)
     {
         Family::where('family_id', $request->family_id)
@@ -109,7 +111,7 @@ class FamilyController extends Controller
         ]);
 
         DB::transaction(function () use ($request) {
-            $product_service_type = Family::create([
+            $family = Family::create([
                 'name' => $request->name,
                 'internal_code' => $request->internal_code,
                 'user_code' => $request->user_code,
@@ -118,6 +120,29 @@ class FamilyController extends Controller
                 'created_in' => date('Y-m-d H:i:s'),
                 'status' => $request->status,
             ]);
+
+            $profitByFamilyContainer = $request->profitByFamilyData;
+            foreach ($profitByFamilyContainer as $profitByFamily) {
+
+                $profitByFamily_SolId = ProfitByFamily::create([
+                    'family_id' => $family->family_id,
+                    'category_id' => $profitByFamily['id'],
+                    'coin_id' => 0,
+                    'percentage' => $profitByFamily['coinSol'],
+                    'created_in' => date('Y-m-d H:i:s'),
+                    'status' => $request->status,
+                ]);
+                $profitByFamily_DollarId = ProfitByFamily::create([
+                    'family_id' => $family->family_id,
+                    'category_id' => $profitByFamily['id'],
+                    'coin_id' => 1,
+                    'percentage' => $profitByFamily['coinDollar'],
+                    'created_in' => date('Y-m-d H:i:s'),
+                    'status' => $request->status,
+                ]);
+            }
+
         });
+
     }
 }

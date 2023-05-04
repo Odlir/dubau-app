@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import Button from "@/components/Button/Button.jsx";
 import 'sweetalert2/src/sweetalert2.scss';
 import {Lucide} from "@/components/base-components/index.js";
@@ -32,9 +32,9 @@ function Add(props) {
         percentageSol,
         percentageDollar,
         setPercentageDollar,
+        inputFields,
+        setInputFields,
 
-        inputElements,
-        setInputElements,
         setType
 
     } = props;
@@ -44,26 +44,34 @@ function Add(props) {
         setFormType('list');
     };
 
-    /*    const optionsCategoryContainer = categoryContainer.map(obj =>
-            ({
-                value: obj.category_ID,
-                label: obj.category_Name,
-            }),
-        ); */
-    const inputListRef = useRef(null);
+
+    const handleFormChange = (index, event) => {
+        const data = [...inputFields];
+        data[index][event.target.name] = event.target.value;
+        setInputFields(data);
+    };
+
     useEffect(() => {
-        const inputs = inputListRef.current.querySelectorAll('input');
-        const elementsArray = Array.from(inputs);
-        setInputElements(elementsArray);
+        addFields();
     }, []);
 
-    const handleInputChange = (event) => {
-        const input = event.target;
-        const inputValue = input.value;
-        const inputId = input.id;
-        const inputDataId = input.dataset.id;
-        console.log(inputValue, inputId, inputDataId);
+    const addFields = () => {
+        const categoryObject = categoryContainer.map((category, index) => ({
+                    id: category.category_ID,
+                    name: category.category_Name,
+                    coinSol: '',
+                    coinDollar: ''
+                }
+            )
+        );
+        setInputFields(categoryObject);
     };
+
+
+    const submit = (e) => {
+        e.preventDefault();
+    };
+
 
     return (
         <div>
@@ -222,38 +230,39 @@ function Add(props) {
                                         </th>
                                     </div>
                                 </th>
-
                             </tr>
-
                             </thead>
-                            <tbody ref={inputListRef}>
+                            <tbody>
+                            {/* <form> */}
 
-
-                            {categoryContainer.map((category, index) =>
+                            {inputFields.map((value, index) => (
                                 <tr>
                                     <td className="border border-gray-400 p-2 ">{index + 1}</td>
-                                    <td className="border border-gray-400 p-2 ">{category.category_Name}</td>
+                                    <td className="border border-gray-400 p-2 ">{value.name}</td>
                                     <td className="border border-gray-400 p-2 " rowSpan={1} colSpan={2}>
-                                        <div className="flex">
-                                            <Input dataType="text" dataName={category.category_ID} dataId="email"
-                                                   dataCoin={1}
-                                                   className="form-control "
-                                                   dataPlaceholder="0 %" dataValue={percentageSol}
-                                                   dataOnchange={handleInputChange}/>
-                                            <td/>
-                                            <Input dataType="text" dataName={category.category_ID} dataId="email"
-                                                   dataCoin={2}
-                                                   className="form-control"
-                                                   dataPlaceholder="0 %" dataValue={percentageDollar}
-                                                   dataOnchange={handleInputChange}/>
+                                        <div className="flex" key={index}>
+                                            <input
+                                                name="coinSol"
+                                                placeholder="0.00 S/."
+                                                value={value.coinSol}
+                                                onChange={event => handleFormChange(index, event)}
+                                            />
+                                            <td><p>&nbsp;</p></td>
+                                            <input
+                                                name="coinDollar"
+                                                placeholder="0.00 $"
+                                                value={value.coinDollar}
+                                                onChange={event => handleFormChange(index, event)}
+                                            />
                                         </div>
 
                                     </td>
 
                                 </tr>
-                            )
-                            }
+                            ))}
 
+                            {/*  </form>
+*/}
                             </tbody>
                         </table>
 
