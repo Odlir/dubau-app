@@ -34,7 +34,9 @@ function Add(props) {
         setPercentageDollar,
         inputFields,
         setInputFields,
-
+        profitByFamilyContainer,
+        setProfitByFamilyContainer,
+        formType,
         setType
 
     } = props;
@@ -56,15 +58,93 @@ function Add(props) {
     }, []);
 
     const addFields = () => {
-        const categoryObject = categoryContainer.map((category, index) => ({
-                    id: category.category_ID,
-                    name: category.category_Name,
-                    coinSol: '',
-                    coinDollar: ''
+        if (formType === 'edit') {
+
+
+            const categoryArray = categoryContainer.map((category) => {
+                    const profi = profitByFamilyContainer.some(profit => profit.category_id === category.category_ID);
+
+                    return profitByFamilyContainer.map((profit) => {
+                            console.log(profit);
+                            if (profit.category_id === category.category_ID) {
+                                if (profit.coin_id === 0) {
+                                    return ({
+                                        id: category.category_ID,
+                                        profit_by_family_id_sol: profit.profit_by_family_id,
+                                        name: category.category_Name,
+                                        coinSol: profit.percentage,
+                                    });
+                                }
+
+                                if (profit.coin_id === 1) {
+                                    return ({
+                                        id: category.category_ID,
+                                        profit_by_family_id_dollar: profit.profit_by_family_id,
+                                        name: category.category_Name,
+                                        coinDollar: profit.percentage,
+                                    });
+                                }
+                            }
+                            if (!profi) {
+                                return ({
+                                    id: category.category_ID,
+                                    profit_by_family_id_sol: '',
+                                    name: category.category_Name,
+                                    coinSol: '',
+                                    profit_by_family_id_dollar: '',
+                                    coinDollar: '',
+                                });
+                            }
+
+                        }
+                    ).filter((element) => element !== undefined
+                    );
                 }
-            )
-        );
-        setInputFields(categoryObject);
+            );
+
+
+            // Quitamos el array dentro el array
+            const categoryObjects = categoryArray.map(array => array.filter(objeto => objeto)).flat();
+
+            // Filtramos los objetos q tengan el mismo id y aumentamos el valor diferente
+            const objetosUnicos = categoryObjects.reduce((acumulador, objeto) => {
+                const index = acumulador.findIndex(item => item.id === objeto.id);
+                if (index >= 0) {
+                    acumulador[index] = {...acumulador[index], ...objeto};
+                } else {
+                    acumulador.push(objeto);
+                }
+                return acumulador;
+            }, []);
+
+
+            setInputFields(objetosUnicos);
+
+        } else {
+            const categoryObject = categoryContainer.map((category, index) => ({
+                        id: category.category_ID,
+                        name: category.category_Name,
+                        profit_by_family_id_sol: '',
+                        coinSol: '',
+                        profit_by_family_id_dollar: '',
+                        coinDollar: '',
+
+                    }
+                )
+            );
+            setInputFields(categoryObject);
+        }
+
+        /*       const categoryObject = categoryContainer.map((category, index) => ({
+                           id: category.category_ID,
+                           name: category.category_Name,
+                           coinSol: '',
+                           coinDollar: ''
+                       }
+                   )
+               );
+               setInputFields(categoryObject); */
+
     };
 
 

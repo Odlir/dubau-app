@@ -83,15 +83,57 @@ class FamilyController extends Controller
 
     public function updateFamily(Request $request)
     {
-        Family::where('family_id', $request->family_id)
-            ->update([
-                'name' => $request->name,
-                'internal_code' => $request->internal_code,
-                'user_code' => $request->user_code,
-                'percentage' => $request->percentage,
-                'type' => $request->type,
 
-            ]);
+        DB::transaction(function () use ($request) {
+            Family::where('family_id', $request->family_id)
+                ->update([
+                    'name' => $request->name,
+                    'internal_code' => $request->internal_code,
+                    'user_code' => $request->user_code,
+                    'percentage' => $request->percentage,
+                    'type' => $request->type,
+
+                ]);
+
+            $profitByFamilyContainer = $request->profitByFamilyData;
+            foreach ($profitByFamilyContainer as $profitByFamily) {
+                if ($profitByFamily['profit_by_family_id_sol'] === null && $profitByFamily['profit_by_family_id_dollar'] === null) {
+
+                    $profitByFamily_SolId = ProfitByFamily::create([
+                        'family_id' => $request->family_id,
+                        'category_id' => $profitByFamily['id'],
+                        'coin_id' => 0,
+                        'percentage' => $profitByFamily['coinSol'],
+                        'created_in' => date('Y-m-d H:i:s'),
+                        'status' => $request->status,
+                    ]);
+                    $profitByFamily_DollarId = ProfitByFamily::create([
+                        'family_id' => $request->family_id,
+                        'category_id' => $profitByFamily['id'],
+                        'coin_id' => 1,
+                        'percentage' => $profitByFamily['coinDollar'],
+                        'created_in' => date('Y-m-d H:i:s'),
+                        'status' => $request->status,
+                    ]);
+                }
+                $profitByFamily_SolId = ProfitByFamily::where('profit_by_family_id', $profitByFamily['profit_by_family_id_sol'])->update([
+                    'family_id' => $request->family_id,
+                    'category_id' => $profitByFamily['id'],
+                    'coin_id' => 0,
+                    'percentage' => $profitByFamily['coinSol'],
+                    'created_in' => date('Y-m-d H:i:s'),
+                    'status' => $request->status,
+                ]);
+                $profitByFamily_DollarId = ProfitByFamily::where('profit_by_family_id', $profitByFamily['profit_by_family_id_dollar'])->update([
+                    'family_id' => $request->family_id,
+                    'category_id' => $profitByFamily['id'],
+                    'coin_id' => 1,
+                    'percentage' => $profitByFamily['coinDollar'],
+                    'created_in' => date('Y-m-d H:i:s'),
+                    'status' => $request->status,
+                ]);
+            }
+        });
     }
 
     public function deleteFamily(Request $request)

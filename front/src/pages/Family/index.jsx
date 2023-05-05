@@ -31,11 +31,19 @@ function Index() {
     const [dataxFamily, setdataxFamily] = useState('');
     const [category_id, setCategory_id] = useState('');
     const [categoryContainer, setCategoryContainer] = useState('');
+    const [profitByFamilyContainer, setProfitByFamilyContainer] = useState('');
     const [coin_id, setCoin_id] = useState('');
     const [profit_by_family_percentage, setProfit_by_family_percentage] = useState('');
 
     const [inputFields, setInputFields] = useState([
-        {id: '', name: '', coinSol: '', coinDollar: ''}
+        {
+            id: '',
+            name: '',
+            profit_by_family_id_sol: '',
+            coinSol: '',
+            profit_by_family_id_dollar: '',
+            coinDollar: ''
+        }
     ]);
     const fetchFamilys = async page => {
         setLoading(true);
@@ -104,9 +112,13 @@ function Index() {
         setPercentage(response.data.percentage);
         setType(response.data.type);
 
+        const endpoint5 = `${env.apiURL}listCategorys`;
+        const response5 = await axios.get(`${endpoint5}`);
+        setCategoryContainer(response5.data);
+
         const endpoint2 = `${env.apiURL}listXProfitByFamily`;
         const response2 = await axios.get(`${endpoint2}?family_id=${family_id}`);
-        console.log(response2);
+        setProfitByFamilyContainer(response2.data);
 
         setFormType('edit');
     };
@@ -142,8 +154,17 @@ function Index() {
 
     const handleOnClickUpdate = async (e) => {
         e.preventDefault();
+
         const endpoint = `${env.apiURL}updateFamily`;
-        await axios.post(endpoint, {family_id: dataxFamily, name, percentage, internal_code, user_code, type})
+        await axios.post(endpoint, {
+            family_id: dataxFamily,
+            name,
+            internal_code,
+            user_code,
+            percentage,
+            profitByFamilyData: inputFields,
+            type
+        })
             .then((response) => {
                 window.location.reload();
             })
@@ -175,7 +196,6 @@ function Index() {
         fetchFamilys(1);
         setLoading(false);
     };
-    console.log(status);
 
     return (
         <div>
@@ -239,6 +259,9 @@ function Index() {
                              setDescriptionAgain={setDescriptionAgain}
                              categoryContainer={categoryContainer}
                              setCategoryContainer={setCategoryContainer}
+                             profitByFamilyContainer={profitByFamilyContainer}
+                             setProfitByFamilyContainer={setProfitByFamilyContainer}
+                             formType={formType}
                              setFormType={setFormType}
                              inputFields={inputFields}
                              setInputFields={setInputFields}
@@ -259,6 +282,9 @@ function Index() {
                              setDescriptionAgain={setDescriptionAgain}
                              categoryContainer={categoryContainer}
                              setCategoryContainer={setCategoryContainer}
+                             profitByFamilyContainer={profitByFamilyContainer}
+                             setProfitByFamilyContainer={setProfitByFamilyContainer}
+                             formType={formType}
                              setFormType={setFormType}
                              inputFields={inputFields}
                              setInputFields={setInputFields}
