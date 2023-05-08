@@ -60,12 +60,11 @@ function Add(props) {
     const addFields = () => {
         if (formType === 'edit') {
 
-
+            console.log(profitByFamilyContainer);
             const categoryArray = categoryContainer.map((category) => {
-                    const profi = profitByFamilyContainer.some(profit => profit.category_id === category.category_ID);
+                    const profi = Object.values(profitByFamilyContainer).some(profittt => profittt.category_id === category.category_ID);
 
-                    return profitByFamilyContainer.map((profit) => {
-                            console.log(profit);
+                    return Object.values(profitByFamilyContainer).map((profit) => {
                             if (profit.category_id === category.category_ID) {
                                 if (profit.coin_id === 0) {
                                     return ({
@@ -315,24 +314,24 @@ function Add(props) {
                             <tbody>
                             {/* <form> */}
 
-                            {inputFields.map((value, index) => (
+                            {inputFields.map((value, index_) => (
                                 <tr>
-                                    <td className="border border-gray-400 p-2 ">{index + 1}</td>
+                                    <td className="border border-gray-400 p-2 ">{index_ + 1}</td>
                                     <td className="border border-gray-400 p-2 ">{value.name}</td>
                                     <td className="border border-gray-400 p-2 " rowSpan={1} colSpan={2}>
-                                        <div className="flex" key={index}>
+                                        <div className="flex">
                                             <input
                                                 name="coinSol"
                                                 placeholder="0.00 S/."
                                                 value={value.coinSol}
-                                                onChange={event => handleFormChange(index, event)}
+                                                onChange={event => handleFormChange(index_, event)}
                                             />
                                             <td><p>&nbsp;</p></td>
                                             <input
                                                 name="coinDollar"
                                                 placeholder="0.00 $"
                                                 value={value.coinDollar}
-                                                onChange={event => handleFormChange(index, event)}
+                                                onChange={event => handleFormChange(index_, event)}
                                             />
                                         </div>
 
