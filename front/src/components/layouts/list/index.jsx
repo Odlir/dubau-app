@@ -30,7 +30,7 @@ function Index(props) {
                                    dataPlaceholder="name" dataValue={dataSearch1}
                                    dataOnchange={setdataSearch1}/>
                             <i className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0 btn-primary"
-                               data-lucide="search" />
+                               data-lucide="search"/>
                         </div>
                     </div>
                     <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 p-1">
@@ -40,7 +40,7 @@ function Index(props) {
                                    dataPlaceholder="2022-11-08" dataValue={dataSearch2}
                                    dataOnchange={setdataSearch2}/>
                             <i className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0 btn-primary"
-                               data-lucide="search" />
+                               data-lucide="search"/>
                         </div>
                     </div>
                     <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 p-1">
@@ -54,16 +54,16 @@ function Index(props) {
                                 </div>
                             </div>
                             <i className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0 btn-primary"
-                               data-lucide="search" />
+                               data-lucide="search"/>
                         </div>
                     </div>
-                    <div className="hidden md:block mx-auto text-slate-500" />
+                    <div className="hidden md:block mx-auto text-slate-500"/>
                     <button className="btn btn-facebook shadow-md mr-2" onClick={handleOnClickSearch}>Buscar
                     </button>
                     <button className="btn btn-close shadow-md mr-2" onClick={handleOnClickClean}>
-                        <i className="fas fa-broom" /><p align="right:10rem"> Limpiar</p>
+                        <i className="fas fa-broom"/><p align="right:10rem"> Limpiar</p>
                     </button>
-                    <button className="btn btn-primary shadow-md mr-2" onClick={actionAdd}>Nuevo {nameSection}
+                    <button className="btn btn-primary shadow-md mr-2" onClick={actionAdd}>Nuevo
                     </button>
                 </div>
             </div>

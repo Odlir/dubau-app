@@ -20,6 +20,13 @@ const columns = (actionDelete, actionEdit) => [
         name: 'Nombre',
         selector: row => row.name,
     },
+    {
+        name: 'Tipo',
+        selector: row => row.type,
+        cell: (selector) =>
+            <p>{selector.type === 'S' ? 'SERVICIO' : 'PRODUCTO'}</p>,
+    },
+
 
     {
         name: 'Fecha de Creacion',

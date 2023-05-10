@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->integer('internal_code');
             $table->integer('user_code');
             $table->integer('percentage');
-            $table->integer('type')->comment('P Producto, S Servicio')->nullable();
+            $table->string('type')->comment('P Producto, S Servicio')->nullable();
             $table->integer('created_by')->nullable();
             $table->dateTime('created_in')->nullable();
             $table->integer('updated_by')->nullable();

@@ -13,6 +13,7 @@ use App\Http\Controllers\LineController;
 use App\Http\Controllers\MakerController;
 use App\Http\Controllers\PaymentConditionController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductServiceTypeController;
 use App\Http\Controllers\ProfitByFamilyController;
 use App\Http\Controllers\RoleController;
@@ -265,4 +266,19 @@ Route::controller(ProfitByFamilyController::class)->group(function () {
     Route::get('listXProfitByFamily', 'listXProfitByFamily');
     Route::post('deleteProfitByFamily', 'deleteProfitByFamily');
     Route::post('updateProfitByFamily', 'updateProfitByFamily');
+});
+
+
+Route::controller(ProductController::class)->group(function () {
+    Route::post('registerProduct', 'registerProduct');
+    Route::get('listProduct', 'listProduct');
+    Route::get('listXProduct', 'listXProduct');
+    Route::post('deleteProduct', 'deleteProduct');
+    Route::post('updateProduct', 'updateProduct');
+    Route::get('listFamilys', 'listFamilys');
+    Route::get('listProductServiceTypes', 'listProductServiceTypes');
+    Route::get('listBrands', 'listBrands');
+    Route::get('listLines', 'listLines');
+    Route::get('listMakers', 'listMakers');
+    Route::get('listUnitOfMeasurement', 'listUnitOfMeasurement');
 });

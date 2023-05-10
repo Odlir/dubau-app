@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "@/components/Button/Button.jsx";
 import 'sweetalert2/src/sweetalert2.scss';
 import {Lucide} from "@/components/base-components/index.js";
 import Input from "../../components/Input/Input.jsx";
+import Select from "react-select";
 
 function Add(props) {
     const {
@@ -52,7 +53,29 @@ function Add(props) {
         data[index][event.target.name] = event.target.value;
         setInputFields(data);
     };
+    const optionsType = [
+        {value: 'P', label: 'PRODUCTO', isSelected: true},
+        {value: 'S', label: 'SERVICIO', isSelected: true},
+    ];
 
+    let defaultSelectedOptionsType = [];
+
+    if (type === 'P') {
+        defaultSelectedOptionsType = [
+            optionsType[0],
+        ];
+    }
+    if (type === 'S') {
+        defaultSelectedOptionsType = [
+            optionsType[1],
+        ];
+    }
+    const handleChangeType = (selected) => {
+        setSelectedOptionsType(selected);
+        setType(selected.value);
+    };
+
+    const [selectedOptionsType, setSelectedOptionsType] = useState(defaultSelectedOptionsType);
     useEffect(() => {
         addFields();
     }, []);
@@ -145,7 +168,13 @@ function Add(props) {
                setInputFields(categoryObject); */
 
     };
+    const customStyles = {
+        control: (provided) => ({
+            ...provided,
+            textAlign: 'center',
+        }),
 
+    };
 
     const submit = (e) => {
         e.preventDefault();
@@ -168,6 +197,18 @@ function Add(props) {
                             </div>
 
                             <div className="mt-5">
+                                <div className="mt-3">
+                                    <label className="form-label">Tipo</label>
+                                    <div className="dropdown">
+                                        <Select
+                                            styles={customStyles}
+                                            options={optionsType}
+                                            value={selectedOptionsType}
+                                            onChange={handleChangeType}
+                                            className="w-full"
+                                        />
+                                    </div>
+                                </div>
                                 <div
                                     className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
                                     <div className="form-label xl:w-64 xl:!mr-10">

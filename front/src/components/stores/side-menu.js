@@ -131,6 +131,11 @@ const sideMenu = atom({
                 subMenu: [
                     {
                         icon: "",
+                        pathname: "/Product",
+                        title: "Producto",
+                    },
+                    {
+                        icon: "",
                         pathname: "/Inventory",
                         title: "Inventario",
                     },

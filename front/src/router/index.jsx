@@ -26,6 +26,7 @@ import CommercialSection from "@/pages/commercialSection/index.jsx";
 import Inventory from "@/pages/Inventory";
 import ProductServiceType from "@/pages/ProductServiceType";
 import Family from "@/pages/Family";
+import Product from "@/pages/Product";
 
 function Router() {
     const routes = [
@@ -115,6 +116,9 @@ function Router() {
                 }, {
                     path: "/Family",
                     element: <Family/>,
+                }, {
+                    path: "/Product",
+                    element: <Product/>,
                 }
             ]
         },
