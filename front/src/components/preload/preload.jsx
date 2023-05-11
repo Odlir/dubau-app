@@ -1,28 +1,20 @@
-import React from 'react'
-import Input from "@/components/Input/Input.jsx";
+import React from 'react';
 
 const preload = (props) => {
-    const {className} = props
+    const { className } = props;
     return (
-        <div className={className} >
-            <div className="dot">
-            </div>
-            <div className="dot">
-            </div>
-            <div className="dot">
-            </div>
-            <div className="dot">
-            </div>
-            <div className="dot">
-            </div>
+        <div className={className}>
+            <div className="dot" />
+            <div className="dot" />
+            <div className="dot" />
+            <div className="dot" />
+            <div className="dot" />
         </div>
     );
-
 };
 
 preload.defaultProps = {
-    className:"loader"
+    className: 'loader',
 };
-
 
 export default preload;
