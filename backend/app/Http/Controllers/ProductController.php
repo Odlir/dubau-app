@@ -25,8 +25,10 @@ class ProductController extends Controller
     {
         $page = $_GET["page"];
         $per_page = $_GET["per_page"];
+        $type = $_GET["type"];
 
-        $total = Product::where('status', '=', '1')->count();
+        $total = Product::where('status', '=', '1')->where('product.type', '=', "'$type'")->count();
+
         $total_pages = $total / $per_page;
         if ($page == 1) {
             $auto_increment = 0;
@@ -34,7 +36,7 @@ class ProductController extends Controller
             $auto_increment = ($page - 1) * $per_page;
         }
 
-        $data = Product::where('product.status', '=', '1')->join('family', 'product.family_id', '=', 'family.family_id', 'left')->selectRaw('product.*, family.name AS familyName')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+        $data = Product::where('product.status', '=', '1')->where('product.type', '=', $type)->join('family', 'product.family_id', '=', 'family.family_id', 'left')->selectRaw('product.*, family.name AS familyName')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
             $row->auto_increment = $auto_increment + $index + 1;
         });
 
@@ -43,7 +45,7 @@ class ProductController extends Controller
             $created_in = $_GET["created_in"];
 
             if ($created_in != '' || $created_in != null) {
-                $total = Product::where('product.status', '=', '1')->join('family', 'product.family_id', '=', 'family.family_id', 'left')->selectRaw('product.*,family.name AS familyName')->where('name', 'LIKE', '%' . $name . '%')->where('created_in', 'LIKE', '%' . $created_in . '%')->count();
+                $total = Product::where('product.status', '=', '1')->where('product.type', '=', $type)->join('family', 'product.family_id', '=', 'family.family_id', 'left')->selectRaw('product.*,family.name AS familyName')->where('name', 'LIKE', '%' . $name . '%')->where('created_in', 'LIKE', '%' . $created_in . '%')->count();
                 $total_pages = $total / $per_page;
                 if ($page == 1) {
                     $auto_increment = 0;
@@ -94,7 +96,8 @@ class ProductController extends Controller
 
     public function listProductServiceTypes(Request $request)
     {
-        $typeDocument = ProductServiceType::all();
+        $type = $_GET["type"];
+        $typeDocument = ProductServiceType::where('type', '=', $type)->get();
         return response()->json($typeDocument, 200);
     }
 
@@ -149,7 +152,7 @@ class ProductController extends Controller
                     'maker_id' => $request->maker_id,
                     'unit_of_measurement_id' => $request->unit_of_measurement_id,
                     'name' => $request->name,
-                    'type' => 'P',
+                    'type' => $request->type,
                     'description' => $request->description,
                     'comment' => $request->comment,
                     'model' => $request->model,
@@ -208,7 +211,7 @@ class ProductController extends Controller
                 'unit_of_measurement_id' => $request->unit_of_measurement_id,
 
                 'name' => $request->name,
-                'type' => 'P',
+                'type' => $request->type,
                 'description' => $request->description,
                 'comment' => $request->comment,
                 'model' => $request->model,

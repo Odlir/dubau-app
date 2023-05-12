@@ -5,7 +5,7 @@ const sideMenu = atom({
     default: {
         menu: [
             {
-                icon: "Home",
+                icon: "Airplay",
                 title: "Dashboard",
                 subMenu: [
                     {
@@ -16,7 +16,7 @@ const sideMenu = atom({
                 ],
             },
             {
-                icon: "Box",
+                icon: "Wrench",
                 title: "Mantenimientos",
                 subMenu: [
                     {
@@ -99,25 +99,11 @@ const sideMenu = atom({
                 ],
             },
             {
-                icon: "Box",
+                icon: "Users",
                 title: "Principal",
                 subMenu: [
-                    /*  {
-                        icon: "",
-                        pathname: "/staff",
-                        title: "Personal",
-                      },
-            
-                      {
-                        icon: "",
-                        pathname: "/staff2",
-                        title: "Cliente",
-                      },
-                      {
-                        icon: "",
-                        pathname: "/staff3",
-                        title: "Proveedor",
-                      }, */
+
+
                     {
                         icon: "",
                         pathname: "/businessEntity",
@@ -126,13 +112,18 @@ const sideMenu = atom({
                 ]
             },
             {
-                icon: "Box",
+                icon: "Package",
                 title: "Almacen",
                 subMenu: [
                     {
                         icon: "",
                         pathname: "/Product",
                         title: "Producto",
+                    },
+                    {
+                        icon: "",
+                        pathname: "/Service",
+                        title: "Servicio",
                     },
                     {
                         icon: "",

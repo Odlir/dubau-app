@@ -1,25 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-import {env} from "@/env.js";
+import {useNavigate} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import {env} from "@/env.js";
 import columns from '../../data/Category.jsx';
 import Preload from "@/components/preload/preload";
-import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
-import Add  from '../Category/add.jsx'
+import Add from "./add.jsx";
 import List from "../../components/layouts/list/index.jsx";
 
-const Index = () => {
-    const navigate = useNavigate()
+export const categoryContext = React.createContext();
 
+function Index() {
+    const navigate = useNavigate();
+
+    const [example, setExample] = useState('');
     const [category_Name, setCategory_Name] = useState('');
     const [category_Description, setCategory_Description] = useState('');
     const [DescriptionAgain, setDescriptionAgain] = useState('');
     const [category_CreationDate, setCategoryCreationDate] = useState('');
     const [category_ApprovedStatus, setCategory_ApprovedStatus] = useState('1');
     const [formType, setFormType] = useState('list');
-    /*Server Side*/
+    /* Server Side */
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [totalRows, setTotalRows] = useState(0);
@@ -66,8 +69,8 @@ const Index = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 const endpoint = `${env.apiURL}deleteCategory`;
-                axios.post(endpoint, {category_ID: category_ID, category_StatusID: 0})
-                    .then(function (response) {
+                axios.post(endpoint, {category_ID, category_StatusID: 0})
+                    .then((response) => {
                         Swal.fire(
                             'Eliminado!',
                             'Se ha eliminado Correctamente.',
@@ -77,12 +80,12 @@ const Index = () => {
                         });
                     })
                     .catch(error => {
-                        alert('Operacion no completada')
-                    })
+                        alert('Operacion no completada');
+                    });
 
             }
-        })
-    }
+        });
+    };
 
     const actionEdit = async (category_ID) => {
         const endpoint = `${env.apiURL}listXCategory`;
@@ -91,38 +94,46 @@ const Index = () => {
         setCategory_Name(response.data.category_Name);
         setCategory_Description(response.data.category_Description);
         setFormType('edit');
-    }
+    };
     const actionAdd = async () => {
         setFormType('register');
-    }
+    };
 
     const handleOnClickRegister = async (e) => {
         e.preventDefault();
-        const endpoint = `${env.apiURL}registerCategory`
-        await axios.post(endpoint, {category_Name: category_Name, category_Description: category_Description, category_StatusID: '1'})
-            .then(function (response) {
+        const endpoint = `${env.apiURL}registerCategory`;
+        await axios.post(endpoint, {
+            category_Name,
+            category_Description,
+            category_StatusID: '1'
+        })
+            .then((response) => {
                 window.location.reload();
             })
             .catch(error => {
-                alert('Debe completar correctamente sus datos')
-            })
-    }
+                alert('Debe completar correctamente sus datos');
+            });
+    };
 
     const handleOnClickUpdate = async (e) => {
         e.preventDefault();
-        const endpoint = `${env.apiURL}updateCategory`
-        await axios.post(endpoint, {category_ID:dataxCategory, category_Name: category_Name, category_Description: category_Description})
-            .then(function (response) {
+        const endpoint = `${env.apiURL}updateCategory`;
+        await axios.post(endpoint, {
+            category_ID: dataxCategory,
+            category_Name,
+            category_Description
+        })
+            .then((response) => {
                 window.location.reload();
             })
             .catch(error => {
-                alert('Debe completar correctamente sus datos')
-            })
-    }
+                alert('Debe completar correctamente sus datos');
+            });
+    };
 
     const captureType = (e) => {
         setCategory_ApprovedStatus(e.target.value);
-    }
+    };
 
     const handleOnClickSearch = async page => {
         setLoading(true);
@@ -134,7 +145,7 @@ const Index = () => {
         setLoading(false);
     };
 
-    const handleOnClickClean= async page => {
+    const handleOnClickClean = async page => {
         setLoading(true);
         setCategory_Name('');
         setCategory_Description('');
@@ -146,80 +157,80 @@ const Index = () => {
     console.log(category_ApprovedStatus);
 
     return (
-        <div>
-            { (formType === 'list') ?
-                <>
-                <List
-                    nameSection={'Categoria'}
-                    dataType={'text'}
-                    dataSearch1={category_Name}
-                    setdataSearch1={setCategory_Name}
-                    dataType2={'date'}
-                    dataSearch2={category_CreationDate}
-                    setdataSearch2={setCategoryCreationDate}
-                    captureType={captureType}
-                    handleOnClickSearch={handleOnClickSearch}
-                    handleOnClickClean={handleOnClickClean}
-                    actionAdd={actionAdd}
-                />
-                    {data.length != 0 ?
-                        <DataTable
-                            columns={columns(actionDelete,actionEdit)}
-                            data={data}
-                            progressPending={loading}
-                            progressComponent={<Preload/>}
-                            pagination
-                            paginationServer
-                            paginationTotalRows={totalRows}
-                            onChangeRowsPerPage={handlePerRowsChange}
-                            onChangePage={handlePageChange}
+        <categoryContext.Provider value={example}>
+            <div>
+                {(formType === 'list') ?
+                    <>
+                        <List
+                            nameSection="Categoria"
+                            dataType="text"
+                            dataSearch1={category_Name}
+                            setdataSearch1={setCategory_Name}
+                            dataType2="date"
+                            dataSearch2={category_CreationDate}
+                            setdataSearch2={setCategoryCreationDate}
+                            captureType={captureType}
+                            handleOnClickSearch={handleOnClickSearch}
+                            handleOnClickClean={handleOnClickClean}
+                            actionAdd={actionAdd}
                         />
-                        :
-                        <>
+                        {data.length != 0 ?
                             <DataTable
-                                columns={columns(actionDelete,actionEdit)}
+                                columns={columns(actionDelete, actionEdit)}
                                 data={data}
                                 progressPending={loading}
                                 progressComponent={<Preload/>}
-                                noDataComponent={'No existen registros en esta tabla'}
                                 pagination
                                 paginationServer
                                 paginationTotalRows={totalRows}
                                 onChangeRowsPerPage={handlePerRowsChange}
                                 onChangePage={handlePageChange}
                             />
-                        </>
-                    }
-                </>
-                    :
-                <>
-                    { (formType === 'register') ?
-                    <Add  handleOnClickRegister={handleOnClickRegister}
-                          category_Name={category_Name}
-                          setCategory_Name={setCategory_Name}
-                          category_Description={category_Description}
-                          setCategory_Description={setCategory_Description}
-                          DescriptionAgain={DescriptionAgain}
-                          setDescriptionAgain={setDescriptionAgain}
-                          setFormType={setFormType}
-                          setCategory_ApprovedStatus={setCategory_ApprovedStatus}
-                    />
-                    :
-                        <Add  handleOnClickRegister={handleOnClickUpdate}
-                              category_Name={category_Name}
-                              setCategory_Name={setCategory_Name}
-                              category_Description={category_Description}
-                              setCategory_Description={setCategory_Description}
-                              DescriptionAgain={DescriptionAgain}
-                              setDescriptionAgain={setDescriptionAgain}
-                              setFormType={setFormType}
-                              setCategory_ApprovedStatus={setCategory_ApprovedStatus}
-                        />
-                    }
+                            :
+                            <DataTable
+                                columns={columns(actionDelete, actionEdit)}
+                                data={data}
+                                progressPending={loading}
+                                progressComponent={<Preload/>}
+                                noDataComponent="No existen registros en esta tabla"
+                                pagination
+                                paginationServer
+                                paginationTotalRows={totalRows}
+                                onChangeRowsPerPage={handlePerRowsChange}
+                                onChangePage={handlePageChange}
+                            />
+                        }
                     </>
-            }
-        </div>
+                    :
+                    <>
+                        {(formType === 'register') ?
+                            <Add handleOnClickRegister={handleOnClickRegister}
+                                 category_Name={category_Name}
+                                 setCategory_Name={setCategory_Name}
+                                 category_Description={category_Description}
+                                 setCategory_Description={setCategory_Description}
+                                 DescriptionAgain={DescriptionAgain}
+                                 setDescriptionAgain={setDescriptionAgain}
+                                 setFormType={setFormType}
+                                 setCategory_ApprovedStatus={setCategory_ApprovedStatus}
+                            />
+                            :
+                            <Add handleOnClickRegister={handleOnClickUpdate}
+                                 category_Name={category_Name}
+                                 setCategory_Name={setCategory_Name}
+                                 category_Description={category_Description}
+                                 setCategory_Description={setCategory_Description}
+                                 DescriptionAgain={DescriptionAgain}
+                                 setDescriptionAgain={setDescriptionAgain}
+                                 setFormType={setFormType}
+                                 setCategory_ApprovedStatus={setCategory_ApprovedStatus}
+                            />
+                        }
+                    </>
+                }
+            </div>
+        </categoryContext.Provider>
     );
 }
 
-export default Index
+export default Index;

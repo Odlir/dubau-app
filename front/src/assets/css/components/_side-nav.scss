@@ -24,6 +24,11 @@
   .side-nav__devider {
     @apply w-full h-px bg-white/[0.08] z-10 relative dark:bg-white/[0.07];
   }
+
+  .height-sub-section {
+    height: 1px !important;
+  }
+
   .side-menu {
     @apply h-[50px] flex items-center pl-5 text-slate-600 mb-1 relative rounded-xl dark:text-slate-300;
     .side-menu__title {
@@ -41,6 +46,7 @@
         @apply hidden;
       }
     }
+
   }
   > ul {
     @for $i from 1 through 50 {
@@ -63,6 +69,7 @@
             animation: 0.4s intro-active-menu-animation ease-in-out 0.33333s;
             animation-fill-mode: forwards;
           }
+
         }
       }
     }
@@ -81,10 +88,11 @@
       @apply hidden bg-white/[0.04] rounded-xl relative dark:bg-transparent;
       &:before {
         content: "";
-        @apply block inset-0 bg-white/30 rounded-xl absolute z-[-1] dark:bg-darkmode-900/30;
+        @apply block inset-0 bg-white rounded-xl absolute z-[-1] dark:bg-darkmode-900/30;
       }
       &.side-menu__sub-open {
         @apply block;
+        background: ghostwhite;
       }
       .side-menu__icon:before {
         @apply hidden;
