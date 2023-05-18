@@ -72,7 +72,7 @@ function Add(props) {
                         <div
                             className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
                             <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Inventario
-                            Configa
+                            Config
                         </div>
                         <div
                             className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">

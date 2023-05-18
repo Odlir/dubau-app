@@ -308,7 +308,7 @@ function Index() {
             {(formType === 'list') ?
                 <>
                     <List
-                        nameSection="Productos"
+                        nameSection="Articulos"
                         dataType="text"
                         dataSearch1={name}
                         setdataSearch1={setName}

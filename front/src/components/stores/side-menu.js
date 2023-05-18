@@ -118,7 +118,7 @@ const sideMenu = atom({
                     {
                         icon: "",
                         pathname: "/Product",
-                        title: "Producto",
+                        title: "Articulo",
                     },
                     {
                         icon: "",

@@ -2,40 +2,36 @@ import React from 'react';
 import {Lucide} from "@/components/base-components/index.js";
 
 const number = 20;
-const columns = (actionDelete, actionViewDetail, actionEdit) => [
+const columns = (actionDelete, actionEdit) => [
     {
         name: '#',
         selector: row => row.auto_increment,
         width: "4rem",
     },
     {
-        name: 'Nombre',
+        name: 'ARTICULO',
         selector: row => row.name,
     },
     {
-        name: 'Fecha Inicio',
-        selector: row => row.start_date,
+        name: 'CANTIDAD',
+        selector: row => row.amount,
     },
     {
-        name: 'Fecha Final',
-        selector: row => row.final_date,
-    },
-    {
-        name: 'Fecha de Creacion',
-        selector: row => row.created_in,
+        name: 'PRECIO',
+        selector: row => row.cost,
     },
     {
         name: 'Acciones',
-        selector: row => row.inventory_id,
+        selector: row => row.inventory_detail_id,
         cell: (selector) =>
             <div className="flex justify-center items-center">
-                <button className="flex items-center mr-3" onClick={(e) => actionViewDetail(selector.inventory_id)}>
+                <button className="flex items-center mr-3">
                     <Lucide icon="Archive" className="w-4 h-4 mr-1 text-indigo-700"/>{" "}
                 </button>
-                <button className="flex items-center mr-3" onClick={(e) => actionEdit(selector.inventory_id)}>
+                <button className="flex items-center mr-3" onClick={(e) => actionEdit(selector.inventory_detail_id)}>
                     <Lucide icon="Edit3" className="w-4 h-4 mr-1 text-primary"/>{" "}
                 </button>
-                <button className="flex items-center mr-3" onClick={(e) => actionDelete(selector.inventory_id)}>
+                <button className="flex items-center mr-3" onClick={(e) => actionDelete(selector.inventory_detail_id)}>
                     <Lucide icon="Trash2" className="w-4 h-4 mr-1 text-danger"/>
 
                 </button>

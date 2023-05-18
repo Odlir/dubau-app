@@ -26,7 +26,7 @@ const columns = (actionDelete, actionEdit, handleOnClickModalImage) => [
             </div>
     },
     {
-        name: 'Linea',
+        name: 'Articulo',
         selector: row => row.name,
     },
     {
