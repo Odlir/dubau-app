@@ -5,6 +5,7 @@ import DataTable from 'react-data-table-component';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {env} from "@/env.js";
 import columns from '../../data/Inventory.jsx';
+import columnsDetail from '../../data/InventoryDetail';
 import Preload from "@/components/preload/preload";
 import 'sweetalert2/src/sweetalert2.scss';
 import Add from "./add.jsx";
@@ -16,6 +17,9 @@ function Index() {
     const [showModal, setShowModal] = React.useState(false);
     const [id, setId] = useState('');
     const [name, setName] = useState('');
+    const [quantity, setQuantity] = useState('');
+    const [productName, setProductName] = useState('');
+    const [price, setPrice] = useState('');
     const [start_date, setStart_date] = useState('');
     const [final_date, setFinal_date] = useState('');
     const [created_in, setCreated_in] = useState('');
@@ -218,7 +222,7 @@ function Index() {
                                                 <div>
                                                     <div
                                                         className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                                        <div className="form-label xl:w-10">
+                                                        <div className=" xl:w-10">
                                                             <div className="text-left">
                                                                 <div className="flex items-center">
                                                                     <div className="">Articulo</div>
@@ -229,58 +233,79 @@ function Index() {
                                                         <div className=" width-28em mt-3 xl:mt-0 flex-1 ">
                                                             <Input dataType="text" dataName="email" dataId="email"
                                                                    className="form-control height-10px font-size-8px width-28em "
-                                                                   dataPlaceholder="Name Inventario" dataValue={name}
-                                                                   dataOnchange={setName}/>
+                                                                   dataPlaceholder="Nombre del Articulo"
+                                                                   dataValue={productName}
+                                                                   dataOnchange={setProductName}/>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div className=" w-1 mt-3 xl:mt-0 flex-1 "/>
                                                 <div>
                                                     <div
                                                         className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                                        <div className="form-label xl:w-10 ">
+                                                        <div className="xl:w-12 ">
                                                             <div className="text-left">
                                                                 <div className="flex items-center">
                                                                     <div className="">Cantidad</div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className=" mt-2 xl:mt-0 flex-1">
+                                                        <div className="w-16 mt-4 xl:mt-0 flex-1">
                                                             <Input dataType="text" dataName="email" dataId="email"
                                                                    className="form-control height-10px font-size-8px "
-                                                                   dataPlaceholder="0" dataValue={name}
-                                                                   dataOnchange={setName}/>
+                                                                   dataPlaceholder="0.0" dataValue={quantity}
+                                                                   dataOnchange={setQuantity}/>
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                <div className=" w-1 mt-3 xl:mt-0 flex-1 "/>
                                                 <div>
                                                     <div
                                                         className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                                        <div className="form-label xl:w-10 ">
+                                                        <div className=" xl:w-12  ">
                                                             <div className="text-left">
                                                                 <div className="flex items-center">
                                                                     <div className="">Precio</div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="w-12 mt-3 xl:mt-0 flex-1">
+                                                        <div className="w-16 mt-4 xl:mt-0 flex-1">
                                                             <Input dataType="text" dataName="email" dataId="email"
                                                                    className="form-control height-10px font-size-8px "
-                                                                   dataPlaceholder="0.00" dataValue={name}
-                                                                   dataOnchange={setName}/>
+                                                                   dataPlaceholder="0.00" dataValue={price}
+                                                                   dataOnchange={setPrice}/>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div
+                                                className="hidden md:block mx-auto text-slate-500 ">
+                                                <div className="h-2 flex justify-end">
+                                                    <button className="btn btn-primary shadow-md mr-2"
+                                                            onClick={actionAdd}>Agregar
+                                                    </button>
+                                                    <button className="btn btn-danger shadow-md mr-2"
+                                                            onClick={actionAdd}>Cancelar
+                                                    </button>
+                                                </div>
+                                            </div>
+
+
                                         </div>
+
                                         <div className="relative p-6 flex-auto">
-                                            <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                                                I always felt like I could do anything. That’s the main
-                                                thing people are controlled by! Thoughts- their perception
-                                                of themselves! They're slowed down by their perception of
-                                                themselves. If you're taught you can’t do anything, you
-                                                won’t do anything. I was taught I could do everything.
-                                            </p>
+                                            <DataTable
+                                                columns={columnsDetail(actionDelete, actionViewDetail, actionEdit)}
+                                                data={data}
+                                                progressPending={loading}
+                                                progressComponent={<Preload/>}
+                                                pagination
+                                                paginationServer
+                                                paginationTotalRows={totalRows}
+                                                onChangeRowsPerPage={handlePerRowsChange}
+                                                onChangePage={handlePageChange}
+                                            />
                                         </div>
 
                                         <div

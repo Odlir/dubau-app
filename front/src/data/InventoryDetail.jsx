@@ -25,9 +25,6 @@ const columns = (actionDelete, actionEdit) => [
         selector: row => row.inventory_detail_id,
         cell: (selector) =>
             <div className="flex justify-center items-center">
-                <button className="flex items-center mr-3">
-                    <Lucide icon="Archive" className="w-4 h-4 mr-1 text-indigo-700"/>{" "}
-                </button>
                 <button className="flex items-center mr-3" onClick={(e) => actionEdit(selector.inventory_detail_id)}>
                     <Lucide icon="Edit3" className="w-4 h-4 mr-1 text-primary"/>{" "}
                 </button>
