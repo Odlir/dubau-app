@@ -2,7 +2,7 @@ import React from 'react';
 import {Lucide} from "@/components/base-components/index.js";
 
 const number = 20;
-const columns = (actionDelete, actionEdit) => [
+const columns = (actionDelete, actionViewDetail, actionEdit) => [
     {
         name: '#',
         selector: row => row.auto_increment,
@@ -29,8 +29,8 @@ const columns = (actionDelete, actionEdit) => [
         selector: row => row.inventory_id,
         cell: (selector) =>
             <div className="flex justify-center items-center">
-                <button className="flex items-center mr-3">
-                    <Lucide icon="Archive" className="w-4 h-4 mr-1 text-cyan-700"/>{" "}
+                <button className="flex items-center mr-3" onClick={(e) => actionViewDetail(selector.inventory_id)}>
+                    <Lucide icon="Archive" className="w-4 h-4 mr-1 text-indigo-700"/>{" "}
                 </button>
                 <button className="flex items-center mr-3" onClick={(e) => actionEdit(selector.inventory_id)}>
                     <Lucide icon="Edit3" className="w-4 h-4 mr-1 text-primary"/>{" "}

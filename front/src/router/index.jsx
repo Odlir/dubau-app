@@ -27,6 +27,7 @@ import Inventory from "@/pages/Inventory";
 import ProductServiceType from "@/pages/ProductServiceType";
 import Family from "@/pages/Family";
 import Product from "@/pages/Product";
+import Service from "@/pages/Service";
 
 function Router() {
     const routes = [
@@ -119,6 +120,9 @@ function Router() {
                 }, {
                     path: "/Product",
                     element: <Product/>,
+                }, {
+                    path: "/Service",
+                    element: <Service/>,
                 }
             ]
         },

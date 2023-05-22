@@ -203,7 +203,7 @@ function Add(props) {
     return (
         <div>
             <h2 className="intro-y text-lg font-medium mt-10">
-                Añadir Producto
+                Añadir Articulo
             </h2>
             <div className="intro-y box p-5 mt-5">
                 <div className="flex">
@@ -211,7 +211,7 @@ function Add(props) {
                         <div className="border w-full border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                             <div
                                 className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/>Producto
+                                <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/>Articulo
                                 Info
                             </div>
                             <div className="mt-5">
@@ -232,7 +232,7 @@ function Add(props) {
                                     <div className="form-label xl:w-64 xl:!mr-10">
                                         <div className="text-left">
                                             <div className="flex items-center">
-                                                <div className="font-medium">Nombre Producto</div>
+                                                <div className="font-medium">Nombre Articulo</div>
                                                 <div
                                                     className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
                                                     Required
@@ -246,7 +246,7 @@ function Add(props) {
                                     <div className="w-full mt-3 xl:mt-0 flex-1">
                                         <Input dataType="text" dataName="email" dataId="email"
                                                className="form-control"
-                                               dataPlaceholder="Name Producto" dataValue={name}
+                                               dataPlaceholder="Name Articulo" dataValue={name}
                                                dataOnchange={setName}/>
                                         <div className="form-help text-right">
                                             Maximum character 0/50
@@ -345,7 +345,7 @@ function Add(props) {
                                     <div className="w-full mt-3 xl:mt-0 flex-1">
                                         <Input dataType="text" dataName="emailll" dataId="emailll"
                                                className="form-control"
-                                               dataPlaceholder="Este Producto es exclusivo para ...."
+                                               dataPlaceholder="Este Articulo es exclusivo para ...."
                                                dataValue={description}
                                                dataOnchange={setDescription}/>
                                         <div className="form-help text-right">
@@ -422,7 +422,7 @@ function Add(props) {
                                     <div className="w-full mt-3 xl:mt-0 flex-1">
                                         <Input dataType="text" dataName="email" dataId="email"
                                                className="form-control"
-                                               dataPlaceholder="Name Producto" dataValue={comment}
+                                               dataPlaceholder="Name Articulo" dataValue={comment}
                                                dataOnchange={setComment}/>
                                         <div className="form-help text-right">
                                             Maximum character 0/50
@@ -436,7 +436,7 @@ function Add(props) {
                     <div className="border w-6/12 border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                         <div
                             className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                            <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Producto
+                            <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Articulo
                             Config
                         </div>
                         <div className="mt-5">
@@ -549,7 +549,7 @@ function Add(props) {
                                 <div className="w-full mt-3 xl:mt-0 flex-1">
                                     <Input dataType="text" dataName="email" dataId="email"
                                            className="form-control"
-                                           dataPlaceholder="Name Producto" dataValue={model}
+                                           dataPlaceholder="Name Articulo" dataValue={model}
                                            dataOnchange={setModel}/>
                                     <div className="form-help text-right">
                                         Maximum character 0/50

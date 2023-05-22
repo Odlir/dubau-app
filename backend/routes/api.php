@@ -9,6 +9,7 @@ use App\Http\Controllers\CommercialSectionController;
 use App\Http\Controllers\EstablishmentController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\InventoryDetailController;
 use App\Http\Controllers\LineController;
 use App\Http\Controllers\MakerController;
 use App\Http\Controllers\PaymentConditionController;
@@ -281,4 +282,13 @@ Route::controller(ProductController::class)->group(function () {
     Route::get('listLines', 'listLines');
     Route::get('listMakers', 'listMakers');
     Route::get('listUnitOfMeasurement', 'listUnitOfMeasurement');
+});
+
+
+Route::controller(InventoryDetailController::class)->group(function () {
+    Route::post('registerInventoryDetail', 'registerInventoryDetail');
+    Route::get('listInventoryDetail', 'listInventoryDetail');
+    Route::get('listXInventoryDetail', 'listXInventoryDetail');
+    Route::post('deleteInventoryDetail', 'deleteInventoryDetail');
+    Route::post('updateInventoryDetail', 'updateInventoryDetail');
 });

@@ -61,9 +61,8 @@ function Index() {
     const fetchProducts = async page => {
         setLoading(true);
         const endpoint = `${env.apiURL}listProduct`;
-        const response = await axios.get(`${endpoint}?page=${page}&per_page=${perPage}`);
+        const response = await axios.get(`${endpoint}?page=${page}&per_page=${perPage}&type=P`);
         setData(response.data.data);
-        console.log(response.data);
         setPage_(response.data.page);
         setTotalRows(response.data.total);
         setLoading(false);
@@ -140,7 +139,7 @@ function Index() {
         setFamilyContainer(response1.data);
 
         const endpoint2 = `${env.apiURL}listProductServiceTypes`;
-        const response2 = await axios.get(`${endpoint2}`);
+        const response2 = await axios.get(`${endpoint2}?type=P`);
         setProduct_service_type_Container(response2.data);
 
         const endpoint3 = `${env.apiURL}listBrands`;
@@ -167,7 +166,7 @@ function Index() {
         setFamilyContainer(response.data);
 
         const endpoint2 = `${env.apiURL}listProductServiceTypes`;
-        const response2 = await axios.get(`${endpoint2}`);
+        const response2 = await axios.get(`${endpoint2}?type=P`);
         setProduct_service_type_Container(response2.data);
 
         const endpoint3 = `${env.apiURL}listBrands`;
@@ -203,7 +202,7 @@ function Index() {
                 line_id: line,
                 unit_of_measurement_id: unitMeasure,
                 maker_id: maker,
-                type,
+                type: 'P',
                 comment,
                 model,
                 minimun_stock,
@@ -242,7 +241,7 @@ function Index() {
                 line_id: line,
                 unit_of_measurement_id: unitMeasure,
                 maker_id: maker,
-                type,
+                type: 'P',
                 comment,
                 model,
                 minimun_stock,
@@ -309,7 +308,7 @@ function Index() {
             {(formType === 'list') ?
                 <>
                     <List
-                        nameSection="Productos"
+                        nameSection="Articulos"
                         dataType="text"
                         dataSearch1={name}
                         setdataSearch1={setName}

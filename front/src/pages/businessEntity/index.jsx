@@ -254,8 +254,8 @@ function Index() {
             typedocument_ID,
             creditLine,
             typeQualification,
-            nationality_ID: paymentCondition,
-            nationality_ID: waytopay,
+            paymentCondition,
+            waytopay,
             businessEntity_StatusID: '1',
         }, {
             headers: {
@@ -374,7 +374,7 @@ function Index() {
                         handleOnClickClean={handleOnClickClean}
                         actionAdd={actionAdd}
                     />
-                    {data.length != 0 ?
+                    {data.length !== 0 ?
                         <DataTable
                             columns={columns(actionDelete, actionEdit, handleOnClickModalImage)}
                             data={data}
