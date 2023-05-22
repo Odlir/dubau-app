@@ -4,7 +4,7 @@ import 'sweetalert2/src/sweetalert2.scss';
 import Input from "../../components/Input/Input.jsx";
 import Select from 'react-select';
 
-const Add = (props) => {
+function Add(props) {
     const {
         handleOnClickRegister,
         person_Name,
@@ -20,6 +20,9 @@ const Add = (props) => {
         staff_finalDate,
         staff_ContractNumber,
 
+        type_person_id,
+        setType_person_id,
+
         ubigeous_PlaceBirth,
         numberDocument,
         person_Gender,
@@ -34,6 +37,7 @@ const Add = (props) => {
         staff_id,
 
         nationalityContainer,
+        typeDocumentContainer,
 
         setHandleOnClickRegister,
         setPerson_Name,
@@ -58,6 +62,7 @@ const Add = (props) => {
         setPosition_ID,
         setFormType,
         setNationalityContainer,
+        setTypedocumentContainer,
         setCustomer_id,
         setSupplier_id,
         setStaff_id,
@@ -65,6 +70,36 @@ const Add = (props) => {
         setSelectedOptionsNaturality,
         selectedOptionsNaturalitys,
         setSelectedOptionsNaturalitys,
+
+        person_ID,
+        setPerson_ID,
+
+        person_DNI,
+        setPerson_DNI,
+
+        person_RUC,
+        setPerson_RUC,
+
+        typeQualificationContainer,
+        setWaytopayContainer,
+        categoryContainer,
+        setPaymentConditionContainer,
+
+        setTypeQualificationContainer,
+        waytopayContainer,
+        setCategoryContainer,
+        paymentConditionContainer,
+        creditLine,
+        setCreditLine,
+        setTypeQualification,
+        setCategory,
+        setWaytopay,
+        setPaymentCondition,
+
+        typeQualification,
+        category,
+        waytopay,
+        paymentCondition,
 
     } = props;
 
@@ -112,20 +147,75 @@ const Add = (props) => {
         setShowDivPersonal(true);
     };
 
+    console.log(nationalityContainer);
+    console.log(typeDocumentContainer);
+    const optionsNaturality = nationalityContainer.map(obj =>
+        ({
+            value: obj.nationality_ID,
+            label: obj.nationality_Name
+        })
+    );
 
-    const optionsNaturality = nationalityContainer.map(obj => {
+    const optionsTypeDocument = typeDocumentContainer.map(obj =>
+        ({
+            value: obj.typedocument_ID,
+            label: obj.typedocument_Initial,
+        }),
+    );
 
-        return console.log(setSelectedOptionsNaturalitys);
-//            return {value: obj.nationality_ID, label: obj.nationality_Name};
+    const optionsTypeQualificationContainer = typeQualificationContainer.map(obj =>
+        ({
+            value: obj.typequalification_ID,
+            label: obj.typequalification_Name,
+        }),
+    );
 
-    });
+    const optionsCategoryContainer = categoryContainer.map(obj =>
+        ({
+            value: obj.category_ID,
+            label: obj.category_Name,
+        }),
+    );
 
+    const optionsPaymentConditionContainer = paymentConditionContainer.map(obj =>
+        ({
+            value: obj.payment_condition_ID,
+            label: obj.payment_condition_Name,
+        }),
+    );
+
+    const optionsWaytoPay = waytopayContainer.map(obj =>
+        ({
+            value: obj.waytopay_ID,
+            label: obj.waytopay_Name,
+        }),
+    );
+
+    const optionsGender = [
+        {value: 0, label: 'MASCULINO', isSelected: true},
+        {value: 1, label: 'FEMENINO', isSelected: true},
+    ];
+
+    const optionsStatusmarital = [
+        {value: 0, label: 'CASADO'},
+        {value: 1, label: 'CONVIVIENTE'},
+        {value: 2, label: 'DIVORCIADO'},
+        {value: 3, label: 'NO REGISTRADO'},
+        {value: 4, label: 'SOLTERO'},
+        {value: 5, label: 'VIUDO'},
+    ];
+
+
+    const optionsTypePerson = [
+        {value: 0, label: 'P. NATURAL'},
+        {value: 1, label: 'P. JURIDICA'},
+    ];
 
     const options = [
         {value: 'Cliente', label: 'Cliente', isSelected: true},
         {value: 'Proveedor', label: 'Proveedor', isSelected: true},
         {value: 'Personal', label: 'Personal'}
-    ]
+    ];
 
     const options2 = [
         {value: 'A 15 DIAS', label: 'A 15 DIAS'},
@@ -135,11 +225,15 @@ const Add = (props) => {
         {value: 'A 120 DIAS', label: 'A 120 DIAS'},
         {value: 'A 150 DIAS', label: 'A 150 DIAS'}
 
-    ]
+    ];
 
     /*   console.log(customer_id, supplier_id, staff_id)
    */
     let defaultSelectedOptions = [];
+    let defaultSelectedOptionsGender = [];
+    let defaultSelectedOptionsStatusmarital = [];
+    let defaultSelectedOptionsTypePerson = [];
+
     if (formType === 'edit') {
         if (customer_id > 0 && supplier_id > 0 && staff_id > 0) {
             defaultSelectedOptions = [
@@ -185,15 +279,100 @@ const Add = (props) => {
             ];
         }
 
+        if (person_Gender === '0') {
+            defaultSelectedOptionsGender = [
+                optionsGender[0],
+            ];
+        }
+        if (person_Gender === '1') {
+            defaultSelectedOptionsGender = [
+                optionsGender[1],
+            ];
+        }
+
+        if (type_person_id === '0') {
+            defaultSelectedOptionsTypePerson = [
+                optionsTypePerson[0],
+            ];
+        }
+        if (type_person_id === '1') {
+            defaultSelectedOptionsTypePerson = [
+                optionsTypePerson[1],
+            ];
+        }
+
+
+        if (statusmarital_ID === 0) {
+            defaultSelectedOptionsStatusmarital = [
+                optionsStatusmarital[0],
+            ];
+        }
+        if (statusmarital_ID === 1) {
+            defaultSelectedOptionsStatusmarital = [
+                optionsStatusmarital[1],
+            ];
+        }
+        if (statusmarital_ID === 2) {
+            defaultSelectedOptionsStatusmarital = [
+                optionsStatusmarital[2],
+            ];
+        }
+        if (statusmarital_ID === 3) {
+            defaultSelectedOptionsStatusmarital = [
+                optionsStatusmarital[3],
+            ];
+        }
+        if (statusmarital_ID === 4) {
+            defaultSelectedOptionsStatusmarital = [
+                optionsStatusmarital[4],
+            ];
+        }
+        if (statusmarital_ID === 5) {
+            defaultSelectedOptionsStatusmarital = [
+                optionsStatusmarital[5],
+            ];
+        }
+
     }
 
+    // const defaultSelectedOptionsNationality = [];
+
+    const defaultSelectedOptionsNationality = nationalityContainer.map(obj => selectedOptionsNaturalitys === obj.nationality_ID ? ({
+        value: obj.nationality_ID,
+        label: obj.nationality_Name
+    }) : '');
+
+    const defaultSelectedOptionsTypeQualification = typeQualificationContainer.map(obj => typeQualification === obj.typequalification_ID ? ({
+        value: obj.typequalification_ID,
+        label: obj.typequalification_Name
+    }) : '');
+
+    const defaultSelectedOptionsCategory = categoryContainer.map(obj => category === obj.category_ID ? ({
+        value: obj.category_ID,
+        label: obj.category_Name
+    }) : '');
+
+    const defaultSelectedOptionsWaytoPay = waytopayContainer.map(obj => waytopay === obj.waytopay_ID ? ({
+        value: obj.waytopay_ID,
+        label: obj.waytopay_Name
+    }) : '');
+
+    const defaultSelectedPaymentCondition = paymentConditionContainer.map(obj => paymentCondition === obj.payment_condition_ID ? ({
+        value: obj.payment_condition_ID,
+        label: obj.payment_condition_Name
+    }) : '');
 
     const [selectedOptions, setSelectedOptions] = useState(defaultSelectedOptions);
-
-
+    const [selectedOptionsGender, setSelectedOptionsGender] = useState(defaultSelectedOptionsGender);
+    const [selectedOptionsTypePerson, setSelectedOptionsTypePerson] = useState(defaultSelectedOptionsTypePerson);
     const [selectedOptions2, setSelectedOptions2] = useState([]);
-
-    const [selectedOptionsNaturalityy, setSelectedOptionsNaturalityy] = useState([]);
+    const [selectedOptionsNaturalityy, setSelectedOptionsNaturalityy] = useState(defaultSelectedOptionsNationality);
+    const [selectedOptionsTypeDocument, setSelectedOptionsTypeDocument] = useState();
+    const [selectedOptionsStatusmarital, setSelectedOptionsStatusmarital] = useState(defaultSelectedOptionsStatusmarital);
+    const [selectedOptionsWaytopayContainer, setSelectedOptionsWaytopayContainer] = useState(defaultSelectedOptionsWaytoPay);
+    const [selectedOptionsCategoryContainer, setSelectedOptionsCategoryContainer] = useState(defaultSelectedOptionsCategory);
+    const [selectedOptionsPaymentConditionContainer, setSelectedOptionsPaymentConditionContainer] = useState(defaultSelectedPaymentCondition);
+    const [selectedOptionsTypeQualificationContainer, setSelectedOptionsTypeQualificationContainer] = useState(defaultSelectedOptionsTypeQualification);
 
     const handleChange = (selected) => {
         setSelectedOptions(selected);
@@ -205,6 +384,38 @@ const Add = (props) => {
     const handleChange3 = (selected) => {
         setSelectedOptionsNaturalityy(selected);
         setSelectedOptionsNaturality(selected.value);
+        setSelectedOptionsNaturalitys(selected.value);
+    };
+    const handleChangeGender = (selected) => {
+        setSelectedOptionsGender(selected);
+        setPerson_Gender(selected.value);
+    };
+
+    const handleChangeStatusmarital = (selected) => {
+        setSelectedOptionsStatusmarital(selected);
+        setStatusmarital_ID(selected.value);
+    };
+
+    const handleChangeTypePerson = (selected) => {
+        setSelectedOptionsTypePerson(selected);
+        setType_person_id(selected.value);
+    };
+
+    const handleChangeTypeDocument = (selected) => {
+        setSelectedOptionsTypeDocument(selected);
+    };
+
+    const handleChangeWaytopay = (selected) => {
+        setSelectedOptionsWaytopayContainer(selected);
+    };
+    const handleChangeCategory = (selected) => {
+        setSelectedOptionsCategoryContainer(selected);
+    };
+    const handleChangeTypeQualification = (selected) => {
+        setSelectedOptionsTypeQualificationContainer(selected);
+    };
+    const handleChangePaymentCondition = (selected) => {
+        setSelectedOptionsPaymentConditionContainer(selected);
     };
 
 
@@ -251,12 +462,12 @@ const Add = (props) => {
 
                     <div className="flex justify-end flex-col md:flex-row gap-2 mt-5">
                         <Button
-                            textName='Cancelar'
-                            color='btn-light'
+                            textName="Cancelar"
+                            color="btn-light"
                             onClick={handleOnClickList}
                         />
                         <Button
-                            textName='Guardar'
+                            textName="Guardar"
                             onClick={handleOnClickRegister}
                         />
                     </div>
@@ -266,8 +477,8 @@ const Add = (props) => {
             <div className="pos intro-y grid grid-cols-12 gap-5 mt-5">
                 <div className="intro-y col-span-12 lg:col-span-8">
 
-                    <div className={"flex z-10"}>
-                        <p className={"flex w-10"}>Tipo: </p><p></p>
+                    <div className="flex z-10">
+                        <p className="flex w-10">Tipo: </p><p/>
                         <div className="w-2/5">
                             <Select
                                 options={options}
@@ -293,7 +504,7 @@ const Add = (props) => {
                                 <button title=""
                                         className="nav-link tooltip w-full sm:w-40 py-4 active" id="content-tab"
                                         role="tab" aria-controls="content" onClick={general}><i
-                                    data-lucide="file-text" className="w-4 h-4 mr-2"></i> General
+                                    data-lucide="file-text" className="w-4 h-4 mr-2"/> General
                                 </button>
                             </li>
                             {showNavCliente &&
@@ -301,7 +512,7 @@ const Add = (props) => {
                                     <button title=""
                                             className="nav-link tooltip w-full sm:w-40 py-4" id="meta-title-tab"
                                             role="tab" aria-hidden="true" onClick={cliente}>
-                                        <i data-lucide="code" className="w-4 h-4 mr-2"></i> Cliente
+                                        <i data-lucide="code" className="w-4 h-4 mr-2"/> Cliente
                                     </button>
                                 </li>}
                             {showNavProveedor &&
@@ -310,7 +521,7 @@ const Add = (props) => {
                                         <button title="Use search keywords" data-toggle="tab" data-target="#keywords"
                                                 className="nav-link tooltip w-full sm:w-40 py-4" id="keywords-tab"
                                                 role="tab" onClick={proveedor}><i data-lucide="align-left"
-                                                                                  className="w-4 h-4 mr-2"></i> Proveedor
+                                                                                  className="w-4 h-4 mr-2"/> Proveedor
                                         </button>
                                     </li>
                                 </div>
@@ -321,7 +532,7 @@ const Add = (props) => {
                                         <button title="Use search keywords" data-toggle="tab" data-target="#keywords"
                                                 className="nav-link tooltip w-full sm:w-40 py-4" id="keywords-tab"
                                                 role="tab" onClick={personal}><i data-lucide="align-left"
-                                                                                 className="w-4 h-4 mr-2"></i> Personal
+                                                                                 className="w-4 h-4 mr-2"/> Personal
                                         </button>
                                     </li>
                                 </div>
@@ -336,7 +547,7 @@ const Add = (props) => {
 
                                         <div
                                             className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"></i> Data
+                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"/> Data
                                         </div>
                                         <div className="flex">
                                             <div className="mt-5 w-2/4">
@@ -367,7 +578,7 @@ const Add = (props) => {
 
                                         <div
                                             className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"></i> Data
+                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"/> Data
                                         </div>
                                         <div className="flex">
                                             <div className="mt-5 w-2/4">
@@ -417,8 +628,7 @@ const Add = (props) => {
 
 
                                             </div>
-                                            <div className="mt-5 w-1/5">
-                                            </div>
+                                            <div className="mt-5 w-1/5"/>
                                             <div className="mt-5 w-2/4">
                                                 <div className="mt-3">
                                                     <label className="form-label">Fecha Fin</label>
@@ -446,68 +656,74 @@ const Add = (props) => {
 
                                         <div
                                             className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"></i> Data
+                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"/> Data
                                         </div>
                                         <div className="flex">
                                             <div className="mt-5 w-2/4">
                                                 <div className="mt-3">
                                                     <label className="form-label">Calificacion</label>
                                                     <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                                            <option>EXCELENTE</option>
-                                                            <option>BUENO</option>
-                                                            <option>REGULAR</option>
-                                                            <option>MALO</option>
-                                                            <option>SIN DESCUENTO</option>
-                                                        </select>
+                                                        <Select
+                                                            styles={customStyles}
+                                                            options={optionsTypeQualificationContainer}
+                                                            value={selectedOptionsTypeQualificationContainer}
+                                                            onChange={handleChangeTypeQualification}
+                                                            className="w-full"
+                                                        />
                                                     </div>
                                                 </div>
                                                 <div className="mt-3">
                                                     <label className="form-label">Linea de Credito</label>
                                                     <input type="text" className="datepicker form-control"
-                                                           id="post-form-2"
-                                                           data-single-mode="true" placeholder=" 0.00 "/>
+                                                           id="post-form-2" value={creditLine}
+                                                           data-single-mode="true" placeholder=" 0.00 "
+                                                           onChange={(e) => setCreditLine(e.target.value)}/>
                                                 </div>
                                                 <div className="mt-3">
                                                     <label className="form-label">Categoria</label>
                                                     <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                                            <option>DUBAU 01</option>
-                                                            <option>DUBAU 02</option>
-                                                            <option>DUBAU 03</option>
-                                                            <option>DUBAU 04</option>
-                                                            <option>DUBAU 05</option>
-                                                        </select>
+                                                        <Select
+                                                            styles={customStyles}
+                                                            options={optionsCategoryContainer}
+                                                            value={selectedOptionsCategoryContainer}
+                                                            onChange={handleChangeCategory}
+                                                            className="w-full"
+                                                        />
                                                     </div>
                                                 </div>
                                                 <div className="mt-3">
                                                     <label className="form-label">Forma de Pago</label>
                                                     <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                                            <option>CONTADO</option>
-                                                            <option>CREDITO</option>
-                                                            <option>LETRA</option>
-                                                            <option>TRANSFERENCIA</option>
-                                                        </select>
+                                                        <Select
+                                                            styles={customStyles}
+                                                            options={optionsWaytoPay}
+                                                            value={selectedOptionsWaytopayContainer}
+                                                            onChange={handleChangeWaytopay}
+                                                            className="w-full"
+                                                        />
                                                     </div>
                                                 </div>
+                                                <div className="mt-3"/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
 
                                             </div>
-                                            <div className="mt-5 w-1/5">
-                                            </div>
+
+                                            <div className="mt-5 w-1/5"/>
                                             <div className="mt-5 w-2/4">
 
                                                 <div className="mt-3">
                                                     <label className="form-label">Condiciones</label>
                                                     <div className="dropdown z-40">
                                                         <Select
-                                                            options={options2}
+                                                            options={optionsPaymentConditionContainer}
                                                             closeMenuOnSelect={false}
-                                                            value={selectedOptions2}
-                                                            onChange={handleChange2}
+                                                            value={selectedOptionsPaymentConditionContainer}
+                                                            onChange={handleChangePaymentCondition}
                                                             isMulti
 
                                                             className="w-full"
@@ -531,7 +747,7 @@ const Add = (props) => {
 
                                         <div
                                             className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"></i> Data
+                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"/> Data
                                         </div>
                                         <div className="flex">
                                             <div className="mt-5 w-2/4">
@@ -557,8 +773,7 @@ const Add = (props) => {
                                                            onChange={(e) => setPerson_LastNameMaternal(e.target.value)}/>
                                                 </div>
                                             </div>
-                                            <div className="mt-5 w-1/5">
-                                            </div>
+                                            <div className="mt-5 w-1/5"/>
                                             <div className="mt-5 w-2/4">
 
                                                 <div className="mt-3">
@@ -576,24 +791,25 @@ const Add = (props) => {
                                                 <div className="mt-3">
                                                     <label className="form-label">Sexo</label>
                                                     <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-
-                                                            <option>MASCULINO</option>
-                                                            <option>FEMENINO</option>
-                                                        </select>
+                                                        <Select
+                                                            styles={customStyles}
+                                                            options={optionsGender}
+                                                            value={selectedOptionsGender}
+                                                            onChange={handleChangeGender}
+                                                            className="w-full"
+                                                        />
                                                     </div>
                                                 </div>
                                                 <div className="mt-3">
                                                     <label className="form-label">Estado Civil</label>
                                                     <div className="dropdown">
-                                                        {/*<Select
+                                                        <Select
                                                             styles={customStyles}
-                                                            options={optionsNaturality}
-                                                            value={selectedOptionsNaturalityy}
-                                                            onChange={handleChange3}
+                                                            options={optionsStatusmarital}
+                                                            value={selectedOptionsStatusmarital}
+                                                            onChange={handleChangeStatusmarital}
                                                             className="w-full"
-                                                        />*/}
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>
@@ -607,60 +823,60 @@ const Add = (props) => {
                                     <div className="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                         <div
                                             className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"></i> Contacto
+                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"/> Contacto
                                         </div>
                                         <div className="mt-5">
                                             <div className="mt-3">
                                                 <label className="form-label">Telefono</label>
-                                                <Input dataType={'text'} dataName={'phone'} dataId={'phone'}
-                                                       className={'form-control'}
-                                                       dataPlaceholder={'01 - 0000 - 0'}
+                                                <Input dataType="text" dataName="phone" dataId="phone"
+                                                       className="form-control"
+                                                       dataPlaceholder="01 - 0000 - 0"
                                                        dataValue={person_Phone}
                                                        dataOnchange={setPerson_Phone}/>
                                             </div>
                                             <div className="mt-3">
                                                 <label className="form-label">Celular</label>
-                                                <Input dataType={'text'} dataName={'cellphone'} dataId={'cellphone'}
-                                                       className={'form-control'}
-                                                       dataPlaceholder={'999999999'}
+                                                <Input dataType="text" dataName="cellphone" dataId="cellphone"
+                                                       className="form-control"
+                                                       dataPlaceholder="999999999"
                                                        dataValue={person_CellPhone}
                                                        dataOnchange={setPerson_CellPhone}
                                                 />
                                             </div>
                                             <div className="mt-3">
                                                 <label className="form-label">Correo</label>
-                                                <Input dataType={'text'} dataName={'cellphone'} dataId={'cellphone'}
-                                                       className={'form-control'}
-                                                       dataPlaceholder={'example@example.com'}
+                                                <Input dataType="text" dataName="cellphone" dataId="cellphone"
+                                                       className="form-control"
+                                                       dataPlaceholder="example@example.com"
                                                        dataValue={person_Email}
                                                        dataOnchange={setPerson_Email}
                                                 />
                                             </div>
                                             <div className="mt-3">
                                                 <label className="form-label">Sitio Web</label>
-                                                <Input dataType={'text'} dataName={'cellphone'} dataId={'cellphone'}
-                                                       className={'form-control'}
-                                                       dataPlaceholder={'www.example.com'}
+                                                <Input dataType="text" dataName="cellphone" dataId="cellphone"
+                                                       className="form-control"
+                                                       dataPlaceholder="www.example.com"
                                                        dataValue={person_WebSite}
                                                        dataOnchange={setPerson_WebSite}
                                                 />
                                             </div>
                                             <div className="mt-3">
                                                 <label className="form-label">Numero de Cuenta S/.</label>
-                                                <Input dataType={'text'} dataName={'cellphone'} dataId={'cellphone'}
-                                                       className={'form-control'}
-                                                       dataPlaceholder={'00 - 000 - 0'}
+                                                <Input dataType="text" dataName="cellphone" dataId="cellphone"
+                                                       className="form-control"
+                                                       dataPlaceholder="00 - 000 - 0"
                                                     /*            dataValue={person_Phone}
-                                                                dataOnchange={setPerson_Phone}*/
+                                                                dataOnchange={setPerson_Phone} */
                                                 />
                                             </div>
                                             <div className="mt-3">
                                                 <label className="form-label">Numero de Cuenta $.</label>
-                                                <Input dataType={'text'} dataName={'cellphone'} dataId={'cellphone'}
-                                                       className={'form-control'}
-                                                       dataPlaceholder={'00 - 0000 - 0'}
+                                                <Input dataType="text" dataName="cellphone" dataId="cellphone"
+                                                       className="form-control"
+                                                       dataPlaceholder="00 - 0000 - 0"
                                                     /*    dataValue={person_Phone}
-                                                        dataOnchange={setPerson_}*/
+                                                        dataOnchange={setPerson_} */
                                                 />
                                             </div>
                                         </div>
@@ -676,33 +892,36 @@ const Add = (props) => {
                         <div className="mt-3">
                             <label className="form-label">Tipo Persona</label>
                             <div className="dropdown">
-                                <select
-                                    className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                    <option>P. Natural</option>
-                                    <option>P. Juridica</option>
-                                </select>
+                                <Select
+                                    styles={customStyles}
+                                    options={optionsTypePerson}
+                                    value={selectedOptionsTypePerson}
+                                    onChange={handleChangeTypePerson}
+                                    className="w-full"
+                                />
                             </div>
                         </div>
 
                         <div className="mt-3">
                             <label className="form-label">Tipo Documento</label>
                             <div className="dropdown">
-                                <select
-                                    className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                    <option>DNI</option>
-                                    <option>C.E</option>
-                                    <option>R.U.C</option>
-                                </select>
+                                <Select
+                                    styles={customStyles}
+                                    options={optionsTypeDocument}
+                                    value={selectedOptionsTypeDocument}
+                                    onChange={handleChangeTypeDocument}
+                                    className="w-full"
+                                />
                             </div>
                         </div>
 
                         <div className="mt-3">
                             <label htmlFor="post-form-2" className="form-label">Número de Documento</label>
-                            <Input dataType={'text'} dataName={'cellphone'} dataId={'cellphone'}
-                                   className={'form-control'}
-                                   dataPlaceholder={'000000000'}
-                                   dataValue={numberDocument}
-                                   dataOnchange={setNumberDocument}
+                            <Input dataType="text" dataName="cellphone" dataId="cellphone"
+                                   className="form-control"
+                                   dataPlaceholder="000000000"
+                                   dataValue={person_DNI}
+                                   dataOnchange={setPerson_DNI}
                             />
                         </div>
                         <div className="mt-3">
@@ -746,9 +965,9 @@ const Add = (props) => {
 
                         <div className="mt-3">
                             <label htmlFor="post-form-2" className="form-label">Direccion</label>
-                            <Input dataType={'text'} dataName={'direction'} dataId={'direction'}
-                                   className={'form-control'}
-                                   dataPlaceholder={'Av. Los Algarrobos'}
+                            <Input dataType="text" dataName="direction" dataId="direction"
+                                   className="form-control"
+                                   dataPlaceholder="Av. Los Algarrobos"
                                    dataValue={person_Direction}
                                    dataOnchange={setPerson_Direction}
                             />
@@ -761,4 +980,4 @@ const Add = (props) => {
     );
 }
 
-export default Add
+export default Add;

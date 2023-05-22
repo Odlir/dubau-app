@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Category extends Model
+class Inventory extends Model
 {
     use HasFactory, Notifiable;
 
     public static $rules = array();
     public $timestamps = false;
-    protected $table = 'category';
-    protected $primaryKey = 'category_id';
-    protected $fillable = array('category_id', 'category_Name');
+    protected $table = 'inventory';
+    protected $primaryKey = 'inventory_id';
+    protected $fillable = array('inventory_id', 'name', 'start_date', 'final_date', 'created_in', 'status');
 }

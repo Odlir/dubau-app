@@ -4,17 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 
 class Person extends Model
 {
     use HasFactory, Notifiable;
 
+    public static $rules = array();
+    public $timestamps = false;
     protected $table = 'person';
     protected $primaryKey = 'person_ID';
     protected $fillable = array(
+        'person_ID',
         'nationality_ID',
         'ubigeous_PlaceBirth',
         'ubigeous_Home',
@@ -26,7 +27,7 @@ class Person extends Model
         'person_LastNameMaternal',
         'person_Gender',
         'person_RUC',
-        'person_NumberDocumentID',
+        'person_DNI',
         'person_DateBirth',
         'person_Direction',
         'person_Phone',
@@ -43,8 +44,5 @@ class Person extends Model
         'person_ModificationUser',
         'person_StatusID'
     );
-
-    public $timestamps = false;
-    public static $rules = array();
 
 }

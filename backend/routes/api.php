@@ -1,23 +1,28 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\LineController;
 use App\Http\Controllers\AreaController;
-use App\Http\Controllers\MakerController;
-use App\Http\Controllers\WayToPayController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\businessEntityController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommercialSectionController;
 use App\Http\Controllers\EstablishmentController;
+use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\LineController;
+use App\Http\Controllers\MakerController;
+use App\Http\Controllers\PaymentConditionController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductServiceTypeController;
+use App\Http\Controllers\ProfitByFamilyController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TypeQualificationController;
 use App\Http\Controllers\UnitMeasureController;
-use App\Http\Controllers\PositionController;
-use App\Http\Controllers\StaffController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\PaymentConditionController;
-use App\Http\Controllers\CommercialSectionController;
-use App\Http\Controllers\businessEntityController;
+use App\Http\Controllers\WayToPayController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -212,4 +217,68 @@ Route::controller(businessEntityController::class)->group(function () {
     Route::post('deleteBusinessEntity', 'deleteBusinessEntity');
     Route::post('updateBusinessEntity', 'updateBusinessEntity');
     Route::get('listNationality', 'listNationality');
+    Route::get('listTypeDocument', 'listTypeDocument');
+    Route::get('listTypeQualifications', 'listTypeQualifications');
+    Route::get('listCategorys', 'listCategorys');
+    Route::get('listWaytoPays', 'listWaytoPays');
+    Route::get('listPaymentConditions', 'listPaymentConditions');
+});
+
+
+Route::controller(CommercialSectionController::class)->group(function () {
+    Route::post('registerCommercialSection', 'registerCommercialSection');
+    Route::get('listCommercialSection', 'listCommercialSection');
+    Route::get('listXCommercialSection', 'listXCommercialSection');
+    Route::post('deleteCommercialSection', 'deleteCommercialSection');
+    Route::post('updateCommercialSection', 'updateCommercialSection');
+});
+
+
+Route::controller(ProductServiceTypeController::class)->group(function () {
+    Route::post('registerProductServiceType', 'registerProductServiceType');
+    Route::get('listProductServiceType', 'listProductServiceType');
+    Route::get('listXProductServiceType', 'listXProductServiceType');
+    Route::post('deleteProductServiceType', 'deleteProductServiceType');
+    Route::post('updateProductServiceType', 'updateProductServiceType');
+});
+
+
+Route::controller(InventoryController::class)->group(function () {
+    Route::post('registerInventory', 'registerInventory');
+    Route::get('listInventory', 'listInventory');
+    Route::get('listXInventory', 'listXInventory');
+    Route::post('deleteInventory', 'deleteInventory');
+    Route::post('updateInventory', 'updateInventory');
+});
+
+Route::controller(FamilyController::class)->group(function () {
+    Route::post('registerFamily', 'registerFamily');
+    Route::get('listFamily', 'listFamily');
+    Route::get('listXFamily', 'listXFamily');
+    Route::post('deleteFamily', 'deleteFamily');
+    Route::post('updateFamily', 'updateFamily');
+});
+
+
+Route::controller(ProfitByFamilyController::class)->group(function () {
+    Route::post('registerProfitByFamily', 'registerProfitByFamily');
+    Route::get('listProfitByFamily', 'listProfitByFamily');
+    Route::get('listXProfitByFamily', 'listXProfitByFamily');
+    Route::post('deleteProfitByFamily', 'deleteProfitByFamily');
+    Route::post('updateProfitByFamily', 'updateProfitByFamily');
+});
+
+
+Route::controller(ProductController::class)->group(function () {
+    Route::post('registerProduct', 'registerProduct');
+    Route::get('listProduct', 'listProduct');
+    Route::get('listXProduct', 'listXProduct');
+    Route::post('deleteProduct', 'deleteProduct');
+    Route::post('updateProduct', 'updateProduct');
+    Route::get('listFamilys', 'listFamilys');
+    Route::get('listProductServiceTypes', 'listProductServiceTypes');
+    Route::get('listBrands', 'listBrands');
+    Route::get('listLines', 'listLines');
+    Route::get('listMakers', 'listMakers');
+    Route::get('listUnitOfMeasurement', 'listUnitOfMeasurement');
 });
