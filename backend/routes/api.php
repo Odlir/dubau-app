@@ -291,4 +291,5 @@ Route::controller(InventoryDetailController::class)->group(function () {
     Route::get('listXInventoryDetail', 'listXInventoryDetail');
     Route::post('deleteInventoryDetail', 'deleteInventoryDetail');
     Route::post('updateInventoryDetail', 'updateInventoryDetail');
+    Route::get('listProducts', 'listProducts');
 });
