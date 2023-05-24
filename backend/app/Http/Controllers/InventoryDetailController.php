@@ -18,7 +18,8 @@ class InventoryDetailController extends Controller
                 'listXInventoryDetail',
                 'deleteInventoryDetail',
                 'updateInventoryDetail',
-                'listProducts'
+                'listProducts',
+                'activeInventoryDetail'
             ]]);
     }
 
@@ -37,7 +38,7 @@ class InventoryDetailController extends Controller
             $auto_increment = ($page - 1) * $per_page;
         }
 
-        $data = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->selectRaw('product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+        $data = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->selectRaw('product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->orderByDesc('inventory_detail.inventory_detail_id')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
             $row->auto_increment = $auto_increment + $index + 1;
         });
 
@@ -46,7 +47,7 @@ class InventoryDetailController extends Controller
             $created_in = $_GET["created_in"];
 
             if ($created_in != '' || $created_in != null) {
-                $total = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->selectRaw('product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->where('created_in', 'LIKE', '%' . $created_in . '%')->count();
+                $total = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->selectRaw('product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->where('created_in', 'LIKE', '%' . $created_in . '%')->orderByDesc('inventory_detail.inventory_detail_id')->count();
                 $total_pages = $total / $per_page;
                 if ($page == 1) {
                     $auto_increment = 0;
@@ -54,7 +55,7 @@ class InventoryDetailController extends Controller
                     $auto_increment = ($page - 1) * $per_page;
                 }
 
-                $data = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->selectRaw('product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+                $data = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->selectRaw('product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->orderByDesc('inventory_detail.inventory_detail_id')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
                     $row->auto_increment = $auto_increment + $index + 1;
                 });
             } else {
@@ -66,7 +67,7 @@ class InventoryDetailController extends Controller
                     $auto_increment = ($page - 1) * $per_page;
                 }
 
-                $data = InventoryDetail::where('status', '=', '1')->where('inventory_id', '=', "'$inventory_id'")->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+                $data = InventoryDetail::where('status', '=', '1')->where('inventory_id', '=', "'$inventory_id'")->orderByDesc('inventory_detail.inventory_detail_id')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
                     $row->auto_increment = $auto_increment + $index + 1;
                 });
             }
@@ -85,7 +86,7 @@ class InventoryDetailController extends Controller
     public function listXInventoryDetail()
     {
         $inventory_detail_id = $_GET["inventory_detail_id"];
-        $inventory_detail = InventoryDetail::where('inventory_detail_id', $inventory_detail_id)->first();
+        $inventory_detail = InventoryDetail::where('inventory_detail.inventory_detail_id', $inventory_detail_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->selectRaw('product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->first();
         return response()->json($inventory_detail, 200);
     }
 
@@ -94,9 +95,13 @@ class InventoryDetailController extends Controller
 
         InventoryDetail::where('inventory_detail_id', $request->inventory_detail_id)
             ->update([
-                'name' => $request->name,
-                'start_date' => $request->start_date,
-                'final_date' => $request->final_date,
+                'inventory_id' => $request->inventoryXDetail,
+                'product_id' => $request->productId,
+                'amount' => $request->quantity,
+                'cost' => $request->price,
+                'status_dinamic' => 0,
+                'created_in' => date('Y-m-d H:i:s'),
+                'status' => $request->status,
             ]);
 
     }
@@ -112,18 +117,30 @@ class InventoryDetailController extends Controller
 
     public function registerInventoryDetail(Request $request)
     {
-
         DB::transaction(function () use ($request) {
-            $inventory_detail = InventoryDetail::create([
-                'inventory_id' => $request->inventoryXDetail,
-                'product_id' => $request->productId,
-                'amount' => $request->quantity,
-                'cost' => $request->price,
-                'status_dinamic' => 0,
-                'created_in' => date('Y-m-d H:i:s'),
-                'status' => $request->status,
-            ]);
+            $productId = InventoryDetail::where('product_id', '=', $request->productId)->where('status', '=', 1)->first();
+            if ($productId === null) {
+                $inventory_detail = InventoryDetail::create([
+                    'inventory_id' => $request->inventoryXDetail,
+                    'product_id' => $request->productId,
+                    'amount' => $request->quantity,
+                    'cost' => $request->price,
+                    'status_dinamic' => 0,
+                    'created_in' => date('Y-m-d H:i:s'),
+                    'status' => $request->status,
+                ]);
+            } else {
+                InventoryDetail::where('inventory_id', $request->inventoryXDetail)->where('product_id', '=', $request->productId)->where('status', '=', 1)
+                    ->update([
+                        'amount' => $request->quantity,
+                        'cost' => $request->price,
+                        'status_dinamic' => 0,
+                        'updated_in' => date('Y-m-d H:i:s'),
+                        'status' => $request->status,
+                    ]);
+            }
         });
+
     }
 
     public function listProducts(Request $request)
@@ -131,5 +148,16 @@ class InventoryDetailController extends Controller
         $productName = $request->productName;
         $typeDocument = Product::where('name', 'LIKE', "%$productName%")->get();
         return response()->json($typeDocument, 200);
+    }
+
+
+    public function activeInventoryDetail(Request $request)
+    {
+        InventoryDetail::where('inventory_detail_id', $request->dataInventoryId)
+            ->update([
+                'status_dinamic' => 1,
+                'updated_in' => date('Y-m-d H:i:s'),
+                'status' => $request->status,
+            ]);
     }
 }

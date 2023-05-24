@@ -137,7 +137,6 @@ function Index() {
         const endpoint2 = `${env.apiURL}listInventoryDetail`;
         const response2 = await axios.get(`${endpoint2}?page=${1}&per_page=${perPage}&inventory_id=${inventory_id}`);
         setDataDetail(response2.data.data);
-        console.log(response2.data);
         setPageDetail(response2.data.page);
         setTotalRowsDetail(response2.data.total);
         setIventoryXDetail(inventory_id);
@@ -193,26 +192,6 @@ function Index() {
         setLoading(false);
     };
 
-    const handleOnClickCleanDetail = async page => {
-        setLoading(true);
-        setProductName('');
-        setQuantity('');
-        setPrice('');
-        setLoading(false);
-    };
-
-    const handleOnClickRegisterDetail = async (e) => {
-        e.preventDefault();
-        const endpoint = `${env.apiURL}registerInventoryDetail`;
-        await axios.post(endpoint, {inventoryXDetail, productId, quantity, price, status: '1'})
-            .then((response) => {
-                actionViewDetail(inventoryXDetail);
-            })
-            .catch(error => {
-                alert('Debe completar correctamente sus datos');
-            });
-    };
-
 
     const handleInputChange = async (event) => {
         const {value} = event.target;
@@ -220,7 +199,6 @@ function Index() {
         const endpoint = `${env.apiURL}listProducts`;
         const response = await axios.get(`${endpoint}?productName=${value}`);
         setDataProduct(response.data.data);
-        console.log(dataProduct);
 
     };
 
@@ -309,51 +287,115 @@ function Index() {
         setDataInventoryId(response.data.inventory_id);
         setProductId(response.data.product_id);
 
-        const defaultSelectedOptionsInventoryDetail = options.map(item => response.data.product_id === item.product_id ? ({
-            value: item.product_id,
-            label: item.name
-        }) : '');
-        console.log(options);
+        // Formate os dados de resposta para o formato esperado pelo react-select
+        const defaultSelectedOptionsInventoryDetail = {
+            value: response.data.product_id,
+            label: response.data.name
+        };
+
         setSelectedOption(defaultSelectedOptionsInventoryDetail);
         setQuantity(response.data.amount);
         setPrice(response.data.cost);
 
-        setFormType('edit');
+    };
+    const handleOnClickCleanDetail = async page => {
+        setShowModal(false);
+        setLoading(true);
+        setProductName('');
+        setSelectedOption('');
+        setQuantity('');
+        setPrice('');
+        setLoading(false);
+    };
+
+    const handleOnClickCancelDetail = async page => {
+        setProductName('');
+        setSelectedOption('');
+        setQuantity('');
+        setPrice('');
+    };
+
+    const handleOnClickRegisterDetail = async (e) => {
+        e.preventDefault();
+        const endpoint = `${env.apiURL}registerInventoryDetail`;
+        await axios.post(endpoint, {inventoryXDetail, productId, quantity, price, status: '1'})
+            .then((response) => {
+                handleOnClickCancelDetail();
+                actionViewDetail(inventoryXDetail);
+            })
+            .catch(error => {
+                alert('Debe completar correctamente sus datos');
+            });
+
     };
 
 
+    const actionActiveDetail = async (dataInventoryId) => {
+        const endpoint = `${env.apiURL}activeInventoryDetail`;
+        await axios.post(endpoint, {dataInventoryId, status: '1'})
+            .then((response) => {
+                actionViewDetail(inventoryXDetail);
+            })
+            .catch(error => {
+                alert('Debe completar correctamente sus datos');
+            });
+    };
+    const customStyless = {
+        rows: {
+            style: {
+                minHeight: '1px', // override the row height
+                height: '55px',
+                maxHeight: '30px',
+                fontSize: '13px'
+            },
+        },
+        headCells: {
+            style: {
+                fontSize: '13ppx'
+            },
+        },
+        cells: {
+            style: {
+                fontSize: '13px'
+            },
+        },
+    };
     return (
         <div>
 
-            <div className="z-10">
+            <div className="z-10  ">
                 {showModal ? (
                     <>
                         <div
-                            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 index-absolute outline-none focus:outline-none"
+                            className="modal-detail justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 index-absolute outline-none focus:outline-none"
                         >
-                            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                            <div className="relative w-auto my-6 mx-auto">
 
                                 <div
                                     className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                    <div
+                                        className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0 w-full justify-end">
+                                        <button className="btn btn-danger shadow-md close"
+                                                onClick={handleOnClickCleanDetail}>X
+                                        </button>
+                                    </div>
 
                                     <div
                                         className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+
                                         <div
                                             className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0 w-full">
+
                                             <div className="text-lg font-semibold">Inventario: {name}</div>
                                             <div className="ml-auto  flex ">
-                                                <div className="form-label xl:w-12.5 xl:!mr-10 ">
+                                                <div className="form-label xl:w-15 ">
                                                     <div className="text-left">
                                                         <div className="flex items-center justify-center h-10">
                                                             <div className="font-medium">Fecha Inicial</div>
-                                                            <div
-                                                                className="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                                Required
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="w-full mt-3 xl:mt-0 flex-1">
+                                                <div className="w-full mt-3 xl:mt-0 flex-1 xl:!mr-5 ">
                                                     <Input dataType="date" dataName="0-0-2023" dataId="emailll"
                                                            className="form-control"
                                                            dataPlaceholder="0-0-2023"
@@ -364,19 +406,9 @@ function Index() {
                                             </div>
                                         </div>
 
-
-                                        <button
-                                            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                                            onClick={() => setShowModal(false)}
-                                        >
-                    <span
-                        className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                                        </button>
                                     </div>
                                     <div className="">
-                                        <div className="font-size-10px  p-6  ">
+                                        <div className=" p-6  ">
                                             <div className="relative flex">
                                                 <div>
                                                     <div
@@ -447,7 +479,7 @@ function Index() {
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <div className=" w-1 mt-3 xl:mt-0 flex-1 h-2"/>
                                             <div
                                                 className="hidden md:block mx-auto text-slate-500 ">
                                                 <div className="h-6 flex justify-end">
@@ -455,7 +487,10 @@ function Index() {
                                                             onClick={handleOnClickRegisterDetail}>Agregar
                                                     </button>
                                                     <button className="btn btn-danger shadow-md mr-2"
-                                                            onClick={handleOnClickCleanDetail}>Cancelar
+                                                            onClick={handleOnClickCancelDetail}>Cancelar
+                                                    </button>
+                                                    <button className="btn btn-success shadow-md mr-2 color-white"
+                                                            onClick={handleOnClickCancelDetail}>Aceptar
                                                     </button>
                                                 </div>
                                             </div>
@@ -486,7 +521,8 @@ function Index() {
                                             <div className="relative flex-auto">
                                                 {dataDetail.length !== 0 ?
                                                     <DataTable
-                                                        columns={columnsDetail(actionDeleteDetail, actionEditDetail)}
+                                                        columns={columnsDetail(actionActiveDetail, actionDeleteDetail, actionEditDetail)}
+                                                        customStyles={customStyless}
                                                         data={dataDetail}
                                                         progressPending={loading}
                                                         progressComponent={<Preload/>}
@@ -495,10 +531,12 @@ function Index() {
                                                         paginationTotalRows={totalRowsDetail}
                                                         onChangeRowsPerPage={handlePerRowsChangeDetail}
                                                         onChangePage={handlePageChange}
+
                                                     />
                                                     :
                                                     <DataTable
-                                                        columns={columnsDetail(actionDeleteDetail, actionEditDetail)}
+                                                        columns={columnsDetail(actionActiveDetail, actionDeleteDetail, actionEditDetail)}
+                                                        customStyles={customStyless}
                                                         data={dataDetail}
                                                         progressPending={loading}
                                                         progressComponent={<Preload/>}
@@ -508,27 +546,29 @@ function Index() {
                                                         paginationTotalRows={totalRowsDetail}
                                                         onChangeRowsPerPage={handlePerRowsChangeDetail}
                                                         onChangePage={handlePageChange}
+
+
                                                     />}
 
                                             </div>
 
-                                            <div
-                                                className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                                            {/* <div
+                                                className="flex items-center justify-end p-2 border-t border-solid border-slate-200 rounded-b">
                                                 <button
-                                                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                    className="text-red-500 background-transparent font-bold uppercase px-5 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                     type="button"
-                                                    onClick={() => setShowModal(false)}
+                                                    onClick={() => handleOnClickCleanDetail()}
                                                 >
                                                     Close
                                                 </button>
                                                 <button
-                                                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-5 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                     type="button"
                                                     onClick={() => setShowModal(false)}
                                                 >
                                                     Aceptar
                                                 </button>
-                                            </div>
+                                            </div> */}
                                         </div>
 
 

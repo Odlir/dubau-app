@@ -114,5 +114,20 @@
 }
 
 .width-28em {
-    width: 40em;
+    width: 55em;
 }
+
+.modal-detail {
+
+}
+
+.color-white {
+    color: white !important;
+}
+
+.close {
+    border-radius: 5px;
+    height: 22px;
+    width: 35px;
+}
+
