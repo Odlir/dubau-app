@@ -38,7 +38,7 @@ class InventoryDetailController extends Controller
             $auto_increment = ($page - 1) * $per_page;
         }
 
-        $data = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->selectRaw('product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->orderByDesc('inventory_detail.inventory_detail_id')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+        $data = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->join('family', 'product.family_id', '=', 'family.family_id')->selectRaw('family.name as family_name,product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->orderByDesc('inventory_detail.inventory_detail_id')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
             $row->auto_increment = $auto_increment + $index + 1;
         });
 
@@ -47,7 +47,7 @@ class InventoryDetailController extends Controller
             $created_in = $_GET["created_in"];
 
             if ($created_in != '' || $created_in != null) {
-                $total = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->selectRaw('product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->where('created_in', 'LIKE', '%' . $created_in . '%')->orderByDesc('inventory_detail.inventory_detail_id')->count();
+                $total = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->join('family', 'product.family_id', '=', 'family.family_id')->selectRaw('family.name as family_name,product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->where('created_in', 'LIKE', '%' . $created_in . '%')->orderByDesc('inventory_detail.inventory_detail_id')->count();
                 $total_pages = $total / $per_page;
                 if ($page == 1) {
                     $auto_increment = 0;
@@ -55,7 +55,7 @@ class InventoryDetailController extends Controller
                     $auto_increment = ($page - 1) * $per_page;
                 }
 
-                $data = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->selectRaw('product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->orderByDesc('inventory_detail.inventory_detail_id')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+                $data = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->join('family', 'product.family_id', '=', 'family.family_id')->selectRaw('family.name as family_name,product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->orderByDesc('inventory_detail.inventory_detail_id')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
                     $row->auto_increment = $auto_increment + $index + 1;
                 });
             } else {

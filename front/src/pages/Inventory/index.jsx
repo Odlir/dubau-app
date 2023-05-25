@@ -14,7 +14,7 @@ import 'sweetalert2/src/sweetalert2.scss';
 import Add from "./add.jsx";
 import List from "../../components/layouts/list/index.jsx";
 import Input from "@/components/Input/Input";
-
+import Accordion from "@/components/Accordion/Accordion";
 
 function Index() {
     const navigate = useNavigate();
@@ -140,6 +140,7 @@ function Index() {
         setPageDetail(response2.data.page);
         setTotalRowsDetail(response2.data.total);
         setIventoryXDetail(inventory_id);
+
 
         setShowModal(true);
     };
@@ -360,9 +361,32 @@ function Index() {
             },
         },
     };
+    const [showDiv, setShowDiv] = useState(true);
+    const [showDivFamily, setShowDivFamily] = useState(false);
+    const general = () => {
+        setShowDiv(true);
+        setShowDivFamily(false);
+    };
+
+    const family = () => {
+        setShowDiv(false);
+        setShowDivFamily(true);
+    };
+    // const [familyContainer, setFamilyContainer] = useState([]);
+
+    let familyContainer = [];
+    const accordionItems = dataDetail.map((item) => {
+        familyContainer += [item.family_name];
+
+        return ({
+            title: item.family_name,
+            content: item.name
+        });
+    });
+    console.log(familyContainer);
+
     return (
         <div>
-
             <div className="z-10  ">
                 {showModal ? (
                     <>
@@ -381,10 +405,10 @@ function Index() {
                                     </div>
 
                                     <div
-                                        className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                                        className="flex items-start justify-between h-12  border-b border-solid border-slate-200 rounded-t">
 
                                         <div
-                                            className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0 w-full">
+                                            className="form-inline items-start p-5 flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0 w-full">
 
                                             <div className="text-lg font-semibold">Inventario: {name}</div>
                                             <div className="ml-auto  flex ">
@@ -408,7 +432,7 @@ function Index() {
 
                                     </div>
                                     <div className="">
-                                        <div className=" p-6  ">
+                                        <div className=" p-5 ">
                                             <div className="relative flex">
                                                 <div>
                                                     <div
@@ -502,7 +526,7 @@ function Index() {
                                                         <button title=""
                                                                 className="nav-link tooltip w-full sm:w-40 py-4 active"
                                                                 id="content-tab"
-                                                                role="tab" aria-controls="content"><i
+                                                                role="tab" aria-controls="content" onClick={general}><i
                                                             data-lucide="file-text" className="w-4 h-4 mr-2"/> General
                                                         </button>
                                                     </li>
@@ -511,64 +535,52 @@ function Index() {
                                                         <button title=""
                                                                 className="nav-link tooltip w-full sm:w-40 py-4"
                                                                 id="meta-title-tab"
-                                                                role="tab" aria-hidden="true">
+                                                                role="tab" aria-hidden="true" onClick={family}>
                                                             <i data-lucide="code" className="w-4 h-4 mr-2"/> Familia
                                                         </button>
                                                     </li>
                                                 </ul>
                                             </div>
 
-                                            <div className="relative flex-auto">
-                                                {dataDetail.length !== 0 ?
-                                                    <DataTable
-                                                        columns={columnsDetail(actionActiveDetail, actionDeleteDetail, actionEditDetail)}
-                                                        customStyles={customStyless}
-                                                        data={dataDetail}
-                                                        progressPending={loading}
-                                                        progressComponent={<Preload/>}
-                                                        pagination
-                                                        paginationServer
-                                                        paginationTotalRows={totalRowsDetail}
-                                                        onChangeRowsPerPage={handlePerRowsChangeDetail}
-                                                        onChangePage={handlePageChange}
+                                            {showDiv &&
+                                                <div className="relative flex-auto">
+                                                    {dataDetail.length !== 0 ?
+                                                        <DataTable
+                                                            columns={columnsDetail(actionActiveDetail, actionDeleteDetail, actionEditDetail)}
+                                                            customStyles={customStyless}
+                                                            data={dataDetail}
+                                                            progressPending={loading}
+                                                            progressComponent={<Preload/>}
+                                                            pagination
+                                                            paginationServer
+                                                            paginationTotalRows={totalRowsDetail}
+                                                            onChangeRowsPerPage={handlePerRowsChangeDetail}
+                                                            onChangePage={handlePageChange}
 
-                                                    />
-                                                    :
-                                                    <DataTable
-                                                        columns={columnsDetail(actionActiveDetail, actionDeleteDetail, actionEditDetail)}
-                                                        customStyles={customStyless}
-                                                        data={dataDetail}
-                                                        progressPending={loading}
-                                                        progressComponent={<Preload/>}
-                                                        noDataComponent="No existen registros en esta tabla"
-                                                        pagination
-                                                        paginationServer
-                                                        paginationTotalRows={totalRowsDetail}
-                                                        onChangeRowsPerPage={handlePerRowsChangeDetail}
-                                                        onChangePage={handlePageChange}
+                                                        />
+                                                        :
+                                                        <DataTable
+                                                            columns={columnsDetail(actionActiveDetail, actionDeleteDetail, actionEditDetail)}
+                                                            customStyles={customStyless}
+                                                            data={dataDetail}
+                                                            progressPending={loading}
+                                                            progressComponent={<Preload/>}
+                                                            noDataComponent="No existen registros en esta tabla"
+                                                            pagination
+                                                            paginationServer
+                                                            paginationTotalRows={totalRowsDetail}
+                                                            onChangeRowsPerPage={handlePerRowsChangeDetail}
+                                                            onChangePage={handlePageChange}
+                                                        />}
+                                                </div>
+                                            }
+                                            {showDivFamily &&
 
+                                                <div className="container mx-auto p-4">
+                                                    <Accordion items={accordionItems}/>
+                                                </div>
 
-                                                    />}
-
-                                            </div>
-
-                                            {/* <div
-                                                className="flex items-center justify-end p-2 border-t border-solid border-slate-200 rounded-b">
-                                                <button
-                                                    className="text-red-500 background-transparent font-bold uppercase px-5 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                    type="button"
-                                                    onClick={() => handleOnClickCleanDetail()}
-                                                >
-                                                    Close
-                                                </button>
-                                                <button
-                                                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-5 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                    type="button"
-                                                    onClick={() => setShowModal(false)}
-                                                >
-                                                    Aceptar
-                                                </button>
-                                            </div> */}
+                                            }
                                         </div>
 
 
