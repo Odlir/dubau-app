@@ -11,6 +11,8 @@ Link de produccion [@dubau/dubau-app](http://dubaumetalindustria.com/dubau/).
 - Composer 2
 - Mysql 8.0
 
-## Documentación
-- npm install
-- composer Insall
+## Primeros Pasos
+1. cd/front | npm install
+2. cd/backend | composer Insall
+3. php artisan migrate
+4. php artisan db:seed
