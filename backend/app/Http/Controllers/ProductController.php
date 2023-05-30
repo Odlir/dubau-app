@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Family;
+use App\Models\InventoryDetail;
 use App\Models\Line;
 use App\Models\Maker;
 use App\Models\Product;
@@ -183,10 +184,6 @@ class ProductController extends Controller
     public function registerProduct(Request $request)
     {
 
-        /*        $request->validate([
-                    'name' => 'required|string|max:255|unique:product_service_type',
-                    'status' => 'required|string|min:1',
-                ]);*/
 
         DB::transaction(function () use ($request) {
             /*Image upload*/
@@ -202,7 +199,7 @@ class ProductController extends Controller
             }
             /*Image upload*/
 
-            $family = Product::create([
+            $product = Product::create([
                 'family_id' => $request->family_id,
                 'product_service_type_id' => $request->product_service_type_id,
                 'brand_id' => $request->brand_id,
@@ -225,6 +222,16 @@ class ProductController extends Controller
                 'status_dinamic' => $request->status_dinamic,
                 'created_in' => date('Y-m-d H:i:s'),
                 'status' => $request->status,
+            ]);
+
+            $inventory_detail = InventoryDetail::create([
+                'inventory_id' => 1,
+                'product_id' => $product->product_id,
+                'amount' => 0,
+                'cost' => 0,
+                'status_dinamic' => 0,
+                'created_in' => date('Y-m-d H:i:s'),
+                'status' => 1,
             ]);
         });
 
