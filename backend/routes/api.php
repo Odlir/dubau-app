@@ -293,4 +293,5 @@ Route::controller(InventoryDetailController::class)->group(function () {
     Route::post('updateInventoryDetail', 'updateInventoryDetail');
     Route::get('listProducts', 'listProducts');
     Route::post('activeInventoryDetail', 'activeInventoryDetail');
+    Route::get('listInventoryFamilyDetail', 'listInventoryFamilyDetail');
 });

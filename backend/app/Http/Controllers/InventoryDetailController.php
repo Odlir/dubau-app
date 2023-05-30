@@ -19,7 +19,8 @@ class InventoryDetailController extends Controller
                 'deleteInventoryDetail',
                 'updateInventoryDetail',
                 'listProducts',
-                'activeInventoryDetail'
+                'activeInventoryDetail',
+                'listInventoryFamilyDetail'
             ]]);
     }
 
@@ -159,5 +160,78 @@ class InventoryDetailController extends Controller
                 'updated_in' => date('Y-m-d H:i:s'),
                 'status' => $request->status,
             ]);
+    }
+
+
+    public function listInventoryFamilyDetail()
+    {
+        $page = $_GET["page"];
+        $per_page = $_GET["per_page"];
+        $inventory_id = $_GET["inventory_id"];
+
+        $total = InventoryDetail::where('status', '=', '1')->where('inventory_id', '=', "'$inventory_id'")->count();
+
+        $total_pages = $total / $per_page;
+        if ($page == 1) {
+            $auto_increment = 0;
+        } else {
+            $auto_increment = ($page - 1) * $per_page;
+        }
+
+        $data = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->join('family', 'product.family_id', '=', 'family.family_id')->selectRaw('family.name as family_name,product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->orderByDesc('inventory_detail.inventory_detail_id')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+            $row->auto_increment = $auto_increment + $index + 1;
+        });
+
+        if (isset($_GET["name"])) {
+            $name = $_GET["name"];
+            $created_in = $_GET["created_in"];
+
+            if ($created_in != '' || $created_in != null) {
+                $total = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->join('family', 'product.family_id', '=', 'family.family_id')->selectRaw('family.name as family_name,product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->where('created_in', 'LIKE', '%' . $created_in . '%')->orderByDesc('inventory_detail.inventory_detail_id')->count();
+                $total_pages = $total / $per_page;
+                if ($page == 1) {
+                    $auto_increment = 0;
+                } else {
+                    $auto_increment = ($page - 1) * $per_page;
+                }
+
+                $data = InventoryDetail::where('inventory_detail.status', '=', '1')->where('inventory_detail.inventory_id', '=', $inventory_id)->join('product', 'inventory_detail.product_id', '=', 'product.product_id')->join('family', 'product.family_id', '=', 'family.family_id')->selectRaw('family.name as family_name,product.*,inventory_detail.*, inventory_detail.cost AS inventoryDetailCost')->orderByDesc('inventory_detail.inventory_detail_id')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+                    $row->auto_increment = $auto_increment + $index + 1;
+                });
+            } else {
+                $total = InventoryDetail::where('status', '=', '1')->where('inventory_id', '=', "'$inventory_id'")->count();
+                $total_pages = $total / $per_page;
+                if ($page == 1) {
+                    $auto_increment = 0;
+                } else {
+                    $auto_increment = ($page - 1) * $per_page;
+                }
+
+                $data = InventoryDetail::where('status', '=', '1')->where('inventory_id', '=', "'$inventory_id'")->orderByDesc('inventory_detail.inventory_detail_id')->paginate($per_page)->each(function ($row, $index) use ($auto_increment) {
+                    $row->auto_increment = $auto_increment + $index + 1;
+                });
+            }
+        }
+
+        $containerFamily = array();
+        $i = 0;
+        foreach ($data as $inventory_product) {
+            $containerFamilyName = $inventory_product->family_name;
+            if (array_key_exists($containerFamilyName, $containerFamily)) {
+                $containerFamily[$containerFamilyName][] = $inventory_product;
+            } else {
+                $containerFamily[$containerFamilyName] = [$inventory_product];
+            }
+            $i++;
+        }
+
+        $objContenedorListInventoryDetail = new stdClass();
+        $objContenedorListInventoryDetail->page = $page;
+        $objContenedorListInventoryDetail->per_page = $per_page;
+        $objContenedorListInventoryDetail->total = $total;
+        $objContenedorListInventoryDetail->total_pages = $total_pages;
+        $objContenedorListInventoryDetail->data = $containerFamily;
+
+        return response()->json($objContenedorListInventoryDetail, 200);
     }
 }

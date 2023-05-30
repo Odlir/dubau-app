@@ -6,6 +6,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {useDebounce} from "use-debounce";
 import Select from 'react-select';
 import debounce from 'lodash.debounce';
+import ExpandableTable from "react-exp-table";
 import {env} from "@/env.js";
 import columns from '../../data/Inventory.jsx';
 import columnsDetail from '../../data/InventoryDetail';
@@ -14,7 +15,6 @@ import 'sweetalert2/src/sweetalert2.scss';
 import Add from "./add.jsx";
 import List from "../../components/layouts/list/index.jsx";
 import Input from "@/components/Input/Input";
-import Accordion from "@/components/Accordion/Accordion";
 
 function Index() {
     const navigate = useNavigate();
@@ -39,6 +39,7 @@ function Index() {
     /* Server Side */
     const [data, setData] = useState([]);
     const [dataDetail, setDataDetail] = useState([]);
+    const [dataFamilyDetail, setDataFamilyDetail] = useState([]);
     const [dataProduct, setDataProduct] = useState([]);
     const [loading, setLoading] = useState(false);
     const [totalRowsDetail, setTotalRowsDetail] = useState(0);
@@ -62,7 +63,6 @@ function Index() {
     const handlePageChange = page => {
         fetchInventorys(page);
     };
-
 
     const handlePerRowsChange = (rows) => {
         setLoading(true);
@@ -139,8 +139,10 @@ function Index() {
         setDataDetail(response2.data.data);
         setPageDetail(response2.data.page);
         setTotalRowsDetail(response2.data.total);
+        const endpoint3 = `${env.apiURL}listInventoryFamilyDetail`;
+        const response3 = await axios.get(`${endpoint3}?page=${1}&per_page=${perPage}&inventory_id=${inventory_id}`);
+        setDataFamilyDetail(response3.data.data);
         setIventoryXDetail(inventory_id);
-
 
         setShowModal(true);
     };
@@ -377,13 +379,82 @@ function Index() {
     let familyContainer = [];
     const accordionItems = dataDetail.map((item) => {
         familyContainer += [item.family_name];
-
         return ({
             title: item.family_name,
             content: item.name
         });
     });
-    console.log(familyContainer);
+
+    // const dataFamilyItems = dataFamilyDetail.map((item, key) => (key));
+    const ala = Object.entries(dataFamilyDetail).map(([key, value]) => (
+        Object.entries(value).map(([keyy, valuey]) => (
+            {
+                location: "Prueba con Profit",
+                population: "",
+                party: "",
+                child: [
+                    {
+                        location: valuey.name,
+                        population: valuey.amount,
+                        party: valuey.cost
+                    }
+                ]
+            }
+        ))
+    ));
+    console.log(ala);
+
+    const columnsa = [
+        {
+            title: "Articulo",
+            key: "location"
+        },
+        {
+            title: "Cantidad",
+            key: "population"
+        },
+        {
+            title: "Precio",
+            key: "party"
+        }
+    ];
+
+    const datass = [
+        {
+            location: "Prueba con Profit",
+            population: "",
+            party: "",
+            child: [
+                {
+                    location: "ZAPAPICO PUNTA Y PALA ANCHA - 5 LB SIN MANGO - OJO 70X45MM (TRAMONTINA)\n",
+                    population: "11",
+                    party: "2"
+                },
+                {
+                    location: "12w21w12",
+                    population: "10",
+                    party: "22"
+                }
+            ]
+        },
+        {
+            location: "familia0",
+            population: "",
+            party: "",
+            child: [
+                {
+                    location: "Nuevo producto",
+                    population: "1",
+                    party: "2"
+                },
+                {
+                    location: "NProducto prueba 2",
+                    population: "2",
+                    party: "2"
+                }
+            ]
+        }
+    ];
 
     return (
         <div>
@@ -575,15 +646,13 @@ function Index() {
                                                 </div>
                                             }
                                             {showDivFamily &&
-
-                                                <div className="container mx-auto p-4">
-                                                    <Accordion items={accordionItems}/>
+                                                <div className="  ">
+                                                    <ExpandableTable columns={columnsa} data={datass}
+                                                                     hideCollapseExpandButtons/>
                                                 </div>
 
                                             }
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
