@@ -1,4 +1,4 @@
-##Dubau-App
+#Dubau-App
 Sistema de **Facturación Electrónica** Peru , normado por SUNAT.   
 Link de produccion [@dubau/dubau-app](http://dubaumetalindustria.com/dubau/).
 
@@ -15,3 +15,13 @@ Link de produccion [@dubau/dubau-app](http://dubaumetalindustria.com/dubau/).
 4. composer Insall
 5. php artisan migrate
 6. php artisan db:seed
+
+## Frameworks 
+Dubau actualmente utiliza los siguientes complementos.
+Las instrucciones sobre cómo usarlos estan en su propia aplicación y están vinculadas a continuación.
+
+| Framework | Link |
+| ------ | ------ |
+| Boostrap | [https://getbootstrap.com/] |
+| JQuery | [https://jquery.com/] |
+| Codeigniter | [https://codeigniter.com/] |
