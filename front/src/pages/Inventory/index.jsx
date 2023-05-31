@@ -646,7 +646,8 @@ function Index() {
                                                 </div>
                                             }
                                             {showDivFamily &&
-                                                <div className="  ">
+
+                                                <div className="tableContainer">
                                                     <ExpandableTable columns={columnsa} data={datass}
                                                                      hideCollapseExpandButtons/>
                                                 </div>
