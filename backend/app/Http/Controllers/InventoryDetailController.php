@@ -147,7 +147,7 @@ class InventoryDetailController extends Controller
     public function listProducts(Request $request)
     {
         $productName = $request->productName;
-        $typeDocument = Product::where('name', 'LIKE', "%$productName%")->get();
+        $typeDocument = Product::where('name', 'LIKE', "%$productName%")->where('status', '=', '1')->get();
         return response()->json($typeDocument, 200);
     }
 

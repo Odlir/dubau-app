@@ -136,3 +136,25 @@
     font-size: 10px;
 }
 
+.customTable tbody td:first-child {
+    font-size: 12px;
+    width: 60%;
+    color: black;
+}
+
+.customTable tbody td:nth-child(2),
+.customTable tbody td:nth-child(3),
+.customTable tbody td:nth-child(4) {
+    width: 10%;
+    font-size: 12px;
+    color: black;
+}
+
+.customTable tbody tr td div div.row-background-first,
+.row-background-middle,
+.row-background-last {
+    height: 15px !important;
+    max-height: 15px !important;
+    min-height: 15px !important;
+
+}

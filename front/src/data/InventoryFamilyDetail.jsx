@@ -4,7 +4,7 @@ import {Lucide} from "@/components/base-components/index.js";
 const number = 20;
 const columns = (actionActiveDetail, actionDeleteDetail, actionEditDetail) => [
     {
-        name: '#s',
+        name: '#',
         selector: row => row.auto_increment,
         width: "3rem",
     },
@@ -25,8 +25,6 @@ const columns = (actionActiveDetail, actionDeleteDetail, actionEditDetail) => [
         name: 'Acciones',
         selector: row => row.inventory_detail_id,
         cell: (selector) =>
-
-
             <div className="flex justify-center items-center">
                 {(selector.status_dinamic === 0) ?
                     <button className="flex items-center mr-3"

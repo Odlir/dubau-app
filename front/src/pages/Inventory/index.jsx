@@ -6,7 +6,6 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {useDebounce} from "use-debounce";
 import Select from 'react-select';
 import debounce from 'lodash.debounce';
-import ExpandableTable from "react-exp-table";
 import {env} from "@/env.js";
 import columns from '../../data/Inventory.jsx';
 import columnsDetail from '../../data/InventoryDetail';
@@ -15,6 +14,8 @@ import 'sweetalert2/src/sweetalert2.scss';
 import Add from "./add.jsx";
 import List from "../../components/layouts/list/index.jsx";
 import Input from "@/components/Input/Input";
+import {Lucide} from "@/components/base-components";
+
 
 function Index() {
     const navigate = useNavigate();
@@ -37,7 +38,7 @@ function Index() {
     const [category_ApprovedStatus, setInventory_ApprovedStatus] = useState('1');
     const [formType, setFormType] = useState('list');
     /* Server Side */
-    const [data, setData] = useState([]);
+    const [datasss, setData] = useState([]);
     const [dataDetail, setDataDetail] = useState([]);
     const [dataFamilyDetail, setDataFamilyDetail] = useState([]);
     const [dataProduct, setDataProduct] = useState([]);
@@ -207,9 +208,6 @@ function Index() {
 
     const [options, setOptions] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-
-    const debouncedLoadOptions2 = '';
-
     const [selectedOption, setSelectedOption] = useState(null);
     const loadOptions = async (inputValue) => {
         if (!inputValue) {
@@ -223,14 +221,10 @@ function Index() {
             const endpoint = `${env.apiURL}listProducts`;
             const response = await axios.get(`${endpoint}?productName=${inputValue}`);
             const datas = response.data;
-
-            // Formate os dados de resposta para o formato esperado pelo react-select
             const formattedOptions = datas.map((item) => ({
                 value: item.product_id,
                 label: item.name
             }));
-
-
             setOptions(formattedOptions);
         } catch (error) {
             console.error('Error:', error);
@@ -238,18 +232,15 @@ function Index() {
         setIsLoading(false);
     };
 
-
     const handleSelectChange = (selectedOption) => {
         setSelectedOption(selectedOption);
         setProductId(selectedOption.value);
     };
 
     const debouncedLoadOptions = debounce(loadOptions, 500);
-
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
-
         }),
 
     };
@@ -289,8 +280,6 @@ function Index() {
         const response = await axios.get(`${endpoint}?inventory_detail_id=${dataInventoryId}`);
         setDataInventoryId(response.data.inventory_id);
         setProductId(response.data.product_id);
-
-        // Formate os dados de resposta para o formato esperado pelo react-select
         const defaultSelectedOptionsInventoryDetail = {
             value: response.data.product_id,
             label: response.data.name
@@ -374,87 +363,136 @@ function Index() {
         setShowDiv(false);
         setShowDivFamily(true);
     };
-    // const [familyContainer, setFamilyContainer] = useState([]);
 
-    let familyContainer = [];
-    const accordionItems = dataDetail.map((item) => {
-        familyContainer += [item.family_name];
-        return ({
-            title: item.family_name,
-            content: item.name
-        });
-    });
 
-    // const dataFamilyItems = dataFamilyDetail.map((item, key) => (key));
-    const ala = Object.entries(dataFamilyDetail).map(([key, value]) => (
-        Object.entries(value).map(([keyy, valuey]) => (
-            {
-                location: "Prueba con Profit",
+    const columnsa = [
+        {name: 'Familia', selector: 'location', sortable: true},
+        {name: '', selector: 'population', sortable: true},
+        {name: '', selector: 'partys', sortable: true},
+        {
+            name: '',
+            selector: 'actions',
+            sortable: false
+        }
+    ];
+
+    const columnsaExpanded = [
+        {name: '', selector: '', width: "4rem"},
+        {name: 'Producto', selector: 'location', width: "40rem"},
+        {name: 'Cantidad', selector: 'population'},
+        {name: 'Precio', selector: 'party'},
+        {
+            name: 'Acciones',
+            selector: 'actions',
+            cell: (selector) =>
+                <div className="flex justify-center items-center">
+                    {(selector.status_dinamic === 0) ?
+                        <button className="flex items-center mr-3"
+                                onClick={(e) => actionActiveDetail(selector.actions)}>
+                            <Lucide icon="XOctagon" className="w-4 h-4 mr-1 text-danger"/>
+                        </button>
+                        :
+                        <button className="flex items-center mr-3"
+                                onClick={(e) => actionActiveDetail(selector.actions)}>
+                            <Lucide icon="ShieldCheck" className="w-4 h-4 mr-1 text-success"/>
+                        </button>
+                    }
+                    <p> a {selector.child}</p>
+                    <button className="flex items-center mr-3"
+                            onClick={(e) => actionEditDetail(selector.actions)}>
+                        <Lucide icon="Edit3" className="w-4 h-4 mr-1 text-primary"/>{" "}
+                    </button>
+                    <button className="flex items-center mr-3"
+                            onClick={(e) => actionDeleteDetail(selector.actions)}>
+                        <Lucide icon="Trash2" className="w-4 h-4 mr-1 text-danger"/>
+
+                    </button>
+
+
+                </div>,
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+            width: "9rem"
+        }
+    ];
+    const data = Object.entries(dataFamilyDetail).map(([key, value]) => {
+            const obj = {
+                location: key,
                 population: "",
                 party: "",
-                child: [
+                child: []
+            };
+            Object.entries(value).map(([keyy, valuey]) => (
+                obj.child.push(
                     {
                         location: valuey.name,
                         population: valuey.amount,
-                        party: valuey.cost
+                        party: valuey.cost,
+                        actions: valuey.inventory_detail_id
                     }
-                ]
-            }
-        ))
-    ));
-    console.log(ala);
+                )
+            ));
+            return obj;
+        }
+    );
 
-    const columnsa = [
+    function ExpandedComponent({data}) {
+        return <ExpandableComponent data={data.child} className="expandable-table"/>;
+    }
+
+    const [currentRow, setCurrentRow] = useState(null);
+    const [expandableRowss, setExpandableRowss] = useState(false);
+
+    const handleRowClick = () => {
+        setExpandableRowss(true);
+    };
+    const [expandedData22, setExpandedData22] = React.useState([]);
+    const handleExpandToggle = (expanded, row, id) => {
+        console.log(`Expanded: ${expanded}, Row:`, row, id);
+        setCurrentRow(expanded);
+        setExpandedData22(row.child);
+    };
+
+    const expandedData = data.reduce((expanded, item, index) => {
+        const child = item.child ? <ExpandedComponent data={item.child}/> : null;
+
+        expanded.push({
+            ...item.child[0],
+            id: index + 1,
+            children: child
+        });
+        return expanded;
+    }, []);
+
+    function ExpandableComponent({data}) {
+        return <DataTable
+            columns={columnsaExpanded}
+            customStyles={customStyless}
+            data={expandedData22}
+            noHeader
+        />;
+    }
+
+
+    const expandableRows = [
         {
-            title: "Articulo",
-            key: "location"
+            expanded: true,
+            id: 1,
+            children: <ExpandedComponent data={data[0]} className="expandable-table"/>
         },
         {
-            title: "Cantidad",
-            key: "population"
+            expanded: true,
+            id: 2,
+            children: <ExpandedComponent data={data[1]} className="expandable-table"/>
         },
         {
-            title: "Precio",
-            key: "party"
+            expanded: true,
+            id: 3,
+            children: <ExpandedComponent data={data[2]} className="expandable-table"/>
         }
     ];
 
-    const datass = [
-        {
-            location: "Prueba con Profit",
-            population: "",
-            party: "",
-            child: [
-                {
-                    location: "ZAPAPICO PUNTA Y PALA ANCHA - 5 LB SIN MANGO - OJO 70X45MM (TRAMONTINA)\n",
-                    population: "11",
-                    party: "2"
-                },
-                {
-                    location: "12w21w12",
-                    population: "10",
-                    party: "22"
-                }
-            ]
-        },
-        {
-            location: "familia0",
-            population: "",
-            party: "",
-            child: [
-                {
-                    location: "Nuevo producto",
-                    population: "1",
-                    party: "2"
-                },
-                {
-                    location: "NProducto prueba 2",
-                    population: "2",
-                    party: "2"
-                }
-            ]
-        }
-    ];
 
     return (
         <div>
@@ -590,24 +628,24 @@ function Index() {
                                                 </div>
                                             </div>
 
-                                            <div className="post  overflow-hidden box mt-5 z-0">
-                                                <ul className="post__tabs nav nav-tabs flex-col sm:flex-row bg-slate-100 dark:bg-darkmode-800"
+                                            <div className="post  overflow-hidden box mt-2 z-0 max-h-10">
+                                                <ul className="post__tabs nav nav-tabs flex-col sm:flex-row bg-slate-100 dark:bg-darkmode-800 max-h-10"
                                                     role="tablist">
                                                     <li className="nav-item">
                                                         <button title=""
-                                                                className="nav-link tooltip w-full sm:w-40 py-4 active"
+                                                                className="nav-link tooltip w-full sm:w-40 py-2.5 active"
                                                                 id="content-tab"
-                                                                role="tab" aria-controls="content" onClick={general}><i
-                                                            data-lucide="file-text" className="w-4 h-4 mr-2"/> General
+                                                                role="tab" aria-controls="content"
+                                                                onClick={general}> General
                                                         </button>
                                                     </li>
 
                                                     <li className="nav-item">
                                                         <button title=""
-                                                                className="nav-link tooltip w-full sm:w-40 py-4"
+                                                                className="nav-link tooltip w-full sm:w-40 py-2.5 "
                                                                 id="meta-title-tab"
                                                                 role="tab" aria-hidden="true" onClick={family}>
-                                                            <i data-lucide="code" className="w-4 h-4 mr-2"/> Familia
+                                                            Familia
                                                         </button>
                                                     </li>
                                                 </ul>
@@ -646,11 +684,51 @@ function Index() {
                                                 </div>
                                             }
                                             {showDivFamily &&
+                                                <>
+                                                    <DataTable
+                                                        columns={columnsa}
+                                                        customStyles={customStyless}
+                                                        data={data}
+                                                        expandableRows
+                                                        expandOnRowClicked
+                                                        onRowClicked={handleRowClick}
+                                                        expandableRowExpanded={() => false}
+                                                        expandableRowsComponent={ExpandableComponent}
+                                                        expandableRowsComponentProps={{
+                                                            data,
+                                                            className: "expandable-table"
+                                                        }}
+                                                        onRowExpandToggled={handleExpandToggle}
+                                                        expandableRowsHideExpander={false}
+                                                        className="main-table"
+                                                    />
+                                                    <style>
+                                                        {`
+        .main-table {
+          // Estilos para la tabla principal
+        }
 
-                                                <div className="tableContainer">
-                                                    <ExpandableTable columns={columnsa} data={datass}
-                                                                     hideCollapseExpandButtons/>
-                                                </div>
+        .expandable-table {
+          // Estilos para la tabla expandible
+        }
+
+        .expandable-table table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+
+        .expandable-table th,
+        .expandable-table td {
+          border: 1px solid #ccc;
+          padding: 8px;
+        }
+
+        .expandable-table th {
+          background-color: #f2f2f2;
+        }
+        `}
+                                                    </style>
+                                                </>
 
                                             }
                                         </div>
@@ -681,7 +759,7 @@ function Index() {
                     {data.length != 0 ?
                         <DataTable
                             columns={columns(actionDelete, actionViewDetail, actionEdit)}
-                            data={data}
+                            data={datasss}
                             progressPending={loading}
                             progressComponent={<Preload/>}
                             pagination
@@ -693,7 +771,7 @@ function Index() {
                         :
                         <DataTable
                             columns={columns(actionDelete, actionViewDetail, actionEdit)}
-                            data={data}
+                            data={datasss}
                             progressPending={loading}
                             progressComponent={<Preload/>}
                             noDataComponent="No existen registros en esta tabla"
