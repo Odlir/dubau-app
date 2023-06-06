@@ -134,13 +134,12 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
+        $validation = $request->validate([
             'user_Name' => 'required|email|max:255|unique:user',
             'user_Password' => 'required|string|min:6',
-            'user_ApprovedStatus' => 'required|string|min:1',
+            'user_ApprovedStatus' => 'required|string|min:0',
             'user_StatusID' => 'required|string|min:1',
         ]);
-
 
         \DB::transaction(function () use ($request) {
         $person = Person::create([

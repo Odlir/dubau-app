@@ -1,18 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import {useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import {env} from "@/env.js";
+import env from '@/env.js';
+import Preload from '@/components/preload/preload.jsx';
 import columns from '../../data/businessEntity.jsx';
-import Preload from "@/components/preload/preload";
 import 'sweetalert2/src/sweetalert2.scss';
-import Add from "./add.jsx";
-import List from "../../components/layouts/list/index.jsx";
+import Add from './add.jsx';
+import List from '../../components/layouts/list/index.jsx';
 
 function Index() {
-    const navigate = useNavigate();
-
     const [person_Name, setPerson_Name] = useState('');
     const [person_LastNamePaternal, setPerson_LastNamePaternal] = useState('');
     const [person_LastNameMaternal, setPerson_LastNameMaternal] = useState('');
@@ -39,7 +36,6 @@ function Index() {
     const [supplier_id, setSupplier_id] = useState('');
     const [staff_id, setStaff_id] = useState('');
     const [person_ID, setPerson_ID] = useState('');
-    const [type_person_id, setType_person_id] = useState('');
     const [typedocument_ID, setTypedocument_ID] = useState('');
     const [person_DNI, setPerson_DNI] = useState('');
     const [person_RUC, setPerson_RUC] = useState('');
@@ -54,26 +50,29 @@ function Index() {
     const [perPage, setPerPage] = useState(10);
     const [page_, setPage_] = useState(1);
     const [dataxbusinessEntity, setdataxbusinessEntity] = useState('');
-    const [selectedOptionsNaturality, setSelectedOptionsNaturality] = useState('');
-    const [selectedOptionsNaturalitys, setSelectedOptionsNaturalitys] = useState('');
+    const [selectedOptionsNaturality, setSelectedOptionsNaturality] =
+        useState('');
+    const [selectedOptionsNaturalitys, setSelectedOptionsNaturalitys] =
+        useState('');
 
     const [typeQualification, setTypeQualification] = useState('');
     const [category, setCategory] = useState('');
     const [waytopay, setWaytopay] = useState('');
     const [paymentCondition, setPaymentCondition] = useState('');
 
-    const fetchbusinessEntitys = async page => {
-
+    const fetchbusinessEntitys = async (page) => {
         setLoading(true);
         const endpoint = `${env.apiURL}listBusinessEntity`;
-        const response = await axios.get(`${endpoint}?page=${page}&per_page=${perPage}`);
+        const response = await axios.get(
+            `${endpoint}?page=${page}&per_page=${perPage}`
+        );
         setData(response.data.data);
         setPage_(response.data.page);
         setTotalRows(response.data.total);
         setLoading(false);
     };
 
-    const handlePageChange = page => {
+    const handlePageChange = (page) => {
         fetchbusinessEntitys(page);
     };
 
@@ -93,26 +92,27 @@ function Index() {
     const actionDelete = async (businessEntity_id) => {
         Swal.fire({
             title: 'Desea realizar esta accion?',
-            text: "No podra revertir los cambios!",
+            text: 'No podra revertir los cambios!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Si, Eliminar!'
+            confirmButtonText: 'Si, Eliminar!',
         }).then((result) => {
             if (result.isConfirmed) {
                 const endpoint = `${env.apiURL}deleteBusinessEntity`;
-                axios.post(endpoint, {business_entity_id: businessEntity_id})
-                    .then((response) => {
+                axios
+                    .post(endpoint, { business_entity_id: businessEntity_id })
+                    .then(() => {
                         Swal.fire(
                             'Eliminado!',
                             'Se ha eliminado Correctamente.',
                             'success'
-                        ).then((result) => {
+                        ).then(() => {
                             fetchbusinessEntitys(page_);
                         });
                     })
-                    .catch(error => {
+                    .catch(() => {
                         alert('Operacion no completada');
                     });
             }
@@ -120,13 +120,18 @@ function Index() {
     };
     const [nationalityContainer, setNationalityContainer] = useState([]);
     const [typeDocumentContainer, setTypeDocumentContainer] = useState([]);
-    const [typeQualificationContainer, setTypeQualificationContainer] = useState([]);
+    const [typeQualificationContainer, setTypeQualificationContainer] =
+        useState([]);
     const [categoryContainer, setCategoryContainer] = useState([]);
     const [waytopayContainer, setWaytopayContainer] = useState([]);
-    const [paymentConditionContainer, setPaymentConditionContainer] = useState([]);
+    const [paymentConditionContainer, setPaymentConditionContainer] = useState(
+        []
+    );
     const actionEdit = async (business_entity_idd) => {
         const endpoint = `${env.apiURL}listXBusinessEntity`;
-        const response = await axios.get(`${endpoint}?business_entity_id=${business_entity_idd}`);
+        const response = await axios.get(
+            `${endpoint}?business_entity_id=${business_entity_idd}`
+        );
 
         setBusiness_entity_id(business_entity_idd);
         setdataxbusinessEntity(response.data.business_entity_idd);
@@ -140,9 +145,6 @@ function Index() {
         setPerson_CellPhone(response.data.person_CellPhone);
         setPerson_Email(response.data.person_Email);
         setPerson_WebSite(response.data.person_WebSite);
-        /*  setStaff_StartDate(response.data.staff_StartDate);
-          setStaff_FinalDate(response.data.staff_FinalDate);
-          setStaff_ContractNumber(response.data.staff_ContractNumber); */
         setUbigeous_PlaceBirth(response.data.ubigeous_PlaceBirth);
         setNumberDocument(response.data.person_NumberDocumentID);
         setPerson_Gender(response.data.person_Gender);
@@ -194,7 +196,6 @@ function Index() {
         setFormType('edit');
     };
 
-
     const actionAdd = async () => {
         setFormType('register');
         const endpoint = `${env.apiURL}listNationality`;
@@ -203,7 +204,6 @@ function Index() {
         const endpoint2 = `${env.apiURL}listTypeDocument`;
         const response2 = await axios.get(`${endpoint2}`);
         setTypeDocumentContainer(response2.data);
-
 
         const endpoint4 = `${env.apiURL}listTypeQualification`;
         const response4 = await axios.get(`${endpoint4}`);
@@ -224,48 +224,52 @@ function Index() {
     };
 
     const handleOnClickRegister = async (e) => {
-
         e.preventDefault();
 
         const endpoint = `${env.apiURL}registerBusinessEntity`;
-        await axios.post(endpoint, {
-            person_Name,
-            person_LastNamePaternal,
-            person_LastNameMaternal,
-            person_DateBirth,
-            person_Direction,
-            person_Phone,
-            person_CellPhone,
-            person_Email,
-            person_WebSite,
-            staff_StartDate,
-            staff_finalDate,
-            staff_ContractNumber,
+        await axios
+            .post(
+                endpoint,
+                {
+                    person_Name,
+                    person_LastNamePaternal,
+                    person_LastNameMaternal,
+                    person_DateBirth,
+                    person_Direction,
+                    person_Phone,
+                    person_CellPhone,
+                    person_Email,
+                    person_WebSite,
+                    staff_StartDate,
+                    staff_finalDate,
+                    staff_ContractNumber,
 
-            ubigeous_PlaceBirth,
-            numberDocument,
-            person_Gender,
-            statusmarital_ID,
-            nationality_ID: selectedOptionsNaturality,
-            person_DNI,
-            person_RUC,
-            ubigeous_Home,
-            position_ID,
-            typedocument_ID,
-            creditLine,
-            typeQualification,
-            paymentCondition,
-            waytopay,
-            businessEntity_StatusID: '1',
-        }, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        })
-            .then((response) => {
+                    ubigeous_PlaceBirth,
+                    numberDocument,
+                    person_Gender,
+                    statusmarital_ID,
+                    nationality_ID: selectedOptionsNaturality,
+                    person_DNI,
+                    person_RUC,
+                    ubigeous_Home,
+                    position_ID,
+                    typedocument_ID,
+                    creditLine,
+                    typeQualification,
+                    paymentCondition,
+                    waytopay,
+                    businessEntity_StatusID: '1',
+                },
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            )
+            .then(() => {
                 //  window.location.reload();
             })
-            .catch(error => {
+            .catch(() => {
                 alert('Debe completar correctamente sus datos');
             });
     };
@@ -274,47 +278,51 @@ function Index() {
         e.preventDefault();
 
         const endpoint = `${env.apiURL}updateBusinessEntity`;
-        await axios.post(endpoint, {
-            businessEntity_ID: dataxbusinessEntity,
-            business_entity_id,
-            staff_ID: staff_id,
-            customer_id,
-            supplier_id,
-            person_Name,
-            person_LastNamePaternal,
-            person_LastNameMaternal,
-            person_DateBirth,
-            person_Direction,
-            person_Phone,
-            person_CellPhone,
-            person_Email,
-            person_WebSite,
-            staff_StartDate,
-            staff_finalDate,
-            staff_ContractNumber,
-            ubigeous_PlaceBirth,
-            numberDocument,
-            person_Gender,
-            statusmarital_ID,
-            nationality_ID: selectedOptionsNaturality,
-            ubigeous_Home,
-            position_ID,
-            person_ID,
-            person_DNI,
-            person_RUC,
-            typedocument_ID,
+        await axios
+            .post(
+                endpoint,
+                {
+                    businessEntity_ID: dataxbusinessEntity,
+                    business_entity_id,
+                    staff_ID: staff_id,
+                    customer_id,
+                    supplier_id,
+                    person_Name,
+                    person_LastNamePaternal,
+                    person_LastNameMaternal,
+                    person_DateBirth,
+                    person_Direction,
+                    person_Phone,
+                    person_CellPhone,
+                    person_Email,
+                    person_WebSite,
+                    staff_StartDate,
+                    staff_finalDate,
+                    staff_ContractNumber,
+                    ubigeous_PlaceBirth,
+                    numberDocument,
+                    person_Gender,
+                    statusmarital_ID,
+                    nationality_ID: selectedOptionsNaturality,
+                    ubigeous_Home,
+                    position_ID,
+                    person_ID,
+                    person_DNI,
+                    person_RUC,
+                    typedocument_ID,
 
-            businessEntity_StatusID: '1',
-
-        }, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        })
-            .then((response) => {
+                    businessEntity_StatusID: '1',
+                },
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            )
+            .then(() => {
                 window.location.reload();
             })
-            .catch(error => {
+            .catch(() => {
                 alert('Debe completar correctamente sus datos');
             });
     };
@@ -323,7 +331,7 @@ function Index() {
         setbusinessEntity_ApprovedStatus(e.target.value);
     };
 
-    const handleOnClickSearch = async page => {
+    const handleOnClickSearch = async () => {
         setLoading(true);
         const endpoint = `${env.apiURL}listBusinessEntity`;
         const response = await axios.get(`${endpoint}
@@ -336,7 +344,7 @@ function Index() {
         setLoading(false);
     };
 
-    const handleOnClickClean = async page => {
+    const handleOnClickClean = async () => {
         setLoading(true);
         // setbusinessEntity_Name('');
 
@@ -346,7 +354,11 @@ function Index() {
         setLoading(false);
     };
 
-    const handleOnClickModalImage = async (imageName, businessEntityName, branDescription) => {
+    const handleOnClickModalImage = async (
+        imageName,
+        businessEntityName,
+        branDescription
+    ) => {
         Swal.fire({
             title: businessEntityName,
             text: branDescription,
@@ -359,7 +371,7 @@ function Index() {
 
     return (
         <div>
-            {(formType === 'list') ?
+            {formType === 'list' ? (
                 <>
                     <List
                         nameSection="Persona"
@@ -374,22 +386,24 @@ function Index() {
                         handleOnClickClean={handleOnClickClean}
                         actionAdd={actionAdd}
                     />
-                    {data.length !== 0 ?
+                    {data.length !== 0 ? (
                         <DataTable
-                            columns={columns(actionDelete, actionEdit, handleOnClickModalImage)}
+                            columns={columns(
+                                actionDelete,
+                                actionEdit,
+                                handleOnClickModalImage
+                            )}
                             data={data}
                             progressPending={loading}
-                            progressComponent={<Preload/>}
+                            progressComponent={<Preload />}
                             pagination
                             paginationServer
                             paginationTotalRows={totalRows}
                             onChangeRowsPerPage={handlePerRowsChange}
                             onChangePage={handlePageChange}
                         />
-
-                        :
+                    ) : (
                         <>
-
                             {/* <DataTable
                                 columns={columns(actionDelete, actionEdit, handleOnClickModalImage)}
                                 data={data}
@@ -403,205 +417,224 @@ function Index() {
                                 onChangePage={handlePageChange}
                             /> */}
                         </>
-                    }
+                    )}
                 </>
-                :
+            ) : (
                 <>
-                    {(formType === 'register') ?
-                        <Add handleOnClickRegister={handleOnClickRegister}
-                             person_Name={person_Name}
-                             setPerson_Name={setPerson_Name}
-                             person_LastNamePaternal={person_LastNamePaternal}
-                             setPerson_LastNamePaternal={setPerson_LastNamePaternal}
-                             person_LastNameMaternal={person_LastNameMaternal}
-                             setPerson_LastNameMaternal={setPerson_LastNameMaternal}
-                             person_DateBirth={person_DateBirth}
-                             setPerson_DateBirth={setPerson_DateBirth}
-                             person_Direction={person_Direction}
-                             setPerson_Direction={setPerson_Direction}
-                             person_Phone={person_Phone}
-                             setPerson_Phone={setPerson_Phone}
-                             person_CellPhone={person_CellPhone}
-                             setPerson_CellPhone={setPerson_CellPhone}
-                             person_Email={person_Email}
-                             setPerson_Email={setPerson_Email}
-                             person_WebSite={person_WebSite}
-                             setPerson_WebSite={setPerson_WebSite}
-                             staff_StartDate={staff_StartDate}
-                             setStaff_StartDate={setStaff_StartDate}
-                             staff_finalDate={staff_finalDate}
-                             setStaff_finalDate={setStaff_finalDate}
-                             staff_ContractNumber={staff_ContractNumber}
-                             setStaff_ContractNumber={setStaff_ContractNumber}
-
-                             ubigeous_PlaceBirth={ubigeous_PlaceBirth}
-                             setUbigeous_PlaceBirth={setUbigeous_PlaceBirth}
-                             numberDocument={numberDocument}
-                             setNumberDocument={setNumberDocument}
-                             person_Gender={person_Gender}
-                             setPerson_Gender={setPerson_Gender}
-                             statusmarital_ID={statusmarital_ID}
-                             setStatusmarital_ID={setStatusmarital_ID}
-                             nationality_ID={nationality_ID}
-                             setNationality_ID={setNationality_ID}
-                             ubigeous_Home={ubigeous_Home}
-                             setUbigeous_Home={setUbigeous_Home}
-                             position_ID={position_ID}
-                             setPosition_ID={setPosition_ID}
-                             formType={formType}
-                             setFormType={setFormType}
-
-                             customer_id={customer_id}
-                             setCustomer_id={setCustomer_id}
-                             supplier_id={supplier_id}
-                             setSupplier_id={setSupplier_id}
-                             staff_id={staff_id}
-                             setStaff_id={setStaff_id}
-
-                             typedocument_ID={typedocument_ID}
-                             setTypedocument_ID={setTypedocument_ID}
-
-                             nationalityContainer={nationalityContainer}
-                             setNationalityContainer={setNationalityContainer}
-                             selectedOptionsNaturality={selectedOptionsNaturality}
-                             setSelectedOptionsNaturality={setSelectedOptionsNaturality}
-
-                             selectedOptionsNaturalitys={selectedOptionsNaturalitys}
-                             setSelectedOptionsNaturalitys={setSelectedOptionsNaturalitys}
-
-                             setTypeQualification={setTypeQualification}
-                             setCategory={setCategory}
-                             setWaytopay={setWaytopay}
-                             setPaymentCondition={setPaymentCondition}
-
-                             typeQualification={typeQualification}
-                             category={category}
-                             waytopay={waytopay}
-                             paymentCondition={paymentCondition}
-
-                             typeDocumentContainer={typeDocumentContainer}
-                             setTypeDocumentContainer={setTypeDocumentContainer}
-
-                             setContainer={setTypeDocumentContainer}
-
-                             person_DNI={person_DNI}
-                             setPerson_DNI={setPerson_DNI}
-                             person_RUC={person_RUC}
-                             setPerson_RUC={setPerson_RUC}
-
-                             setTypeQualificationContainer={setTypeQualificationContainer}
-                             setCategoryContainer={setCategoryContainer}
-                             setWaytopayContainer={setWaytopayContainer}
-                             setPaymentConditionContainer={setPaymentConditionContainer}
-
-                             typeQualificationContainer={typeQualificationContainer}
-                             categoryContainer={categoryContainer}
-                             waytopayContainer={waytopayContainer}
-                             paymentConditionContainer={paymentConditionContainer}
-
-                             creditLine={creditLine}
-                             setCreditLine={setCreditLine}
-
-                            /* setbusinessEntity_ApprovedStatus={setbusinessEntity_ApprovedStatus} */
-                        />
-                        :
-                        <Add handleOnClickRegister={handleOnClickUpdate}
-                             person_Name={person_Name}
-                             setPerson_Name={setPerson_Name}
-                             person_LastNamePaternal={person_LastNamePaternal}
-                             setPerson_LastNamePaternal={setPerson_LastNamePaternal}
-                             person_LastNameMaternal={person_LastNameMaternal}
-                             setPerson_LastNameMaternal={setPerson_LastNameMaternal}
-                             person_DateBirth={person_DateBirth}
-                             setPerson_DateBirth={setPerson_DateBirth}
-                             person_Direction={person_Direction}
-                             setPerson_Direction={setPerson_Direction}
-                             person_Phone={person_Phone}
-                             setPerson_Phone={setPerson_Phone}
-                             person_CellPhone={person_CellPhone}
-                             setPerson_CellPhone={setPerson_CellPhone}
-                             person_Email={person_Email}
-                             setPerson_Email={setPerson_Email}
-                             person_WebSite={person_WebSite}
-                             setPerson_WebSite={setPerson_WebSite}
-                             staff_StartDate={staff_StartDate}
-                             setStaff_StartDate={setStaff_StartDate}
-                             staff_finalDate={staff_finalDate}
-                             setStaff_finalDate={setStaff_finalDate}
-                             staff_ContractNumber={staff_ContractNumber}
-                             setStaff_ContractNumber={setStaff_ContractNumber}
-                             person_DNI={person_DNI}
-                             setPerson_DNI={setPerson_DNI}
-                             person_RUC={person_RUC}
-                             setPerson_RUC={setPerson_RUC}
-                             ubigeous_PlaceBirth={ubigeous_PlaceBirth}
-                             setUbigeous_PlaceBirth={setUbigeous_PlaceBirth}
-                             numberDocument={numberDocument}
-                             setNumberDocument={setNumberDocument}
-                             person_Gender={person_Gender}
-                             setPerson_Gender={setPerson_Gender}
-                             statusmarital_ID={statusmarital_ID}
-                             setStatusmarital_ID={setStatusmarital_ID}
-                             nationality_ID={nationality_ID}
-                             setNationality_ID={setNationality_ID}
-                             ubigeous_Home={ubigeous_Home}
-                             setUbigeous_Home={setUbigeous_Home}
-                             position_ID={position_ID}
-                             setPosition_ID={setPosition_ID}
-                             formType={formType}
-                             setFormType={setFormType}
-
-                             customer_id={customer_id}
-                             setCustomer_id={setCustomer_id}
-                             supplier_id={supplier_id}
-                             setSupplier_id={setSupplier_id}
-                             staff_id={staff_id}
-                             setStaff_id={setStaff_id}
-
-                             typedocument_ID={typedocument_ID}
-                             setTypedocument_ID={setTypedocument_ID}
-
-                             nationalityContainer={nationalityContainer}
-                             setNationalityContainer={setNationalityContainer}
-                             selectedOptionsNaturality={selectedOptionsNaturality}
-                             setSelectedOptionsNaturality={setSelectedOptionsNaturality}
-                             selectedOptionsNaturalitys={selectedOptionsNaturalitys}
-                             setSelectedOptionsNaturalitys={setSelectedOptionsNaturalitys}
-                             typeDocumentContainer={typeDocumentContainer}
-                             setTypeDocumentContainer={setTypeDocumentContainer}
-
-
-                             setTypeQualificationContainer={setTypeQualificationContainer}
-                             setCategoryContainer={setCategoryContainer}
-                             setWaytopayContainer={setWaytopayContainer}
-                             setPaymentConditionContainer={setPaymentConditionContainer}
-
-                             typeQualificationContainer={typeQualificationContainer}
-                             categoryContainer={categoryContainer}
-                             waytopayContainer={waytopayContainer}
-                             paymentConditionContainer={paymentConditionContainer}
-                             creditLine={creditLine}
-                             setCreditLine={setCreditLine}
-
-
-                             setTypeQualification={setTypeQualification}
-                             setCategory={setCategory}
-                             setWaytopay={setWaytopay}
-                             setPaymentCondition={setPaymentCondition}
-
-                             typeQualification={typeQualification}
-                             category={category}
-                             waytopay={waytopay}
-                             paymentCondition={paymentCondition}
+                    {formType === 'register' ? (
+                        <Add
+                            handleOnClickRegister={handleOnClickRegister}
+                            person_Name={person_Name}
+                            setPerson_Name={setPerson_Name}
+                            person_LastNamePaternal={person_LastNamePaternal}
+                            setPerson_LastNamePaternal={
+                                setPerson_LastNamePaternal
+                            }
+                            person_LastNameMaternal={person_LastNameMaternal}
+                            setPerson_LastNameMaternal={
+                                setPerson_LastNameMaternal
+                            }
+                            person_DateBirth={person_DateBirth}
+                            setPerson_DateBirth={setPerson_DateBirth}
+                            person_Direction={person_Direction}
+                            setPerson_Direction={setPerson_Direction}
+                            person_Phone={person_Phone}
+                            setPerson_Phone={setPerson_Phone}
+                            person_CellPhone={person_CellPhone}
+                            setPerson_CellPhone={setPerson_CellPhone}
+                            person_Email={person_Email}
+                            setPerson_Email={setPerson_Email}
+                            person_WebSite={person_WebSite}
+                            setPerson_WebSite={setPerson_WebSite}
+                            staff_StartDate={staff_StartDate}
+                            setStaff_StartDate={setStaff_StartDate}
+                            staff_finalDate={staff_finalDate}
+                            setStaff_finalDate={setStaff_finalDate}
+                            staff_ContractNumber={staff_ContractNumber}
+                            setStaff_ContractNumber={setStaff_ContractNumber}
+                            ubigeous_PlaceBirth={ubigeous_PlaceBirth}
+                            setUbigeous_PlaceBirth={setUbigeous_PlaceBirth}
+                            numberDocument={numberDocument}
+                            setNumberDocument={setNumberDocument}
+                            person_Gender={person_Gender}
+                            setPerson_Gender={setPerson_Gender}
+                            statusmarital_ID={statusmarital_ID}
+                            setStatusmarital_ID={setStatusmarital_ID}
+                            nationality_ID={nationality_ID}
+                            setNationality_ID={setNationality_ID}
+                            ubigeous_Home={ubigeous_Home}
+                            setUbigeous_Home={setUbigeous_Home}
+                            position_ID={position_ID}
+                            setPosition_ID={setPosition_ID}
+                            formType={formType}
+                            setFormType={setFormType}
+                            customer_id={customer_id}
+                            setCustomer_id={setCustomer_id}
+                            supplier_id={supplier_id}
+                            setSupplier_id={setSupplier_id}
+                            staff_id={staff_id}
+                            setStaff_id={setStaff_id}
+                            typedocument_ID={typedocument_ID}
+                            setTypedocument_ID={setTypedocument_ID}
+                            nationalityContainer={nationalityContainer}
+                            setNationalityContainer={setNationalityContainer}
+                            selectedOptionsNaturality={
+                                selectedOptionsNaturality
+                            }
+                            setSelectedOptionsNaturality={
+                                setSelectedOptionsNaturality
+                            }
+                            selectedOptionsNaturalitys={
+                                selectedOptionsNaturalitys
+                            }
+                            setSelectedOptionsNaturalitys={
+                                setSelectedOptionsNaturalitys
+                            }
+                            setTypeQualification={setTypeQualification}
+                            setCategory={setCategory}
+                            setWaytopay={setWaytopay}
+                            setPaymentCondition={setPaymentCondition}
+                            typeQualification={typeQualification}
+                            category={category}
+                            waytopay={waytopay}
+                            paymentCondition={paymentCondition}
+                            typeDocumentContainer={typeDocumentContainer}
+                            setTypeDocumentContainer={setTypeDocumentContainer}
+                            setContainer={setTypeDocumentContainer}
+                            person_DNI={person_DNI}
+                            setPerson_DNI={setPerson_DNI}
+                            person_RUC={person_RUC}
+                            setPerson_RUC={setPerson_RUC}
+                            setTypeQualificationContainer={
+                                setTypeQualificationContainer
+                            }
+                            setCategoryContainer={setCategoryContainer}
+                            setWaytopayContainer={setWaytopayContainer}
+                            setPaymentConditionContainer={
+                                setPaymentConditionContainer
+                            }
+                            typeQualificationContainer={
+                                typeQualificationContainer
+                            }
+                            categoryContainer={categoryContainer}
+                            waytopayContainer={waytopayContainer}
+                            paymentConditionContainer={
+                                paymentConditionContainer
+                            }
+                            creditLine={creditLine}
+                            setCreditLine={setCreditLine}
 
                             /* setbusinessEntity_ApprovedStatus={setbusinessEntity_ApprovedStatus} */
                         />
-                    }
+                    ) : (
+                        <Add
+                            handleOnClickRegister={handleOnClickUpdate}
+                            person_Name={person_Name}
+                            setPerson_Name={setPerson_Name}
+                            person_LastNamePaternal={person_LastNamePaternal}
+                            setPerson_LastNamePaternal={
+                                setPerson_LastNamePaternal
+                            }
+                            person_LastNameMaternal={person_LastNameMaternal}
+                            setPerson_LastNameMaternal={
+                                setPerson_LastNameMaternal
+                            }
+                            person_DateBirth={person_DateBirth}
+                            setPerson_DateBirth={setPerson_DateBirth}
+                            person_Direction={person_Direction}
+                            setPerson_Direction={setPerson_Direction}
+                            person_Phone={person_Phone}
+                            setPerson_Phone={setPerson_Phone}
+                            person_CellPhone={person_CellPhone}
+                            setPerson_CellPhone={setPerson_CellPhone}
+                            person_Email={person_Email}
+                            setPerson_Email={setPerson_Email}
+                            person_WebSite={person_WebSite}
+                            setPerson_WebSite={setPerson_WebSite}
+                            staff_StartDate={staff_StartDate}
+                            setStaff_StartDate={setStaff_StartDate}
+                            staff_finalDate={staff_finalDate}
+                            setStaff_finalDate={setStaff_finalDate}
+                            staff_ContractNumber={staff_ContractNumber}
+                            setStaff_ContractNumber={setStaff_ContractNumber}
+                            person_DNI={person_DNI}
+                            setPerson_DNI={setPerson_DNI}
+                            person_RUC={person_RUC}
+                            setPerson_RUC={setPerson_RUC}
+                            ubigeous_PlaceBirth={ubigeous_PlaceBirth}
+                            setUbigeous_PlaceBirth={setUbigeous_PlaceBirth}
+                            numberDocument={numberDocument}
+                            setNumberDocument={setNumberDocument}
+                            person_Gender={person_Gender}
+                            setPerson_Gender={setPerson_Gender}
+                            statusmarital_ID={statusmarital_ID}
+                            setStatusmarital_ID={setStatusmarital_ID}
+                            nationality_ID={nationality_ID}
+                            setNationality_ID={setNationality_ID}
+                            ubigeous_Home={ubigeous_Home}
+                            setUbigeous_Home={setUbigeous_Home}
+                            position_ID={position_ID}
+                            setPosition_ID={setPosition_ID}
+                            formType={formType}
+                            setFormType={setFormType}
+                            customer_id={customer_id}
+                            setCustomer_id={setCustomer_id}
+                            supplier_id={supplier_id}
+                            setSupplier_id={setSupplier_id}
+                            staff_id={staff_id}
+                            setStaff_id={setStaff_id}
+                            typedocument_ID={typedocument_ID}
+                            setTypedocument_ID={setTypedocument_ID}
+                            nationalityContainer={nationalityContainer}
+                            setNationalityContainer={setNationalityContainer}
+                            selectedOptionsNaturality={
+                                selectedOptionsNaturality
+                            }
+                            setSelectedOptionsNaturality={
+                                setSelectedOptionsNaturality
+                            }
+                            selectedOptionsNaturalitys={
+                                selectedOptionsNaturalitys
+                            }
+                            setSelectedOptionsNaturalitys={
+                                setSelectedOptionsNaturalitys
+                            }
+                            typeDocumentContainer={typeDocumentContainer}
+                            setTypeDocumentContainer={setTypeDocumentContainer}
+                            setTypeQualificationContainer={
+                                setTypeQualificationContainer
+                            }
+                            setCategoryContainer={setCategoryContainer}
+                            setWaytopayContainer={setWaytopayContainer}
+                            setPaymentConditionContainer={
+                                setPaymentConditionContainer
+                            }
+                            typeQualificationContainer={
+                                typeQualificationContainer
+                            }
+                            categoryContainer={categoryContainer}
+                            waytopayContainer={waytopayContainer}
+                            paymentConditionContainer={
+                                paymentConditionContainer
+                            }
+                            creditLine={creditLine}
+                            setCreditLine={setCreditLine}
+                            setTypeQualification={setTypeQualification}
+                            setCategory={setCategory}
+                            setWaytopay={setWaytopay}
+                            setPaymentCondition={setPaymentCondition}
+                            typeQualification={typeQualification}
+                            category={category}
+                            waytopay={waytopay}
+                            paymentCondition={paymentCondition}
+
+                            /* setbusinessEntity_ApprovedStatus={setbusinessEntity_ApprovedStatus} */
+                        />
+                    )}
                 </>
-            }
+            )}
         </div>
-    )
-        ;
+    );
 }
 
 export default Index;

@@ -16,12 +16,9 @@ function Index() {
     const [user_Password, setUser_Password] = useState('');
     const [formType, setFormType] = useState('login');
 
-    const [user_ApprovedStatus, setUser_ApprovedStatus] = useState('0');
-    const [user_StatusID, setUser_StatusID] = useState('1');
     const navigate = useNavigate();
 
-    const handleOnClickLogin = async (e) => {
-        e.preventDefault();
+    const handleOnClickLogin = async () => {
         let token = '';
         const endpoint = `${env.apiURL}login`;
         await axios
@@ -30,10 +27,9 @@ function Index() {
                 token = response.data.authorisation.token;
                 const cookies = new Cookies();
                 cookies.set('token', token, { path: '/' });
-                console.log('Successfully Logged in ');
                 navigate('/dashboard');
             })
-            .catch((error) => {
+            .catch(() => {
                 alert('Usuario o Contraseña incorrectos');
             });
     };
@@ -51,16 +47,16 @@ function Index() {
                 user_ApprovedStatus: '0',
                 user_StatusID: '1',
             })
-            .then((response) => {
+            .then(() => {
                 Swal.fire(
                     'Sucess!',
                     'Usuario creado correctamente.',
                     'success'
-                ).then((result) => {
+                ).then(() => {
                     window.location.reload();
                 });
             })
-            .catch((error) => {
+            .catch(() => {
                 alert('Debe completar correctamente sus datos');
             });
     };

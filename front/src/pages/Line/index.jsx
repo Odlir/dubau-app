@@ -1,18 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-import {env} from "@/env.js";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import env from '@/env.js';
 import DataTable from 'react-data-table-component';
-import columns from '../../data/Line.jsx';
-import Preload from "@/components/preload/preload";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Preload from '@/components/preload/preload.jsx';
+import columns from '../../data/Line.jsx';
 import 'sweetalert2/src/sweetalert2.scss';
-import Add  from '../Line/add.jsx'
-import List from "../../components/layouts/list/index.jsx";
+import Add from './add.jsx';
+import List from '../../components/layouts/list/index.jsx';
 
-const Index = () => {
-    const navigate = useNavigate()
-
+function Index() {
     const [line_Name, setLine_Name] = useState('');
     const [line_Description, setLine_Description] = useState('');
     const [DescriptionAgain, setDescriptionAgain] = useState('');
@@ -20,7 +17,7 @@ const Index = () => {
     const [line_ApprovedStatus, setLine_ApprovedStatus] = useState('1');
     const [formType, setFormType] = useState('list');
     const [img, setImg] = useState('');
-    /*Server Side*/
+    /* Server Side */
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [totalRows, setTotalRows] = useState(0);
@@ -28,17 +25,19 @@ const Index = () => {
     const [page_, setPage_] = useState(1);
     const [dataxLine, setdataxLine] = useState('');
 
-    const fetchLines = async page => {
+    const fetchLines = async (page) => {
         setLoading(true);
         const endpoint = `${env.apiURL}listLine`;
-        const response = await axios.get(`${endpoint}?page=${page}&per_page=${perPage}`);
+        const response = await axios.get(
+            `${endpoint}?page=${page}&per_page=${perPage}`
+        );
         setData(response.data.data);
         setPage_(response.data.page);
         setTotalRows(response.data.total);
         setLoading(false);
     };
 
-    const handlePageChange = page => {
+    const handlePageChange = (page) => {
         fetchLines(page);
     };
 
@@ -58,32 +57,32 @@ const Index = () => {
     const actionDelete = async (line_ID) => {
         Swal.fire({
             title: 'Desea realizar esta accion?',
-            text: "No podra revertir los cambios!",
+            text: 'No podra revertir los cambios!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Si, Eliminar!'
+            confirmButtonText: 'Si, Eliminar!',
         }).then((result) => {
             if (result.isConfirmed) {
                 const endpoint = `${env.apiURL}deleteLine`;
-                axios.post(endpoint, {line_ID: line_ID, line_StatusID: 0})
-                    .then(function (response) {
+                axios
+                    .post(endpoint, { line_ID, line_StatusID: 0 })
+                    .then(() => {
                         Swal.fire(
                             'Eliminado!',
                             'Se ha eliminado Correctamente.',
                             'success'
-                        ).then((result) => {
+                        ).then(() => {
                             fetchLines(page_);
                         });
                     })
-                    .catch(error => {
-                        alert('Operacion no completada')
-                    })
-
+                    .catch(() => {
+                        alert('Operacion no completada');
+                    });
             }
-        })
-    }
+        });
+    };
 
     const actionEdit = async (line_ID) => {
         const endpoint = `${env.apiURL}listXLine`;
@@ -92,58 +91,80 @@ const Index = () => {
         setLine_Name(response.data.line_Name);
         setLine_Description(response.data.line_Description);
         setFormType('edit');
-    }
+    };
     const actionAdd = async () => {
         setFormType('register');
-    }
+    };
 
     const handleOnClickRegister = async (e) => {
         e.preventDefault();
-        const endpoint = `${env.apiURL}registerLine`
-        await axios.post(endpoint, {line_Name: line_Name, line_Description: line_Description, line_StatusID: '1',img:img},{
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },}
-        )
-            .then(function (response) {
+        const endpoint = `${env.apiURL}registerLine`;
+        await axios
+            .post(
+                endpoint,
+                {
+                    line_Name,
+                    line_Description,
+                    line_StatusID: '1',
+                    img,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            )
+            .then(() => {
                 window.location.reload();
             })
-            .catch(error => {
-                alert('Debe completar correctamente sus datos')
-            })
-    }
+            .catch(() => {
+                alert('Debe completar correctamente sus datos');
+            });
+    };
 
     const handleOnClickUpdate = async (e) => {
         e.preventDefault();
-        const endpoint = `${env.apiURL}updateLine`
-        await axios.post(endpoint, {line_ID:dataxLine, line_Name: line_Name, line_Description: line_Description,img:img},{
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },}
-        )
-            .then(function (response) {
+        const endpoint = `${env.apiURL}updateLine`;
+        await axios
+            .post(
+                endpoint,
+                {
+                    line_ID: dataxLine,
+                    line_Name,
+                    line_Description,
+                    img,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            )
+            .then(() => {
                 window.location.reload();
             })
-            .catch(error => {
-                alert('Debe completar correctamente sus datos')
-            })
-    }
+            .catch(() => {
+                alert('Debe completar correctamente sus datos');
+            });
+    };
 
     const captureType = (e) => {
         setLine_ApprovedStatus(e.target.value);
-    }
+    };
 
-    const handleOnClickSearch = async page => {
+    const handleOnClickSearch = async () => {
         setLoading(true);
         const endpoint = `${env.apiURL}listLine`;
-        const response = await axios.get(`${endpoint}?page=${page_}&per_page=${perPage}&line_Name=${line_Name}&line_CreationDate=${line_CreationDate}`);
+        const response = await axios.get(
+            `${endpoint}?page=${page_}&per_page=${perPage}&line_Name=${line_Name}&line_CreationDate=${line_CreationDate}`
+        );
         setData(response.data.data);
         setPage_(response.data.page);
         setTotalRows(response.data.total);
         setLoading(false);
     };
 
-    const handleOnClickClean= async page => {
+    const handleOnClickClean = async () => {
         setLoading(true);
         setLine_Name('');
         setLine_Description('');
@@ -152,101 +173,106 @@ const Index = () => {
         fetchLines(1);
         setLoading(false);
     };
-    console.log(line_ApprovedStatus);
 
-    const handleOnClickModalImage = async (imageName,lineName,lineDescription) => {
+    const handleOnClickModalImage = async (
+        imageName,
+        lineName,
+        lineDescription
+    ) => {
         Swal.fire({
             title: lineName,
             text: lineDescription,
-            /* imageAlt: 'Custom image',*/
+            /* imageAlt: 'Custom image', */
             imageUrl: env.URL + imageName,
             imageWidth: 500,
             imageHeight: 300,
-        })
-    }
+        });
+    };
 
     return (
         <div>
-            { (formType === 'list') ?
+            {formType === 'list' ? (
                 <>
-                <List
-                    nameSection={'Lineas'}
-                    dataType={'text'}
-                    dataSearch1={line_Name}
-                    setdataSearch1={setLine_Name}
-                    dataType2={'date'}
-                    dataSearch2={line_CreationDate}
-                    setdataSearch2={setLineCreationDate}
-                    captureType={captureType}
-                    handleOnClickSearch={handleOnClickSearch}
-                    handleOnClickClean={handleOnClickClean}
-                    actionAdd={actionAdd}
-                />
-                    {data.length != 0 ?
-                        <>
-
-                            <DataTable
-                                columns={columns(actionDelete,actionEdit,handleOnClickModalImage)}
-                                data={data}
-                                progressPending={loading}
-                                progressComponent={<Preload/>}
-                                pagination
-                                paginationServer
-                                paginationTotalRows={totalRows}
-                                onChangeRowsPerPage={handlePerRowsChange}
-                                onChangePage={handlePageChange}
-                            />
-                        </>
-                        :
-                        <>
-                            <DataTable
-                                columns={columns(actionDelete,actionEdit)}
-                                data={data}
-                                progressPending={loading}
-                                progressComponent={<Preload/>}
-                                noDataComponent={'No existen registros en esta tabla'}
-                                pagination
-                                paginationServer
-                                paginationTotalRows={totalRows}
-                                onChangeRowsPerPage={handlePerRowsChange}
-                                onChangePage={handlePageChange}
-                            />
-                        </>
-                    }
-                </>
-                    :
-                <>
-                    { (formType === 'register') ?
-                    <Add  handleOnClickRegister={handleOnClickRegister}
-                          line_Name={line_Name}
-                          setLine_Name={setLine_Name}
-                          line_Description={line_Description}
-                          setLine_Description={setLine_Description}
-                          DescriptionAgain={DescriptionAgain}
-                          setDescriptionAgain={setDescriptionAgain}
-                          img={img}
-                          setImg={setImg}
-                          setFormType={setFormType}
-                          setLine_ApprovedStatus={setLine_ApprovedStatus}
+                    <List
+                        nameSection="Lineas"
+                        dataType="text"
+                        dataSearch1={line_Name}
+                        setdataSearch1={setLine_Name}
+                        dataType2="date"
+                        dataSearch2={line_CreationDate}
+                        setdataSearch2={setLineCreationDate}
+                        captureType={captureType}
+                        handleOnClickSearch={handleOnClickSearch}
+                        handleOnClickClean={handleOnClickClean}
+                        actionAdd={actionAdd}
                     />
-                    :
-                        <Add  handleOnClickRegister={handleOnClickUpdate}
-                              line_Name={line_Name}
-                              setLine_Name={setLine_Name}
-                              line_Description={line_Description}
-                              setLine_Description={setLine_Description}
-                              DescriptionAgain={DescriptionAgain}
-                              setDescriptionAgain={setDescriptionAgain}
-                              img={img}
-                              setImg={setImg}
-                              setFormType={setFormType}
-                              setLine_ApprovedStatus={setLine_ApprovedStatus}
+                    {data.length !== 0 ? (
+                        <DataTable
+                            columns={columns(
+                                actionDelete,
+                                actionEdit,
+                                handleOnClickModalImage
+                            )}
+                            data={data}
+                            progressPending={loading}
+                            progressComponent={<Preload />}
+                            pagination
+                            paginationServer
+                            paginationTotalRows={totalRows}
+                            onChangeRowsPerPage={handlePerRowsChange}
+                            onChangePage={handlePageChange}
                         />
-                    }
-                    </>
-            }
+                    ) : (
+                        <DataTable
+                            columns={columns(actionDelete, actionEdit)}
+                            data={data}
+                            progressPending={loading}
+                            progressComponent={<Preload />}
+                            noDataComponent="No existen registros en esta tabla"
+                            pagination
+                            paginationServer
+                            paginationTotalRows={totalRows}
+                            onChangeRowsPerPage={handlePerRowsChange}
+                            onChangePage={handlePageChange}
+                        />
+                    )}
+                </>
+            ) : (
+                // eslint-disable-next-line react/jsx-no-useless-fragment
+                <>
+                    {formType === 'register' ? (
+                        <Add
+                            handleOnClickRegister={handleOnClickRegister}
+                            line_Name={line_Name}
+                            setLine_Name={setLine_Name}
+                            line_Description={line_Description}
+                            setLine_Description={setLine_Description}
+                            DescriptionAgain={DescriptionAgain}
+                            setDescriptionAgain={setDescriptionAgain}
+                            img={img}
+                            setImg={setImg}
+                            setFormType={setFormType}
+                            setLine_ApprovedStatus={setLine_ApprovedStatus}
+                        />
+                    ) : (
+                        <Add
+                            handleOnClickRegister={handleOnClickUpdate}
+                            line_Name={line_Name}
+                            setLine_Name={setLine_Name}
+                            line_Description={line_Description}
+                            setLine_Description={setLine_Description}
+                            DescriptionAgain={DescriptionAgain}
+                            setDescriptionAgain={setDescriptionAgain}
+                            img={img}
+                            setImg={setImg}
+                            setFormType={setFormType}
+                            setLine_ApprovedStatus={setLine_ApprovedStatus}
+                        />
+                    )}
+                </>
+            )}
         </div>
     );
 }
 
-export default Index
+export default Index;

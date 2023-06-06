@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
-import Swal from 'sweetalert2/dist/sweetalert2';
-import { env } from '@/env';
-import columns from '../../data/WaytoPay';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import env from '@/env.js';
 import Preload from '@/components/preload/preload.jsx';
-import Add from './add';
-import List from '../../components/layouts/list/index';
+import columns from '../../data/WaytoPay.jsx';
+import Add from './add.jsx';
+import List from '../../components/layouts/list/index.jsx';
 import 'sweetalert2/src/sweetalert2.scss';
 
 function Index() {
-    const navigate = useNavigate();
-
     const [waytopay_Name, setWaytoPay_Name] = useState('');
     const [waytopay_Description, setWaytoPay_Description] = useState('');
     const [DescriptionAgain, setDescriptionAgain] = useState('');
@@ -70,16 +67,16 @@ function Index() {
                 const endpoint = `${env.apiURL}deleteWaytoPay`;
                 axios
                     .post(endpoint, { waytopay_ID, waytopay_StatusID: 0 })
-                    .then((response) => {
+                    .then(() => {
                         Swal.fire(
                             'Eliminado!',
                             'Se ha eliminado Correctamente.',
                             'success'
-                        ).then((result) => {
+                        ).then(() => {
                             fetchWaytoPays(page_);
                         });
                     })
-                    .catch((error) => {
+                    .catch(() => {
                         alert('Operacion no completada');
                     });
             }
@@ -117,10 +114,10 @@ function Index() {
                     },
                 }
             )
-            .then((response) => {
+            .then(() => {
                 window.location.reload();
             })
-            .catch((error) => {
+            .catch(() => {
                 alert('Debe completar correctamente sus datos');
             });
     };
@@ -142,10 +139,10 @@ function Index() {
                     },
                 }
             )
-            .then((response) => {
+            .then(() => {
                 window.location.reload();
             })
-            .catch((error) => {
+            .catch(() => {
                 alert('Debe completar correctamente sus datos');
             });
     };
@@ -166,7 +163,7 @@ function Index() {
         setLoading(false);
     };
 
-    const handleOnClickClean = async (page) => {
+    const handleOnClickClean = async () => {
         setLoading(true);
         setWaytoPay_Name('');
         setWaytoPay_Description('');
@@ -175,7 +172,6 @@ function Index() {
         fetchWaytoPays(1);
         setLoading(false);
     };
-    console.log(waytopay_ApprovedStatus);
 
     const handleOnClickModalImage = async (
         imageName,
@@ -185,7 +181,6 @@ function Index() {
         Swal.fire({
             title: waytopayName,
             text: waytopayDescription,
-            /* imageAlt: 'Custom image', */
             imageUrl: env.URL + imageName,
             imageWidth: 500,
             imageHeight: 300,
@@ -209,7 +204,7 @@ function Index() {
                         handleOnClickClean={handleOnClickClean}
                         actionAdd={actionAdd}
                     />
-                    {data.length != 0 ? (
+                    {data.length !== 0 ? (
                         <DataTable
                             columns={columns(
                                 actionDelete,
@@ -245,6 +240,7 @@ function Index() {
                     )}
                 </>
             ) : (
+                // eslint-disable-next-line react/jsx-no-useless-fragment
                 <>
                     {formType === 'register' ? (
                         <Add

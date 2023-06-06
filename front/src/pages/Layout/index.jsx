@@ -1,11 +1,8 @@
-import React, {useState} from "react";
-import Menu_tool from "../../components/layouts/side-menu/Main";
+import React from 'react';
+import MenuTool from '../../components/layouts/side-menu/Main.jsx';
 
-const Index = () => {
-    return (
-        <>
-            <Menu_tool/>
-        </>
-    )
+function Index() {
+    return <MenuTool />;
 }
+
 export default Index;

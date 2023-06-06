@@ -1,116 +1,62 @@
-import React, {useEffect, useState} from 'react';
-import Button from "@/components/Button/Button.jsx";
-import 'sweetalert2/src/sweetalert2.scss';
-import Input from "../../components/Input/Input.jsx";
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
+import 'sweetalert2/src/sweetalert2.scss';
+import Button from '@/components/Button/Button.jsx';
+import Input from '../../components/Input/Input.jsx';
 
-function Add(props) {
-    const {
-        handleOnClickRegister,
-        person_Name,
-        person_LastNamePaternal,
-        person_LastNameMaternal,
-        person_DateBirth,
-        person_Direction,
-        person_Phone,
-        person_CellPhone,
-        person_Email,
-        person_WebSite,
-        staff_StartDate,
-        staff_finalDate,
-        staff_ContractNumber,
-
-        type_person_id,
-        setType_person_id,
-
-        ubigeous_PlaceBirth,
-        numberDocument,
-        person_Gender,
-        statusmarital_ID,
-        nationality_ID,
-        ubigeous_Home,
-        position_ID,
-        formType,
-
-        customer_id,
-        supplier_id,
-        staff_id,
-
-        nationalityContainer,
-        typeDocumentContainer,
-
-        setHandleOnClickRegister,
-        setPerson_Name,
-        setPerson_LastNamePaternal,
-        setPerson_LastNameMaternal,
-        setPerson_DateBirth,
-        setPerson_Direction,
-        setPerson_Phone,
-        setPerson_CellPhone,
-        setPerson_Email,
-        setPerson_WebSite,
-        setStaff_StartDate,
-        setStaff_finalDate,
-        setStaff_ContractNumber,
-
-        setUbigeous_PlaceBirth,
-        setNumberDocument,
-        setPerson_Gender,
-        setStatusmarital_ID,
-        setNationality_ID,
-        setUbigeous_Home,
-        setPosition_ID,
-        setFormType,
-        setNationalityContainer,
-        setTypedocumentContainer,
-        setCustomer_id,
-        setSupplier_id,
-        setStaff_id,
-        selectedOptionsNaturality,
-        setSelectedOptionsNaturality,
-        selectedOptionsNaturalitys,
-        setSelectedOptionsNaturalitys,
-
-        person_ID,
-        setPerson_ID,
-
-        person_DNI,
-        setPerson_DNI,
-
-        person_RUC,
-        setPerson_RUC,
-
-        typeQualificationContainer,
-        setWaytopayContainer,
-        categoryContainer,
-        setPaymentConditionContainer,
-
-        setTypeQualificationContainer,
-        waytopayContainer,
-        setCategoryContainer,
-        paymentConditionContainer,
-        creditLine,
-        setCreditLine,
-        setTypeQualification,
-        setCategory,
-        setWaytopay,
-        setPaymentCondition,
-
-        typeQualification,
-        category,
-        waytopay,
-        paymentCondition,
-
-    } = props;
-
+function Add({
+    handleOnClickRegister,
+    person_Name,
+    person_LastNamePaternal,
+    person_LastNameMaternal,
+    person_Direction,
+    person_Phone,
+    person_CellPhone,
+    person_Email,
+    person_WebSite,
+    type_person_id,
+    setType_person_id,
+    person_Gender,
+    statusmarital_ID,
+    formType,
+    customer_id,
+    supplier_id,
+    staff_id,
+    nationalityContainer,
+    typeDocumentContainer,
+    setPerson_Name,
+    setPerson_LastNamePaternal,
+    setPerson_LastNameMaternal,
+    setPerson_Direction,
+    setPerson_Phone,
+    setPerson_CellPhone,
+    setPerson_Email,
+    setPerson_WebSite,
+    setPerson_Gender,
+    setStatusmarital_ID,
+    setFormType,
+    setSelectedOptionsNaturality,
+    selectedOptionsNaturalitys,
+    setSelectedOptionsNaturalitys,
+    person_DNI,
+    setPerson_DNI,
+    typeQualificationContainer,
+    categoryContainer,
+    waytopayContainer,
+    paymentConditionContainer,
+    creditLine,
+    setCreditLine,
+    typeQualification,
+    category,
+    waytopay,
+    paymentCondition,
+}) {
     const handleOnClickList = () => {
-
         setFormType('list');
     };
 
-
-    const [selectMultiple, setSelectMultiple] = useState(["1", "3"]);
-    const [select, setSelect] = useState("1");
+    const [selectMultiple, setSelectMultiple] = useState(['1', '3']);
+    const [select, setSelect] = useState('1');
     const [showDiv, setShowDiv] = useState(true);
     const [showDivCliente, setShowDivCliente] = useState(false);
     const [showDivProveedor, setShowDivProveedor] = useState(false);
@@ -147,88 +93,76 @@ function Add(props) {
         setShowDivPersonal(true);
     };
 
-    console.log(nationalityContainer);
-    console.log(typeDocumentContainer);
-    const optionsNaturality = nationalityContainer.map(obj =>
-        ({
-            value: obj.nationality_ID,
-            label: obj.nationality_Name
+    const optionsNaturality = nationalityContainer.map((obj) => ({
+        value: obj.nationality_ID,
+        label: obj.nationality_Name,
+    }));
+
+    const optionsTypeDocument = typeDocumentContainer.map((obj) => ({
+        value: obj.typedocument_ID,
+        label: obj.typedocument_Initial,
+    }));
+
+    const optionsTypeQualificationContainer = typeQualificationContainer.map(
+        (obj) => ({
+            value: obj.typequalification_ID,
+            label: obj.typequalification_Name,
         })
     );
 
-    const optionsTypeDocument = typeDocumentContainer.map(obj =>
-        ({
-            value: obj.typedocument_ID,
-            label: obj.typedocument_Initial,
-        }),
-    );
+    const optionsCategoryContainer = categoryContainer.map((obj) => ({
+        value: obj.category_ID,
+        label: obj.category_Name,
+    }));
 
-    const optionsTypeQualificationContainer = typeQualificationContainer.map(obj =>
-        ({
-            value: obj.typequalification_ID,
-            label: obj.typequalification_Name,
-        }),
-    );
-
-    const optionsCategoryContainer = categoryContainer.map(obj =>
-        ({
-            value: obj.category_ID,
-            label: obj.category_Name,
-        }),
-    );
-
-    const optionsPaymentConditionContainer = paymentConditionContainer.map(obj =>
-        ({
+    const optionsPaymentConditionContainer = paymentConditionContainer.map(
+        (obj) => ({
             value: obj.payment_condition_ID,
             label: obj.payment_condition_Name,
-        }),
+        })
     );
 
-    const optionsWaytoPay = waytopayContainer.map(obj =>
-        ({
-            value: obj.waytopay_ID,
-            label: obj.waytopay_Name,
-        }),
-    );
+    const optionsWaytoPay = waytopayContainer.map((obj) => ({
+        value: obj.waytopay_ID,
+        label: obj.waytopay_Name,
+    }));
 
     const optionsGender = [
-        {value: 0, label: 'MASCULINO', isSelected: true},
-        {value: 1, label: 'FEMENINO', isSelected: true},
+        { value: 0, label: 'MASCULINO', isSelected: true },
+        { value: 1, label: 'FEMENINO', isSelected: true },
     ];
 
     const optionsStatusmarital = [
-        {value: 0, label: 'CASADO'},
-        {value: 1, label: 'CONVIVIENTE'},
-        {value: 2, label: 'DIVORCIADO'},
-        {value: 3, label: 'NO REGISTRADO'},
-        {value: 4, label: 'SOLTERO'},
-        {value: 5, label: 'VIUDO'},
+        { value: 0, label: 'CASADO' },
+        { value: 1, label: 'CONVIVIENTE' },
+        { value: 2, label: 'DIVORCIADO' },
+        { value: 3, label: 'NO REGISTRADO' },
+        { value: 4, label: 'SOLTERO' },
+        { value: 5, label: 'VIUDO' },
     ];
 
-
     const optionsTypePerson = [
-        {value: 0, label: 'P. NATURAL'},
-        {value: 1, label: 'P. JURIDICA'},
+        { value: 0, label: 'P. NATURAL' },
+        { value: 1, label: 'P. JURIDICA' },
     ];
 
     const options = [
-        {value: 'Cliente', label: 'Cliente', isSelected: true},
-        {value: 'Proveedor', label: 'Proveedor', isSelected: true},
-        {value: 'Personal', label: 'Personal'}
+        { value: 'Cliente', label: 'Cliente', isSelected: true },
+        { value: 'Proveedor', label: 'Proveedor', isSelected: true },
+        { value: 'Personal', label: 'Personal' },
     ];
 
     const options2 = [
-        {value: 'A 15 DIAS', label: 'A 15 DIAS'},
-        {value: 'A 30 DIAS', label: 'A 30 DIAS'},
-        {value: 'A 50 DIAS', label: 'A 50 DIAS'},
-        {value: 'A 90 DIAS', label: 'A 90 DIAS'},
-        {value: 'A 120 DIAS', label: 'A 120 DIAS'},
-        {value: 'A 150 DIAS', label: 'A 150 DIAS'}
-
+        { value: 'A 15 DIAS', label: 'A 15 DIAS' },
+        { value: 'A 30 DIAS', label: 'A 30 DIAS' },
+        { value: 'A 50 DIAS', label: 'A 50 DIAS' },
+        { value: 'A 90 DIAS', label: 'A 90 DIAS' },
+        { value: 'A 120 DIAS', label: 'A 120 DIAS' },
+        { value: 'A 150 DIAS', label: 'A 150 DIAS' },
     ];
 
     /*   console.log(customer_id, supplier_id, staff_id)
-   */
+     */
     let defaultSelectedOptions = [];
     let defaultSelectedOptionsGender = [];
     let defaultSelectedOptionsStatusmarital = [];
@@ -236,25 +170,15 @@ function Add(props) {
 
     if (formType === 'edit') {
         if (customer_id > 0 && supplier_id > 0 && staff_id > 0) {
-            defaultSelectedOptions = [
-                options[0],
-                options[1],
-                options[2],
-            ];
+            defaultSelectedOptions = [options[0], options[1], options[2]];
         }
 
         if (customer_id > 0 && supplier_id > 0 && staff_id === 0) {
-            defaultSelectedOptions = [
-                options[0],
-                options[1],
-            ];
+            defaultSelectedOptions = [options[0], options[1]];
         }
 
         if (customer_id > 0 && supplier_id === 0 && staff_id > 0) {
-            defaultSelectedOptions = [
-                options[0],
-                options[2],
-            ];
+            defaultSelectedOptions = [options[0], options[2]];
         }
 
         if (customer_id === 0 && supplier_id === 0 && staff_id === 0) {
@@ -262,123 +186,135 @@ function Add(props) {
         }
 
         if (customer_id > 0 && supplier_id === 0 && staff_id === 0) {
-            defaultSelectedOptions = [
-                options[0],
-            ];
+            defaultSelectedOptions = [options[0]];
         }
 
         if (customer_id === 0 && supplier_id > 0 && staff_id === 0) {
-            defaultSelectedOptions = [
-                options[1],
-            ];
+            defaultSelectedOptions = [options[1]];
         }
 
         if (customer_id === 0 && supplier_id === 0 && staff_id > 0) {
-            defaultSelectedOptions = [
-                options[2],
-            ];
+            defaultSelectedOptions = [options[2]];
         }
 
         if (person_Gender === '0') {
-            defaultSelectedOptionsGender = [
-                optionsGender[0],
-            ];
+            defaultSelectedOptionsGender = [optionsGender[0]];
         }
         if (person_Gender === '1') {
-            defaultSelectedOptionsGender = [
-                optionsGender[1],
-            ];
+            defaultSelectedOptionsGender = [optionsGender[1]];
         }
 
         if (type_person_id === '0') {
-            defaultSelectedOptionsTypePerson = [
-                optionsTypePerson[0],
-            ];
+            defaultSelectedOptionsTypePerson = [optionsTypePerson[0]];
         }
         if (type_person_id === '1') {
-            defaultSelectedOptionsTypePerson = [
-                optionsTypePerson[1],
-            ];
+            defaultSelectedOptionsTypePerson = [optionsTypePerson[1]];
         }
-
 
         if (statusmarital_ID === 0) {
-            defaultSelectedOptionsStatusmarital = [
-                optionsStatusmarital[0],
-            ];
+            defaultSelectedOptionsStatusmarital = [optionsStatusmarital[0]];
         }
         if (statusmarital_ID === 1) {
-            defaultSelectedOptionsStatusmarital = [
-                optionsStatusmarital[1],
-            ];
+            defaultSelectedOptionsStatusmarital = [optionsStatusmarital[1]];
         }
         if (statusmarital_ID === 2) {
-            defaultSelectedOptionsStatusmarital = [
-                optionsStatusmarital[2],
-            ];
+            defaultSelectedOptionsStatusmarital = [optionsStatusmarital[2]];
         }
         if (statusmarital_ID === 3) {
-            defaultSelectedOptionsStatusmarital = [
-                optionsStatusmarital[3],
-            ];
+            defaultSelectedOptionsStatusmarital = [optionsStatusmarital[3]];
         }
         if (statusmarital_ID === 4) {
-            defaultSelectedOptionsStatusmarital = [
-                optionsStatusmarital[4],
-            ];
+            defaultSelectedOptionsStatusmarital = [optionsStatusmarital[4]];
         }
         if (statusmarital_ID === 5) {
-            defaultSelectedOptionsStatusmarital = [
-                optionsStatusmarital[5],
-            ];
+            defaultSelectedOptionsStatusmarital = [optionsStatusmarital[5]];
         }
-
     }
 
     // const defaultSelectedOptionsNationality = [];
 
-    const defaultSelectedOptionsNationality = nationalityContainer.map(obj => selectedOptionsNaturalitys === obj.nationality_ID ? ({
-        value: obj.nationality_ID,
-        label: obj.nationality_Name
-    }) : '');
+    const defaultSelectedOptionsNationality = nationalityContainer.map((obj) =>
+        selectedOptionsNaturalitys === obj.nationality_ID
+            ? {
+                  value: obj.nationality_ID,
+                  label: obj.nationality_Name,
+              }
+            : ''
+    );
 
-    const defaultSelectedOptionsTypeQualification = typeQualificationContainer.map(obj => typeQualification === obj.typequalification_ID ? ({
-        value: obj.typequalification_ID,
-        label: obj.typequalification_Name
-    }) : '');
+    const defaultSelectedOptionsTypeQualification =
+        typeQualificationContainer.map((obj) =>
+            typeQualification === obj.typequalification_ID
+                ? {
+                      value: obj.typequalification_ID,
+                      label: obj.typequalification_Name,
+                  }
+                : ''
+        );
 
-    const defaultSelectedOptionsCategory = categoryContainer.map(obj => category === obj.category_ID ? ({
-        value: obj.category_ID,
-        label: obj.category_Name
-    }) : '');
+    const defaultSelectedOptionsCategory = categoryContainer.map((obj) =>
+        category === obj.category_ID
+            ? {
+                  value: obj.category_ID,
+                  label: obj.category_Name,
+              }
+            : ''
+    );
 
-    const defaultSelectedOptionsWaytoPay = waytopayContainer.map(obj => waytopay === obj.waytopay_ID ? ({
-        value: obj.waytopay_ID,
-        label: obj.waytopay_Name
-    }) : '');
+    const defaultSelectedOptionsWaytoPay = waytopayContainer.map((obj) =>
+        waytopay === obj.waytopay_ID
+            ? {
+                  value: obj.waytopay_ID,
+                  label: obj.waytopay_Name,
+              }
+            : ''
+    );
 
-    const defaultSelectedPaymentCondition = paymentConditionContainer.map(obj => paymentCondition === obj.payment_condition_ID ? ({
-        value: obj.payment_condition_ID,
-        label: obj.payment_condition_Name
-    }) : '');
+    const defaultSelectedPaymentCondition = paymentConditionContainer.map(
+        (obj) =>
+            paymentCondition === obj.payment_condition_ID
+                ? {
+                      value: obj.payment_condition_ID,
+                      label: obj.payment_condition_Name,
+                  }
+                : ''
+    );
 
-    const [selectedOptions, setSelectedOptions] = useState(defaultSelectedOptions);
-    const [selectedOptionsGender, setSelectedOptionsGender] = useState(defaultSelectedOptionsGender);
-    const [selectedOptionsTypePerson, setSelectedOptionsTypePerson] = useState(defaultSelectedOptionsTypePerson);
+    const [selectedOptions, setSelectedOptions] = useState(
+        defaultSelectedOptions
+    );
+    const [selectedOptionsGender, setSelectedOptionsGender] = useState(
+        defaultSelectedOptionsGender
+    );
+    const [selectedOptionsTypePerson, setSelectedOptionsTypePerson] = useState(
+        defaultSelectedOptionsTypePerson
+    );
     const [selectedOptions2, setSelectedOptions2] = useState([]);
-    const [selectedOptionsNaturalityy, setSelectedOptionsNaturalityy] = useState(defaultSelectedOptionsNationality);
-    const [selectedOptionsTypeDocument, setSelectedOptionsTypeDocument] = useState();
-    const [selectedOptionsStatusmarital, setSelectedOptionsStatusmarital] = useState(defaultSelectedOptionsStatusmarital);
-    const [selectedOptionsWaytopayContainer, setSelectedOptionsWaytopayContainer] = useState(defaultSelectedOptionsWaytoPay);
-    const [selectedOptionsCategoryContainer, setSelectedOptionsCategoryContainer] = useState(defaultSelectedOptionsCategory);
-    const [selectedOptionsPaymentConditionContainer, setSelectedOptionsPaymentConditionContainer] = useState(defaultSelectedPaymentCondition);
-    const [selectedOptionsTypeQualificationContainer, setSelectedOptionsTypeQualificationContainer] = useState(defaultSelectedOptionsTypeQualification);
+    const [selectedOptionsNaturalityy, setSelectedOptionsNaturalityy] =
+        useState(defaultSelectedOptionsNationality);
+    const [selectedOptionsTypeDocument, setSelectedOptionsTypeDocument] =
+        useState();
+    const [selectedOptionsStatusmarital, setSelectedOptionsStatusmarital] =
+        useState(defaultSelectedOptionsStatusmarital);
+    const [
+        selectedOptionsWaytopayContainer,
+        setSelectedOptionsWaytopayContainer,
+    ] = useState(defaultSelectedOptionsWaytoPay);
+    const [
+        selectedOptionsCategoryContainer,
+        setSelectedOptionsCategoryContainer,
+    ] = useState(defaultSelectedOptionsCategory);
+    const [
+        selectedOptionsPaymentConditionContainer,
+        setSelectedOptionsPaymentConditionContainer,
+    ] = useState(defaultSelectedPaymentCondition);
+    const [
+        selectedOptionsTypeQualificationContainer,
+        setSelectedOptionsTypeQualificationContainer,
+    ] = useState(defaultSelectedOptionsTypeQualification);
 
     const handleChange = (selected) => {
         setSelectedOptions(selected);
-    };
-    const handleChange2 = (selected) => {
-        setSelectedOptions2(selected);
     };
 
     const handleChange3 = (selected) => {
@@ -418,48 +354,46 @@ function Add(props) {
         setSelectedOptionsPaymentConditionContainer(selected);
     };
 
-
     useEffect(() => {
-
-        const clienteLabel = selectedOptions.some(cliente => cliente.label === 'Cliente');
+        const clienteLabel = selectedOptions.some(
+            (client) => client.label === 'Cliente'
+        );
         if (clienteLabel) {
             setShowNavCliente(true);
         } else {
             setShowNavCliente(false);
         }
 
-        const proveedorLabel = selectedOptions.some(proveedor => proveedor.label === 'Proveedor');
+        const proveedorLabel = selectedOptions.some(
+            (proveeder) => proveeder.label === 'Proveedor'
+        );
         if (proveedorLabel) {
             setShowNavProveedor(true);
         } else {
             setShowNavProveedor(false);
         }
 
-        const personalLabel = selectedOptions.some(personal => personal.label === 'Personal');
+        const personalLabel = selectedOptions.some(
+            (personnel) => personnel.label === 'Personal'
+        );
         if (personalLabel) {
             setShowNavPersonal(true);
         } else {
             setShowNavPersonal(false);
         }
-
-    });
+    }, []);
     const customStyles = {
         control: (provided) => ({
             ...provided,
             textAlign: 'center',
         }),
-
     };
 
     return (
-
         <div className="">
             <div className="intro-y flex flex-col sm:flex-row items-center mt-8">
-                <h2 className="text-lg font-medium mr-auto">
-                    Nueva Persona
-                </h2>
+                <h2 className="text-lg font-medium mr-auto">Nueva Persona</h2>
                 <div className="w-full sm:w-auto flex mt-4 sm:mt-0">
-
                     <div className="flex justify-end flex-col md:flex-row gap-2 mt-5">
                         <Button
                             textName="Cancelar"
@@ -471,410 +405,704 @@ function Add(props) {
                             onClick={handleOnClickRegister}
                         />
                     </div>
-
                 </div>
             </div>
             <div className="pos intro-y grid grid-cols-12 gap-5 mt-5">
                 <div className="intro-y col-span-12 lg:col-span-8">
-
                     <div className="flex z-10">
-                        <p className="flex w-10">Tipo: </p><p/>
+                        <p className="flex w-10">Tipo: </p>
+                        <p />
                         <div className="w-2/5">
                             <Select
                                 options={options}
                                 closeMenuOnSelect={false}
                                 value={selectedOptions}
                                 onChange={handleChange}
-
                                 isMulti
-
                                 className="w-full"
-
                             />
-
                         </div>
-
-
                     </div>
 
                     <div className="post  overflow-hidden box mt-5 z-0">
-                        <ul className="post__tabs nav nav-tabs flex-col sm:flex-row bg-slate-200 dark:bg-darkmode-800"
-                            role="tablist">
+                        <ul
+                            className="post__tabs nav nav-tabs flex-col sm:flex-row bg-slate-200 dark:bg-darkmode-800"
+                            role="tablist"
+                        >
                             <li className="nav-item">
-                                <button title=""
-                                        className="nav-link tooltip w-full sm:w-40 py-4 active" id="content-tab"
-                                        role="tab" aria-controls="content" onClick={general}><i
-                                    data-lucide="file-text" className="w-4 h-4 mr-2"/> General
+                                <button
+                                    title=""
+                                    className="nav-link tooltip w-full sm:w-40 py-4 active"
+                                    id="content-tab"
+                                    role="tab"
+                                    aria-controls="content"
+                                    onClick={general}
+                                >
+                                    <i
+                                        data-lucide="file-text"
+                                        className="w-4 h-4 mr-2"
+                                    />{' '}
+                                    General
                                 </button>
                             </li>
-                            {showNavCliente &&
+                            {showNavCliente && (
                                 <li className="nav-item">
-                                    <button title=""
-                                            className="nav-link tooltip w-full sm:w-40 py-4" id="meta-title-tab"
-                                            role="tab" aria-hidden="true" onClick={cliente}>
-                                        <i data-lucide="code" className="w-4 h-4 mr-2"/> Cliente
+                                    <button
+                                        title=""
+                                        className="nav-link tooltip w-full sm:w-40 py-4"
+                                        id="meta-title-tab"
+                                        role="tab"
+                                        aria-hidden="true"
+                                        onClick={cliente}
+                                    >
+                                        <i
+                                            data-lucide="code"
+                                            className="w-4 h-4 mr-2"
+                                        />{' '}
+                                        Cliente
                                     </button>
-                                </li>}
-                            {showNavProveedor &&
+                                </li>
+                            )}
+                            {showNavProveedor && (
                                 <div>
                                     <li className="nav-item">
-                                        <button title="Use search keywords" data-toggle="tab" data-target="#keywords"
-                                                className="nav-link tooltip w-full sm:w-40 py-4" id="keywords-tab"
-                                                role="tab" onClick={proveedor}><i data-lucide="align-left"
-                                                                                  className="w-4 h-4 mr-2"/> Proveedor
+                                        <button
+                                            title="Use search keywords"
+                                            data-toggle="tab"
+                                            data-target="#keywords"
+                                            className="nav-link tooltip w-full sm:w-40 py-4"
+                                            id="keywords-tab"
+                                            role="tab"
+                                            onClick={proveedor}
+                                        >
+                                            <i
+                                                data-lucide="align-left"
+                                                className="w-4 h-4 mr-2"
+                                            />{' '}
+                                            Proveedor
                                         </button>
                                     </li>
                                 </div>
-                            }
-                            {showNavPersonal &&
+                            )}
+                            {showNavPersonal && (
                                 <div>
                                     <li className="nav-item">
-                                        <button title="Use search keywords" data-toggle="tab" data-target="#keywords"
-                                                className="nav-link tooltip w-full sm:w-40 py-4" id="keywords-tab"
-                                                role="tab" onClick={personal}><i data-lucide="align-left"
-                                                                                 className="w-4 h-4 mr-2"/> Personal
+                                        <button
+                                            title="Use search keywords"
+                                            data-toggle="tab"
+                                            data-target="#keywords"
+                                            className="nav-link tooltip w-full sm:w-40 py-4"
+                                            id="keywords-tab"
+                                            role="tab"
+                                            onClick={personal}
+                                        >
+                                            <i
+                                                data-lucide="align-left"
+                                                className="w-4 h-4 mr-2"
+                                            />{' '}
+                                            Personal
                                         </button>
                                     </li>
                                 </div>
-                            }
+                            )}
                         </ul>
-                        {showDivProveedor &&
-                            <div className="post__content tab-content" id="targetGeneral">
-                                <div id="content" className="tab-pane p-5 active" role="tabpanel"
-                                     aria-labelledby="content-tab">
-                                    <div
-                                        className="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 w-full ">
-
-                                        <div
-                                            className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"/> Data
+                        {showDivProveedor && (
+                            <div
+                                className="post__content tab-content"
+                                id="targetGeneral"
+                            >
+                                <div
+                                    id="content"
+                                    className="tab-pane p-5 active"
+                                    role="tabpanel"
+                                    aria-labelledby="content-tab"
+                                >
+                                    <div className="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 w-full ">
+                                        <div className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                            <i
+                                                data-lucide="chevron-down"
+                                                className="w-4 h-4 mr-2"
+                                            />{' '}
+                                            Data
                                         </div>
                                         <div className="flex">
                                             <div className="mt-5 w-2/4">
                                                 <div className="mt-3">
-                                                    <label className="form-label">Sector Comercial</label>
+                                                    <label className="form-label">
+                                                        Sector Comercial
+                                                    </label>
                                                     <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                                            <option>MADERA</option>
-                                                            <option>METAL MECANICA</option>
-                                                            <option>TRANSPORTE</option>
+                                                        <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                                            <option>
+                                                                MADERA
+                                                            </option>
+                                                            <option>
+                                                                METAL MECANICA
+                                                            </option>
+                                                            <option>
+                                                                TRANSPORTE
+                                                            </option>
                                                         </select>
                                                     </div>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>}
-                        {showDivPersonal &&
-                            <div className="post__content tab-content" id="targetGeneral">
-                                <div id="content" className="tab-pane p-5 active" role="tabpanel"
-                                     aria-labelledby="content-tab">
-                                    <div
-                                        className="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 w-full ">
-
-                                        <div
-                                            className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"/> Data
-                                        </div>
-                                        <div className="flex">
-                                            <div className="mt-5 w-2/4">
-                                                <div className="mt-3">
-                                                    <label className="form-label">Fecha Inicio</label>
-                                                    <input type="text" className="datepicker form-control"
-                                                           id="post-form-2"
-                                                           data-single-mode="true" placeholder=" 01-01-23 "/>
-                                                </div>
-                                                <div className="mt-3">
-                                                    <label className="form-label">Cargo</label>
-                                                    <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                                            <option>ADMINISTRADOR</option>
-                                                            <option>ASISTENTE ADMINISTRATIVO</option>
-                                                            <option>ASISTENTE PERSONAL</option>
-                                                            <option>AYUDANTE</option>
-                                                            <option>CONTADOR</option>
-                                                            <option>GERENTE COMERCIAL</option>
-                                                            <option>GERENTE GENERAL</option>
-                                                            <option>JEFE DE VENTA</option>
-                                                            <option>LOGISTICA</option>
-                                                            <option>MAESTRO</option>
-                                                            <option>PRACTICANTES</option>
-                                                            <option>SUB GERENTE</option>
-                                                            <option>VENDEDOR</option>
-                                                            <option>VENDEDOR NORTE</option>
-                                                            <option>VENDEDOR SUPERVISOR</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-3">
-                                                    <label className="form-label">Lista</label>
-                                                    <div className="dropdown">
-                                                        <select
-                                                            className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                                                            <option>DUBAU 01</option>
-                                                            <option>DUBAU 02</option>
-                                                            <option>DUBAU 03</option>
-                                                            <option>DUBAU 04</option>
-                                                            <option>DUBAU 05</option>
-                                                            <option>DUBAU 06</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                            <div className="mt-5 w-1/5"/>
-                                            <div className="mt-5 w-2/4">
-                                                <div className="mt-3">
-                                                    <label className="form-label">Fecha Fin</label>
-                                                    <input type="text" className="datepicker form-control"
-                                                           id="post-form-2"
-                                                           data-single-mode="true" placeholder=" 01-01-23 "/>
-                                                </div>
-                                                <div className="mt-3">
-                                                    <label className="form-label">Nro. Contrato</label>
-                                                    <input type="text" className="datepicker form-control"
-                                                           id="post-form-2"
-                                                           data-single-mode="true" placeholder=" 00000 "/>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>}
-                        {showDivCliente &&
-                            <div className="post__content tab-content" id="targetGeneral">
-                                <div id="content" className="tab-pane p-5 active" role="tabpanel"
-                                     aria-labelledby="content-tab">
-                                    <div
-                                        className="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 w-full ">
-
-                                        <div
-                                            className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"/> Data
+                            </div>
+                        )}
+                        {showDivPersonal && (
+                            <div
+                                className="post__content tab-content"
+                                id="targetGeneral"
+                            >
+                                <div
+                                    id="content"
+                                    className="tab-pane p-5 active"
+                                    role="tabpanel"
+                                    aria-labelledby="content-tab"
+                                >
+                                    <div className="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 w-full ">
+                                        <div className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                            <i
+                                                data-lucide="chevron-down"
+                                                className="w-4 h-4 mr-2"
+                                            />{' '}
+                                            Data
                                         </div>
                                         <div className="flex">
                                             <div className="mt-5 w-2/4">
                                                 <div className="mt-3">
-                                                    <label className="form-label">Calificacion</label>
+                                                    <label className="form-label">
+                                                        Fecha Inicio
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="datepicker form-control"
+                                                        id="post-form-2"
+                                                        data-single-mode="true"
+                                                        placeholder=" 01-01-23 "
+                                                    />
+                                                </div>
+                                                <div className="mt-3">
+                                                    <label className="form-label">
+                                                        Cargo
+                                                    </label>
+                                                    <div className="dropdown">
+                                                        <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                                            <option>
+                                                                ADMINISTRADOR
+                                                            </option>
+                                                            <option>
+                                                                ASISTENTE
+                                                                ADMINISTRATIVO
+                                                            </option>
+                                                            <option>
+                                                                ASISTENTE
+                                                                PERSONAL
+                                                            </option>
+                                                            <option>
+                                                                AYUDANTE
+                                                            </option>
+                                                            <option>
+                                                                CONTADOR
+                                                            </option>
+                                                            <option>
+                                                                GERENTE
+                                                                COMERCIAL
+                                                            </option>
+                                                            <option>
+                                                                GERENTE GENERAL
+                                                            </option>
+                                                            <option>
+                                                                JEFE DE VENTA
+                                                            </option>
+                                                            <option>
+                                                                LOGISTICA
+                                                            </option>
+                                                            <option>
+                                                                MAESTRO
+                                                            </option>
+                                                            <option>
+                                                                PRACTICANTES
+                                                            </option>
+                                                            <option>
+                                                                SUB GERENTE
+                                                            </option>
+                                                            <option>
+                                                                VENDEDOR
+                                                            </option>
+                                                            <option>
+                                                                VENDEDOR NORTE
+                                                            </option>
+                                                            <option>
+                                                                VENDEDOR
+                                                                SUPERVISOR
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-3">
+                                                    <label className="form-label">
+                                                        Lista
+                                                    </label>
+                                                    <div className="dropdown">
+                                                        <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                                            <option>
+                                                                DUBAU 01
+                                                            </option>
+                                                            <option>
+                                                                DUBAU 02
+                                                            </option>
+                                                            <option>
+                                                                DUBAU 03
+                                                            </option>
+                                                            <option>
+                                                                DUBAU 04
+                                                            </option>
+                                                            <option>
+                                                                DUBAU 05
+                                                            </option>
+                                                            <option>
+                                                                DUBAU 06
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="mt-5 w-1/5" />
+                                            <div className="mt-5 w-2/4">
+                                                <div className="mt-3">
+                                                    <label className="form-label">
+                                                        Fecha Fin
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="datepicker form-control"
+                                                        id="post-form-2"
+                                                        data-single-mode="true"
+                                                        placeholder=" 01-01-23 "
+                                                    />
+                                                </div>
+                                                <div className="mt-3">
+                                                    <label className="form-label">
+                                                        Nro. Contrato
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="datepicker form-control"
+                                                        id="post-form-2"
+                                                        data-single-mode="true"
+                                                        placeholder=" 00000 "
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        {showDivCliente && (
+                            <div
+                                className="post__content tab-content"
+                                id="targetGeneral"
+                            >
+                                <div
+                                    id="content"
+                                    className="tab-pane p-5 active"
+                                    role="tabpanel"
+                                    aria-labelledby="content-tab"
+                                >
+                                    <div className="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 w-full ">
+                                        <div className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                            <i
+                                                data-lucide="chevron-down"
+                                                className="w-4 h-4 mr-2"
+                                            />{' '}
+                                            Data
+                                        </div>
+                                        <div className="flex">
+                                            <div className="mt-5 w-2/4">
+                                                <div className="mt-3">
+                                                    <label className="form-label">
+                                                        Calificacion
+                                                    </label>
                                                     <div className="dropdown">
                                                         <Select
-                                                            styles={customStyles}
-                                                            options={optionsTypeQualificationContainer}
-                                                            value={selectedOptionsTypeQualificationContainer}
-                                                            onChange={handleChangeTypeQualification}
+                                                            styles={
+                                                                customStyles
+                                                            }
+                                                            options={
+                                                                optionsTypeQualificationContainer
+                                                            }
+                                                            value={
+                                                                selectedOptionsTypeQualificationContainer
+                                                            }
+                                                            onChange={
+                                                                handleChangeTypeQualification
+                                                            }
                                                             className="w-full"
                                                         />
                                                     </div>
                                                 </div>
                                                 <div className="mt-3">
-                                                    <label className="form-label">Linea de Credito</label>
-                                                    <input type="text" className="datepicker form-control"
-                                                           id="post-form-2" value={creditLine}
-                                                           data-single-mode="true" placeholder=" 0.00 "
-                                                           onChange={(e) => setCreditLine(e.target.value)}/>
+                                                    <label className="form-label">
+                                                        Linea de Credito
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="datepicker form-control"
+                                                        id="post-form-2"
+                                                        value={creditLine}
+                                                        data-single-mode="true"
+                                                        placeholder=" 0.00 "
+                                                        onChange={(e) =>
+                                                            setCreditLine(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
                                                 </div>
                                                 <div className="mt-3">
-                                                    <label className="form-label">Categoria</label>
+                                                    <label className="form-label">
+                                                        Categoria
+                                                    </label>
                                                     <div className="dropdown">
                                                         <Select
-                                                            styles={customStyles}
-                                                            options={optionsCategoryContainer}
-                                                            value={selectedOptionsCategoryContainer}
-                                                            onChange={handleChangeCategory}
+                                                            styles={
+                                                                customStyles
+                                                            }
+                                                            options={
+                                                                optionsCategoryContainer
+                                                            }
+                                                            value={
+                                                                selectedOptionsCategoryContainer
+                                                            }
+                                                            onChange={
+                                                                handleChangeCategory
+                                                            }
                                                             className="w-full"
                                                         />
                                                     </div>
                                                 </div>
                                                 <div className="mt-3">
-                                                    <label className="form-label">Forma de Pago</label>
+                                                    <label className="form-label">
+                                                        Forma de Pago
+                                                    </label>
                                                     <div className="dropdown">
                                                         <Select
-                                                            styles={customStyles}
-                                                            options={optionsWaytoPay}
-                                                            value={selectedOptionsWaytopayContainer}
-                                                            onChange={handleChangeWaytopay}
+                                                            styles={
+                                                                customStyles
+                                                            }
+                                                            options={
+                                                                optionsWaytoPay
+                                                            }
+                                                            value={
+                                                                selectedOptionsWaytopayContainer
+                                                            }
+                                                            onChange={
+                                                                handleChangeWaytopay
+                                                            }
                                                             className="w-full"
                                                         />
                                                     </div>
                                                 </div>
-                                                <div className="mt-3"/>
-                                                <br/>
-                                                <br/>
-                                                <br/>
-                                                <br/>
-                                                <br/>
-                                                <br/>
-
+                                                <div className="mt-3" />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
                                             </div>
 
-                                            <div className="mt-5 w-1/5"/>
+                                            <div className="mt-5 w-1/5" />
                                             <div className="mt-5 w-2/4">
-
                                                 <div className="mt-3">
-                                                    <label className="form-label">Condiciones</label>
+                                                    <label className="form-label">
+                                                        Condiciones
+                                                    </label>
                                                     <div className="dropdown z-40">
                                                         <Select
-                                                            options={optionsPaymentConditionContainer}
-                                                            closeMenuOnSelect={false}
-                                                            value={selectedOptionsPaymentConditionContainer}
-                                                            onChange={handleChangePaymentCondition}
+                                                            options={
+                                                                optionsPaymentConditionContainer
+                                                            }
+                                                            closeMenuOnSelect={
+                                                                false
+                                                            }
+                                                            value={
+                                                                selectedOptionsPaymentConditionContainer
+                                                            }
+                                                            onChange={
+                                                                handleChangePaymentCondition
+                                                            }
                                                             isMulti
-
                                                             className="w-full"
-
                                                         />
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>}
+                            </div>
+                        )}
 
-                        {showDiv &&
-                            <div className="post__content tab-content" id="targetGeneral">
-                                <div id="content" className="tab-pane p-5 active" role="tabpanel"
-                                     aria-labelledby="content-tab">
-                                    <div
-                                        className="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 w-full ">
-
-                                        <div
-                                            className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"/> Data
+                        {showDiv && (
+                            <div
+                                className="post__content tab-content"
+                                id="targetGeneral"
+                            >
+                                <div
+                                    id="content"
+                                    className="tab-pane p-5 active"
+                                    role="tabpanel"
+                                    aria-labelledby="content-tab"
+                                >
+                                    <div className="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 w-full ">
+                                        <div className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                            <i
+                                                data-lucide="chevron-down"
+                                                className="w-4 h-4 mr-2"
+                                            />{' '}
+                                            Data
                                         </div>
                                         <div className="flex">
                                             <div className="mt-5 w-2/4">
                                                 <div className="mt-3">
-                                                    <label className="form-label">Nombres</label>
-                                                    <input type="text" className="datepicker form-control"
-                                                           id="post-form-2" value={person_Name}
-                                                           data-single-mode="true" placeholder=" name "
-                                                           onChange={(e) => setPerson_Name(e.target.value)}/>
+                                                    <label className="form-label">
+                                                        Nombres
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="datepicker form-control"
+                                                        id="post-form-2"
+                                                        value={person_Name}
+                                                        data-single-mode="true"
+                                                        placeholder=" name "
+                                                        onChange={(e) =>
+                                                            setPerson_Name(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
                                                 </div>
                                                 <div className="mt-3">
-                                                    <label className="form-label">Apellido Paterno</label>
-                                                    <input type="text" className="datepicker form-control"
-                                                           id="post-form-2" value={person_LastNamePaternal}
-                                                           data-single-mode="true" placeholder=" last name"
-                                                           onChange={(e) => setPerson_LastNamePaternal(e.target.value)}/>
+                                                    <label className="form-label">
+                                                        Apellido Paterno
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="datepicker form-control"
+                                                        id="post-form-2"
+                                                        value={
+                                                            person_LastNamePaternal
+                                                        }
+                                                        data-single-mode="true"
+                                                        placeholder=" last name"
+                                                        onChange={(e) =>
+                                                            setPerson_LastNamePaternal(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
                                                 </div>
                                                 <div className="mt-3">
-                                                    <label className="form-label">Apellido Materno</label>
-                                                    <input type="text" className="datepicker form-control"
-                                                           id="post-form-2" value={person_LastNameMaternal}
-                                                           data-single-mode="true" placeholder=" mother's last name"
-                                                           onChange={(e) => setPerson_LastNameMaternal(e.target.value)}/>
+                                                    <label className="form-label">
+                                                        Apellido Materno
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="datepicker form-control"
+                                                        id="post-form-2"
+                                                        value={
+                                                            person_LastNameMaternal
+                                                        }
+                                                        data-single-mode="true"
+                                                        placeholder=" mother's last name"
+                                                        onChange={(e) =>
+                                                            setPerson_LastNameMaternal(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
                                                 </div>
                                             </div>
-                                            <div className="mt-5 w-1/5"/>
+                                            <div className="mt-5 w-1/5" />
                                             <div className="mt-5 w-2/4">
-
                                                 <div className="mt-3">
-                                                    <label className="form-label">Pais de Origen</label>
+                                                    <label className="form-label">
+                                                        Pais de Origen
+                                                    </label>
                                                     <div className="dropdown ">
                                                         <Select
-                                                            styles={customStyles}
-                                                            options={optionsNaturality}
-                                                            value={selectedOptionsNaturalityy}
-                                                            onChange={handleChange3}
+                                                            styles={
+                                                                customStyles
+                                                            }
+                                                            options={
+                                                                optionsNaturality
+                                                            }
+                                                            value={
+                                                                selectedOptionsNaturalityy
+                                                            }
+                                                            onChange={
+                                                                handleChange3
+                                                            }
                                                             className="w-full"
                                                         />
                                                     </div>
                                                 </div>
                                                 <div className="mt-3">
-                                                    <label className="form-label">Sexo</label>
+                                                    <label className="form-label">
+                                                        Sexo
+                                                    </label>
                                                     <div className="dropdown">
                                                         <Select
-                                                            styles={customStyles}
-                                                            options={optionsGender}
-                                                            value={selectedOptionsGender}
-                                                            onChange={handleChangeGender}
+                                                            styles={
+                                                                customStyles
+                                                            }
+                                                            options={
+                                                                optionsGender
+                                                            }
+                                                            value={
+                                                                selectedOptionsGender
+                                                            }
+                                                            onChange={
+                                                                handleChangeGender
+                                                            }
                                                             className="w-full"
                                                         />
                                                     </div>
                                                 </div>
                                                 <div className="mt-3">
-                                                    <label className="form-label">Estado Civil</label>
+                                                    <label className="form-label">
+                                                        Estado Civil
+                                                    </label>
                                                     <div className="dropdown">
                                                         <Select
-                                                            styles={customStyles}
-                                                            options={optionsStatusmarital}
-                                                            value={selectedOptionsStatusmarital}
-                                                            onChange={handleChangeStatusmarital}
+                                                            styles={
+                                                                customStyles
+                                                            }
+                                                            options={
+                                                                optionsStatusmarital
+                                                            }
+                                                            value={
+                                                                selectedOptionsStatusmarital
+                                                            }
+                                                            onChange={
+                                                                handleChangeStatusmarital
+                                                            }
                                                             className="w-full"
                                                         />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
-                                <div id="content" className="tab-pane p-5 active" role="tabpanel"
-                                     aria-labelledby="content-tab">
-
+                                <div
+                                    id="content"
+                                    className="tab-pane p-5 active"
+                                    role="tabpanel"
+                                    aria-labelledby="content-tab"
+                                >
                                     <div className="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
-                                        <div
-                                            className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                            <i data-lucide="chevron-down" className="w-4 h-4 mr-2"/> Contacto
+                                        <div className="font-medium flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                            <i
+                                                data-lucide="chevron-down"
+                                                className="w-4 h-4 mr-2"
+                                            />{' '}
+                                            Contacto
                                         </div>
                                         <div className="mt-5">
                                             <div className="mt-3">
-                                                <label className="form-label">Telefono</label>
-                                                <Input dataType="text" dataName="phone" dataId="phone"
-                                                       className="form-control"
-                                                       dataPlaceholder="01 - 0000 - 0"
-                                                       dataValue={person_Phone}
-                                                       dataOnchange={setPerson_Phone}/>
-                                            </div>
-                                            <div className="mt-3">
-                                                <label className="form-label">Celular</label>
-                                                <Input dataType="text" dataName="cellphone" dataId="cellphone"
-                                                       className="form-control"
-                                                       dataPlaceholder="999999999"
-                                                       dataValue={person_CellPhone}
-                                                       dataOnchange={setPerson_CellPhone}
+                                                <label className="form-label">
+                                                    Telefono
+                                                </label>
+                                                <Input
+                                                    dataType="text"
+                                                    dataName="phone"
+                                                    dataId="phone"
+                                                    className="form-control"
+                                                    dataPlaceholder="01 - 0000 - 0"
+                                                    dataValue={person_Phone}
+                                                    dataOnchange={
+                                                        setPerson_Phone
+                                                    }
                                                 />
                                             </div>
                                             <div className="mt-3">
-                                                <label className="form-label">Correo</label>
-                                                <Input dataType="text" dataName="cellphone" dataId="cellphone"
-                                                       className="form-control"
-                                                       dataPlaceholder="example@example.com"
-                                                       dataValue={person_Email}
-                                                       dataOnchange={setPerson_Email}
+                                                <label className="form-label">
+                                                    Celular
+                                                </label>
+                                                <Input
+                                                    dataType="text"
+                                                    dataName="cellphone"
+                                                    dataId="cellphone"
+                                                    className="form-control"
+                                                    dataPlaceholder="999999999"
+                                                    dataValue={person_CellPhone}
+                                                    dataOnchange={
+                                                        setPerson_CellPhone
+                                                    }
                                                 />
                                             </div>
                                             <div className="mt-3">
-                                                <label className="form-label">Sitio Web</label>
-                                                <Input dataType="text" dataName="cellphone" dataId="cellphone"
-                                                       className="form-control"
-                                                       dataPlaceholder="www.example.com"
-                                                       dataValue={person_WebSite}
-                                                       dataOnchange={setPerson_WebSite}
+                                                <label className="form-label">
+                                                    Correo
+                                                </label>
+                                                <Input
+                                                    dataType="text"
+                                                    dataName="cellphone"
+                                                    dataId="cellphone"
+                                                    className="form-control"
+                                                    dataPlaceholder="example@example.com"
+                                                    dataValue={person_Email}
+                                                    dataOnchange={
+                                                        setPerson_Email
+                                                    }
                                                 />
                                             </div>
                                             <div className="mt-3">
-                                                <label className="form-label">Numero de Cuenta S/.</label>
-                                                <Input dataType="text" dataName="cellphone" dataId="cellphone"
-                                                       className="form-control"
-                                                       dataPlaceholder="00 - 000 - 0"
+                                                <label className="form-label">
+                                                    Sitio Web
+                                                </label>
+                                                <Input
+                                                    dataType="text"
+                                                    dataName="cellphone"
+                                                    dataId="cellphone"
+                                                    className="form-control"
+                                                    dataPlaceholder="www.example.com"
+                                                    dataValue={person_WebSite}
+                                                    dataOnchange={
+                                                        setPerson_WebSite
+                                                    }
+                                                />
+                                            </div>
+                                            <div className="mt-3">
+                                                <label className="form-label">
+                                                    Numero de Cuenta S/.
+                                                </label>
+                                                <Input
+                                                    dataType="text"
+                                                    dataName="cellphone"
+                                                    dataId="cellphone"
+                                                    className="form-control"
+                                                    dataPlaceholder="00 - 000 - 0"
                                                     /*            dataValue={person_Phone}
                                                                 dataOnchange={setPerson_Phone} */
                                                 />
                                             </div>
                                             <div className="mt-3">
-                                                <label className="form-label">Numero de Cuenta $.</label>
-                                                <Input dataType="text" dataName="cellphone" dataId="cellphone"
-                                                       className="form-control"
-                                                       dataPlaceholder="00 - 0000 - 0"
+                                                <label className="form-label">
+                                                    Numero de Cuenta $.
+                                                </label>
+                                                <Input
+                                                    dataType="text"
+                                                    dataName="cellphone"
+                                                    dataId="cellphone"
+                                                    className="form-control"
+                                                    dataPlaceholder="00 - 0000 - 0"
                                                     /*    dataValue={person_Phone}
                                                         dataOnchange={setPerson_} */
                                                 />
@@ -882,8 +1110,8 @@ function Add(props) {
                                         </div>
                                     </div>
                                 </div>
-
-                            </div>}
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -916,21 +1144,24 @@ function Add(props) {
                         </div>
 
                         <div className="mt-3">
-                            <label htmlFor="post-form-2" className="form-label">Número de Documento</label>
-                            <Input dataType="text" dataName="cellphone" dataId="cellphone"
-                                   className="form-control"
-                                   dataPlaceholder="000000000"
-                                   dataValue={person_DNI}
-                                   dataOnchange={setPerson_DNI}
+                            <label htmlFor="post-form-2" className="form-label">
+                                Número de Documento
+                            </label>
+                            <Input
+                                dataType="text"
+                                dataName="cellphone"
+                                dataId="cellphone"
+                                className="form-control"
+                                dataPlaceholder="000000000"
+                                dataValue={person_DNI}
+                                dataOnchange={setPerson_DNI}
                             />
                         </div>
                         <div className="mt-3">
                             <label className="form-label">Departamento</label>
 
-
                             <div className="dropdown">
-                                <select
-                                    className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
                                     <option>LIMA</option>
                                     <option>JUNIN</option>
                                     <option>TACNA</option>
@@ -941,10 +1172,8 @@ function Add(props) {
                         <div className="mt-3">
                             <label className="form-label">Provincia</label>
 
-
                             <div className="dropdown">
-                                <select
-                                    className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
                                     <option>LIMA</option>
                                     <option>YAUYOS</option>
                                 </select>
@@ -953,10 +1182,8 @@ function Add(props) {
                         <div className="mt-3">
                             <label className="form-label">Distrito</label>
 
-
                             <div className="dropdown">
-                                <select
-                                    className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                                <select className="dropdown-toggle btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
                                     <option>LIMA</option>
                                     <option>YAUYOS</option>
                                 </select>
@@ -964,19 +1191,23 @@ function Add(props) {
                         </div>
 
                         <div className="mt-3">
-                            <label htmlFor="post-form-2" className="form-label">Direccion</label>
-                            <Input dataType="text" dataName="direction" dataId="direction"
-                                   className="form-control"
-                                   dataPlaceholder="Av. Los Algarrobos"
-                                   dataValue={person_Direction}
-                                   dataOnchange={setPerson_Direction}
+                            <label htmlFor="post-form-2" className="form-label">
+                                Direccion
+                            </label>
+                            <Input
+                                dataType="text"
+                                dataName="direction"
+                                dataId="direction"
+                                className="form-control"
+                                dataPlaceholder="Av. Los Algarrobos"
+                                dataValue={person_Direction}
+                                dataOnchange={setPerson_Direction}
                             />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     );
 }
 

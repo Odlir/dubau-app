@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React from 'react';
 
-const Index = () => {
+function Index() {
     return (
         <div>
             <p>Hola mundo</p>
         </div>
-    )
+    );
 }
 
-export default Index
+export default Index;

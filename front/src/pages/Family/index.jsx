@@ -1,18 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import {useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import {env} from "@/env.js";
+import env from '@/env.js';
+import Preload from '@/components/preload/preload.jsx';
 import columns from '../../data/Family.jsx';
-import Preload from "@/components/preload/preload";
 import 'sweetalert2/src/sweetalert2.scss';
-import Add from "./add.jsx";
-import List from "../../components/layouts/list/index.jsx";
+import Add from './add.jsx';
+import List from '../../components/layouts/list/index.jsx';
 
 function Index() {
-    const navigate = useNavigate();
-
     const [name, setName] = useState('');
     const [internal_code, setInternalCode] = useState('');
     const [user_code, setUserCode] = useState('');
@@ -33,7 +30,8 @@ function Index() {
     const [categoryContainer, setCategoryContainer] = useState('');
     const [profitByFamilyContainer, setProfitByFamilyContainer] = useState('');
     const [coin_id, setCoin_id] = useState('');
-    const [profit_by_family_percentage, setProfit_by_family_percentage] = useState('');
+    const [profit_by_family_percentage, setProfit_by_family_percentage] =
+        useState('');
 
     const [inputFields, setInputFields] = useState([
         {
@@ -42,20 +40,22 @@ function Index() {
             profit_by_family_id_sol: '',
             coinSol: '',
             profit_by_family_id_dollar: '',
-            coinDollar: ''
-        }
+            coinDollar: '',
+        },
     ]);
-    const fetchFamilys = async page => {
+    const fetchFamilys = async (page) => {
         setLoading(true);
         const endpoint = `${env.apiURL}listFamily`;
-        const response = await axios.get(`${endpoint}?page=${page}&per_page=${perPage}`);
+        const response = await axios.get(
+            `${endpoint}?page=${page}&per_page=${perPage}`
+        );
         setData(response.data.data);
         setPage_(response.data.page);
         setTotalRows(response.data.total);
         setLoading(false);
     };
 
-    const handlePageChange = page => {
+    const handlePageChange = (page) => {
         fetchFamilys(page);
     };
 
@@ -75,29 +75,29 @@ function Index() {
     const actionDelete = async (family_id) => {
         Swal.fire({
             title: 'Desea realizar esta accion?',
-            text: "No podra revertir los cambios!",
+            text: 'No podra revertir los cambios!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Si, Eliminar!'
+            confirmButtonText: 'Si, Eliminar!',
         }).then((result) => {
             if (result.isConfirmed) {
                 const endpoint = `${env.apiURL}deleteFamily`;
-                axios.post(endpoint, {family_id, status: 0})
-                    .then((response) => {
+                axios
+                    .post(endpoint, { family_id, status: 0 })
+                    .then(() => {
                         Swal.fire(
                             'Eliminado!',
                             'Se ha eliminado Correctamente.',
                             'success'
-                        ).then((result) => {
+                        ).then(() => {
                             fetchFamilys(page_);
                         });
                     })
-                    .catch(error => {
+                    .catch(() => {
                         alert('Operacion no completada');
                     });
-
             }
         });
     };
@@ -117,13 +117,14 @@ function Index() {
         setCategoryContainer(response5.data);
 
         const endpoint2 = `${env.apiURL}listXProfitByFamily`;
-        const response2 = await axios.get(`${endpoint2}?family_id=${family_id}`);
+        const response2 = await axios.get(
+            `${endpoint2}?family_id=${family_id}`
+        );
         setProfitByFamilyContainer(response2.data);
 
         setFormType('edit');
     };
     const actionAdd = async () => {
-
         const endpoint5 = `${env.apiURL}listCategorys`;
         const response5 = await axios.get(`${endpoint5}`);
         setCategoryContainer(response5.data);
@@ -135,19 +136,20 @@ function Index() {
         e.preventDefault();
 
         const endpoint = `${env.apiURL}registerFamily`;
-        await axios.post(endpoint, {
-            name,
-            internal_code,
-            user_code,
-            percentage,
-            profitByFamilyData: inputFields,
-            type,
-            status: '1'
-        })
-            .then((response) => {
+        await axios
+            .post(endpoint, {
+                name,
+                internal_code,
+                user_code,
+                percentage,
+                profitByFamilyData: inputFields,
+                type,
+                status: '1',
+            })
+            .then(() => {
                 window.location.reload();
             })
-            .catch(error => {
+            .catch(() => {
                 alert('Debe completar correctamente sus datos');
             });
     };
@@ -156,19 +158,20 @@ function Index() {
         e.preventDefault();
 
         const endpoint = `${env.apiURL}updateFamily`;
-        await axios.post(endpoint, {
-            family_id: dataxFamily,
-            name,
-            internal_code,
-            user_code,
-            percentage,
-            profitByFamilyData: inputFields,
-            type
-        })
-            .then((response) => {
+        await axios
+            .post(endpoint, {
+                family_id: dataxFamily,
+                name,
+                internal_code,
+                user_code,
+                percentage,
+                profitByFamilyData: inputFields,
+                type,
+            })
+            .then(() => {
                 window.location.reload();
             })
-            .catch(error => {
+            .catch(() => {
                 alert('Debe completar correctamente sus datos');
             });
     };
@@ -177,17 +180,19 @@ function Index() {
         setStatus(e.target.value);
     };
 
-    const handleOnClickSearch = async page => {
+    const handleOnClickSearch = async () => {
         setLoading(true);
         const endpoint = `${env.apiURL}listFamily`;
-        const response = await axios.get(`${endpoint}?page=${page_}&per_page=${perPage}&name=${name}&created_in=${created_in}`);
+        const response = await axios.get(
+            `${endpoint}?page=${page_}&per_page=${perPage}&name=${name}&created_in=${created_in}`
+        );
         setData(response.data.data);
         setPage_(response.data.page);
         setTotalRows(response.data.total);
         setLoading(false);
     };
 
-    const handleOnClickClean = async page => {
+    const handleOnClickClean = async () => {
         setLoading(true);
         setName('');
         setType('');
@@ -199,7 +204,7 @@ function Index() {
 
     return (
         <div>
-            {(formType === 'list') ?
+            {formType === 'list' ? (
                 <>
                     <List
                         nameSection="Familia"
@@ -214,24 +219,24 @@ function Index() {
                         handleOnClickClean={handleOnClickClean}
                         actionAdd={actionAdd}
                     />
-                    {data.length != 0 ?
+                    {data.length !== 0 ? (
                         <DataTable
                             columns={columns(actionDelete, actionEdit)}
                             data={data}
                             progressPending={loading}
-                            progressComponent={<Preload/>}
+                            progressComponent={<Preload />}
                             pagination
                             paginationServer
                             paginationTotalRows={totalRows}
                             onChangeRowsPerPage={handlePerRowsChange}
                             onChangePage={handlePageChange}
                         />
-                        :
+                    ) : (
                         <DataTable
                             columns={columns(actionDelete, actionEdit)}
                             data={data}
                             progressPending={loading}
-                            progressComponent={<Preload/>}
+                            progressComponent={<Preload />}
                             noDataComponent="No existen registros en esta tabla"
                             pagination
                             paginationServer
@@ -239,59 +244,66 @@ function Index() {
                             onChangeRowsPerPage={handlePerRowsChange}
                             onChangePage={handlePageChange}
                         />
-                    }
+                    )}
                 </>
-                :
+            ) : (
+                // eslint-disable-next-line react/jsx-no-useless-fragment
                 <>
-                    {(formType === 'register') ?
-                        <Add handleOnClickRegister={handleOnClickRegister}
-                             name={name}
-                             setName={setName}
-                             internal_code={internal_code}
-                             setInternalCode={setInternalCode}
-                             user_code={user_code}
-                             setUserCode={setUserCode}
-                             percentage={percentage}
-                             setPercentage={setPercentage}
-                             type={type}
-                             setType={setType}
-                             DescriptionAgain={DescriptionAgain}
-                             setDescriptionAgain={setDescriptionAgain}
-                             categoryContainer={categoryContainer}
-                             setCategoryContainer={setCategoryContainer}
-                             profitByFamilyContainer={profitByFamilyContainer}
-                             setProfitByFamilyContainer={setProfitByFamilyContainer}
-                             formType={formType}
-                             setFormType={setFormType}
-                             inputFields={inputFields}
-                             setInputFields={setInputFields}
+                    {formType === 'register' ? (
+                        <Add
+                            handleOnClickRegister={handleOnClickRegister}
+                            name={name}
+                            setName={setName}
+                            internal_code={internal_code}
+                            setInternalCode={setInternalCode}
+                            user_code={user_code}
+                            setUserCode={setUserCode}
+                            percentage={percentage}
+                            setPercentage={setPercentage}
+                            type={type}
+                            setType={setType}
+                            DescriptionAgain={DescriptionAgain}
+                            setDescriptionAgain={setDescriptionAgain}
+                            categoryContainer={categoryContainer}
+                            setCategoryContainer={setCategoryContainer}
+                            profitByFamilyContainer={profitByFamilyContainer}
+                            setProfitByFamilyContainer={
+                                setProfitByFamilyContainer
+                            }
+                            formType={formType}
+                            setFormType={setFormType}
+                            inputFields={inputFields}
+                            setInputFields={setInputFields}
                         />
-                        :
-                        <Add handleOnClickRegister={handleOnClickUpdate}
-                             name={name}
-                             setName={setName}
-                             internal_code={internal_code}
-                             setInternalCode={setInternalCode}
-                             user_code={user_code}
-                             setUserCode={setUserCode}
-                             percentage={percentage}
-                             setPercentage={setPercentage}
-                             type={type}
-                             setType={setType}
-                             DescriptionAgain={DescriptionAgain}
-                             setDescriptionAgain={setDescriptionAgain}
-                             categoryContainer={categoryContainer}
-                             setCategoryContainer={setCategoryContainer}
-                             profitByFamilyContainer={profitByFamilyContainer}
-                             setProfitByFamilyContainer={setProfitByFamilyContainer}
-                             formType={formType}
-                             setFormType={setFormType}
-                             inputFields={inputFields}
-                             setInputFields={setInputFields}
+                    ) : (
+                        <Add
+                            handleOnClickRegister={handleOnClickUpdate}
+                            name={name}
+                            setName={setName}
+                            internal_code={internal_code}
+                            setInternalCode={setInternalCode}
+                            user_code={user_code}
+                            setUserCode={setUserCode}
+                            percentage={percentage}
+                            setPercentage={setPercentage}
+                            type={type}
+                            setType={setType}
+                            DescriptionAgain={DescriptionAgain}
+                            setDescriptionAgain={setDescriptionAgain}
+                            categoryContainer={categoryContainer}
+                            setCategoryContainer={setCategoryContainer}
+                            profitByFamilyContainer={profitByFamilyContainer}
+                            setProfitByFamilyContainer={
+                                setProfitByFamilyContainer
+                            }
+                            formType={formType}
+                            setFormType={setFormType}
+                            inputFields={inputFields}
+                            setInputFields={setInputFields}
                         />
-                    }
+                    )}
                 </>
-            }
+            )}
         </div>
     );
 }

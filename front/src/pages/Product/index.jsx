@@ -1,18 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import {useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import {env} from "@/env.js";
+import env from '@/env.js';
+import Preload from '@/components/preload/preload.jsx';
 import columns from '../../data/Product.jsx';
-import Preload from "@/components/preload/preload";
 import 'sweetalert2/src/sweetalert2.scss';
-import Add from "./add.jsx";
-import List from "../../components/layouts/list/index.jsx";
+import Add from './add.jsx';
+import List from '../../components/layouts/list/index.jsx';
 
 function Index() {
-    const navigate = useNavigate();
-
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [DescriptionAgain, setDescriptionAgain] = useState('');
@@ -38,14 +35,14 @@ function Index() {
     const [user_code, setUser_code] = useState('');
     const [cost, setCost] = useState('');
 
-
     const [familyContainer, setFamilyContainer] = useState([]);
-    const [product_service_type_Container, setProduct_service_type_Container] = useState([]);
+    const [product_service_type_Container, setProduct_service_type_Container] =
+        useState([]);
     const [brandContainer, setBrandContainer] = useState([]);
     const [lineContainer, setLineContainer] = useState([]);
     const [makerContainer, setMakerContainer] = useState([]);
-    const [unit_of_measurement_Container, setUnit_of_measurement_Container] = useState([]);
-
+    const [unit_of_measurement_Container, setUnit_of_measurement_Container] =
+        useState([]);
 
     const [family, setFamily] = useState('');
     const [productServiceType, setProductServiceType] = useState('');
@@ -57,18 +54,19 @@ function Index() {
 
     const [statusDinamic, setStatusDinamic] = useState('');
 
-
-    const fetchProducts = async page => {
+    const fetchProducts = async (page) => {
         setLoading(true);
         const endpoint = `${env.apiURL}listProduct`;
-        const response = await axios.get(`${endpoint}?page=${page}&per_page=${perPage}&type=P`);
+        const response = await axios.get(
+            `${endpoint}?page=${page}&per_page=${perPage}&type=P`
+        );
         setData(response.data.data);
         setPage_(response.data.page);
         setTotalRows(response.data.total);
         setLoading(false);
     };
 
-    const handlePageChange = page => {
+    const handlePageChange = (page) => {
         fetchProducts(page);
     };
 
@@ -84,36 +82,38 @@ function Index() {
     const actionDelete = async (product_id) => {
         Swal.fire({
             title: 'Desea realizar esta accion?',
-            text: "No podra revertir los cambios!",
+            text: 'No podra revertir los cambios!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Si, Eliminar!'
+            confirmButtonText: 'Si, Eliminar!',
         }).then((result) => {
             if (result.isConfirmed) {
                 const endpoint = `${env.apiURL}deleteProduct`;
-                axios.post(endpoint, {product_id, status: 0})
-                    .then((response) => {
+                axios
+                    .post(endpoint, { product_id, status: 0 })
+                    .then(() => {
                         Swal.fire(
                             'Eliminado!',
                             'Se ha eliminado Correctamente.',
                             'success'
-                        ).then((result) => {
+                        ).then(() => {
                             fetchProducts(page_);
                         });
                     })
-                    .catch(error => {
+                    .catch(() => {
                         alert('Operacion no completada');
                     });
-
             }
         });
     };
 
     const actionEdit = async (product_id) => {
         const endpoint = `${env.apiURL}listXProduct`;
-        const response = await axios.get(`${endpoint}?product_id=${product_id}`);
+        const response = await axios.get(
+            `${endpoint}?product_id=${product_id}`
+        );
         setdataxProduct(response.data.product_id);
         setName(response.data.name);
         setDescription(response.data.description);
@@ -191,39 +191,42 @@ function Index() {
     const handleOnClickRegister = async (e) => {
         e.preventDefault();
         const endpoint = `${env.apiURL}registerProduct`;
-        console.log(family);
-        console.log('family');
-        await axios.post(endpoint, {
-                name,
-                description,
-                family_id: family,
-                product_service_type_id: productServiceType,
-                brand_id: brand,
-                line_id: line,
-                unit_of_measurement_id: unitMeasure,
-                maker_id: maker,
-                type: 'P',
-                comment,
-                model,
-                minimun_stock,
-                maximun_stock,
-                internal_code,
-                original_code,
-                user_code,
-                cost,
-                status_dinamic: statusDinamic,
-                status: '1',
-                img
-            }, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
+
+        await axios
+            .post(
+                endpoint,
+                {
+                    name,
+                    description,
+                    family_id: family,
+                    product_service_type_id: productServiceType,
+                    brand_id: brand,
+                    line_id: line,
+                    unit_of_measurement_id: unitMeasure,
+                    maker_id: maker,
+                    type: 'P',
+                    comment,
+                    model,
+                    minimun_stock,
+                    maximun_stock,
+                    internal_code,
+                    original_code,
+                    user_code,
+                    cost,
+                    status_dinamic: statusDinamic,
+                    status: '1',
+                    img,
                 },
-            }
-        )
-            .then((response) => {
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            )
+            .then(() => {
                 window.location.reload();
             })
-            .catch(error => {
+            .catch(() => {
                 alert('Debe completar correctamente sus datos');
             });
     };
@@ -231,38 +234,42 @@ function Index() {
     const handleOnClickUpdate = async (e) => {
         e.preventDefault();
         const endpoint = `${env.apiURL}updateProduct`;
-        await axios.post(endpoint, {
-                product_id: dataxProduct,
-                name,
-                description,
-                family_id: family,
-                product_service_type_id: productServiceType,
-                brand_id: brand,
-                line_id: line,
-                unit_of_measurement_id: unitMeasure,
-                maker_id: maker,
-                type: 'P',
-                comment,
-                model,
-                minimun_stock,
-                maximun_stock,
-                internal_code,
-                original_code,
-                user_code,
-                cost,
-                status_dinamic: statusDinamic,
-                status: '1',
-                img
-            }, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
+        await axios
+            .post(
+                endpoint,
+                {
+                    product_id: dataxProduct,
+                    name,
+                    description,
+                    family_id: family,
+                    product_service_type_id: productServiceType,
+                    brand_id: brand,
+                    line_id: line,
+                    unit_of_measurement_id: unitMeasure,
+                    maker_id: maker,
+                    type: 'P',
+                    comment,
+                    model,
+                    minimun_stock,
+                    maximun_stock,
+                    internal_code,
+                    original_code,
+                    user_code,
+                    cost,
+                    status_dinamic: statusDinamic,
+                    status: '1',
+                    img,
                 },
-            }
-        )
-            .then((response) => {
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            )
+            .then(() => {
                 window.location.reload();
             })
-            .catch(error => {
+            .catch(() => {
                 alert('Debe completar correctamente sus datos');
             });
     };
@@ -271,17 +278,19 @@ function Index() {
         setProduct_ApprovedStatus(e.target.value);
     };
 
-    const handleOnClickSearch = async page => {
+    const handleOnClickSearch = async (page) => {
         setLoading(true);
         const endpoint = `${env.apiURL}listProduct`;
-        const response = await axios.get(`${endpoint}?page=${page_}&per_page=${perPage}&name=${name}&line_CreationDate=${line_CreationDate}`);
+        const response = await axios.get(
+            `${endpoint}?page=${page_}&per_page=${perPage}&name=${name}&line_CreationDate=${line_CreationDate}`
+        );
         setData(response.data.data);
         setPage_(response.data.page);
         setTotalRows(response.data.total);
         setLoading(false);
     };
 
-    const handleOnClickClean = async page => {
+    const handleOnClickClean = async () => {
         setLoading(true);
         setName('');
         setDescription('');
@@ -292,7 +301,11 @@ function Index() {
     };
     console.log(line_ApprovedStatus);
 
-    const handleOnClickModalImage = async (imageName, lineName, lineDescription) => {
+    const handleOnClickModalImage = async (
+        imageName,
+        lineName,
+        lineDescription
+    ) => {
         Swal.fire({
             title: lineName,
             text: lineDescription,
@@ -305,7 +318,7 @@ function Index() {
 
     return (
         <div>
-            {(formType === 'list') ?
+            {formType === 'list' ? (
                 <>
                     <List
                         nameSection="Articulos"
@@ -320,24 +333,28 @@ function Index() {
                         handleOnClickClean={handleOnClickClean}
                         actionAdd={actionAdd}
                     />
-                    {data.length != 0 ?
+                    {data.length !== 0 ? (
                         <DataTable
-                            columns={columns(actionDelete, actionEdit, handleOnClickModalImage)}
+                            columns={columns(
+                                actionDelete,
+                                actionEdit,
+                                handleOnClickModalImage
+                            )}
                             data={data}
                             progressPending={loading}
-                            progressComponent={<Preload/>}
+                            progressComponent={<Preload />}
                             pagination
                             paginationServer
                             paginationTotalRows={totalRows}
                             onChangeRowsPerPage={handlePerRowsChange}
                             onChangePage={handlePageChange}
                         />
-                        :
+                    ) : (
                         <DataTable
                             columns={columns(actionDelete, actionEdit)}
                             data={data}
                             progressPending={loading}
-                            progressComponent={<Preload/>}
+                            progressComponent={<Preload />}
                             noDataComponent="No existen registros en esta tabla"
                             pagination
                             paginationServer
@@ -345,130 +362,150 @@ function Index() {
                             onChangeRowsPerPage={handlePerRowsChange}
                             onChangePage={handlePageChange}
                         />
-                    }
+                    )}
                 </>
-                :
+            ) : (
+                // eslint-disable-next-line react/jsx-no-useless-fragment
                 <>
-                    {(formType === 'register') ?
-                        <Add handleOnClickRegister={handleOnClickRegister}
-                             name={name}
-                             setName={setName}
-                             description={description}
-                             setDescription={setDescription}
-                             DescriptionAgain={DescriptionAgain}
-                             setDescriptionAgain={setDescriptionAgain}
-                             img={img}
-                             setImg={setImg}
-                             setFormType={setFormType}
-                             setProduct_ApprovedStatus={setProduct_ApprovedStatus}
-                             familyContainer={familyContainer}
-                             setFamilyContainer={setFamilyContainer}
-                             product_service_type_Container={product_service_type_Container}
-                             setProduct_service_type_Container={setProduct_service_type_Container}
-                             brandContainer={brandContainer}
-                             setBrandContainer={setBrandContainer}
-                             lineContainer={lineContainer}
-                             setLineContainer={setLineContainer}
-                             makerContainer={makerContainer}
-                             setMakerContainer={setMakerContainer}
-                             unit_of_measurement_Container={unit_of_measurement_Container}
-                             setUnit_of_measurement_Container={setUnit_of_measurement_Container}
-                             type={type}
-                             setType={setType}
-                             comment={comment}
-                             setComment={setComment}
-                             model={model}
-                             setModel={setModel}
-                             minimun_stock={minimun_stock}
-                             setMinimun_stock={setMinimun_stock}
-                             maximun_stock={maximun_stock}
-                             setMaximun_stock={setMaximun_stock}
-                             internal_code={internal_code}
-                             setInternal_code={setInternal_code}
-                             original_code={original_code}
-                             setOriginal_code={setOriginal_code}
-                             user_code={user_code}
-                             setUser_code={setUser_code}
-                             cost={cost}
-                             setCost={setCost}
-
-                             family={family}
-                             setFamily={setFamily}
-                             productServiceType={productServiceType}
-                             setProductServiceType={setProductServiceType}
-                             brand={brand}
-                             setBrand={setBrand}
-                             line={line}
-                             setLine={setLine}
-                             maker={maker}
-                             setMaker={setMaker}
-                             unitMeasure={unitMeasure}
-                             setUnitMeasure={setUnitMeasure}
-                             statusDinamic={statusDinamic}
-                             setStatusDinamic={setStatusDinamic}
-
+                    {formType === 'register' ? (
+                        <Add
+                            handleOnClickRegister={handleOnClickRegister}
+                            name={name}
+                            setName={setName}
+                            description={description}
+                            setDescription={setDescription}
+                            DescriptionAgain={DescriptionAgain}
+                            setDescriptionAgain={setDescriptionAgain}
+                            img={img}
+                            setImg={setImg}
+                            setFormType={setFormType}
+                            setProduct_ApprovedStatus={
+                                setProduct_ApprovedStatus
+                            }
+                            familyContainer={familyContainer}
+                            setFamilyContainer={setFamilyContainer}
+                            product_service_type_Container={
+                                product_service_type_Container
+                            }
+                            setProduct_service_type_Container={
+                                setProduct_service_type_Container
+                            }
+                            brandContainer={brandContainer}
+                            setBrandContainer={setBrandContainer}
+                            lineContainer={lineContainer}
+                            setLineContainer={setLineContainer}
+                            makerContainer={makerContainer}
+                            setMakerContainer={setMakerContainer}
+                            unit_of_measurement_Container={
+                                unit_of_measurement_Container
+                            }
+                            setUnit_of_measurement_Container={
+                                setUnit_of_measurement_Container
+                            }
+                            type={type}
+                            setType={setType}
+                            comment={comment}
+                            setComment={setComment}
+                            model={model}
+                            setModel={setModel}
+                            minimun_stock={minimun_stock}
+                            setMinimun_stock={setMinimun_stock}
+                            maximun_stock={maximun_stock}
+                            setMaximun_stock={setMaximun_stock}
+                            internal_code={internal_code}
+                            setInternal_code={setInternal_code}
+                            original_code={original_code}
+                            setOriginal_code={setOriginal_code}
+                            user_code={user_code}
+                            setUser_code={setUser_code}
+                            cost={cost}
+                            setCost={setCost}
+                            family={family}
+                            setFamily={setFamily}
+                            productServiceType={productServiceType}
+                            setProductServiceType={setProductServiceType}
+                            brand={brand}
+                            setBrand={setBrand}
+                            line={line}
+                            setLine={setLine}
+                            maker={maker}
+                            setMaker={setMaker}
+                            unitMeasure={unitMeasure}
+                            setUnitMeasure={setUnitMeasure}
+                            statusDinamic={statusDinamic}
+                            setStatusDinamic={setStatusDinamic}
                         />
-                        :
-                        <Add handleOnClickRegister={handleOnClickUpdate}
-                             name={name}
-                             setName={setName}
-                             description={description}
-                             setDescription={setDescription}
-                             DescriptionAgain={DescriptionAgain}
-                             setDescriptionAgain={setDescriptionAgain}
-                             img={img}
-                             setImg={setImg}
-                             setFormType={setFormType}
-                             setProduct_ApprovedStatus={setProduct_ApprovedStatus}
-                             familyContainer={familyContainer}
-                             setFamilyContainer={setFamilyContainer}
-                             product_service_type_Container={product_service_type_Container}
-                             setProduct_service_type_Container={setProduct_service_type_Container}
-                             brandContainer={brandContainer}
-                             setBrandContainer={setBrandContainer}
-                             lineContainer={lineContainer}
-                             setLineContainer={setLineContainer}
-                             makerContainer={makerContainer}
-                             setMakerContainer={setMakerContainer}
-                             unit_of_measurement_Container={unit_of_measurement_Container}
-                             setUnit_of_measurement_Container={setUnit_of_measurement_Container}
-                             type={type}
-                             setType={setType}
-                             comment={comment}
-                             setComment={setComment}
-                             model={model}
-                             setModel={setModel}
-                             minimun_stock={minimun_stock}
-                             setMinimun_stock={setMinimun_stock}
-                             maximun_stock={maximun_stock}
-                             setMaximun_stock={setMaximun_stock}
-                             internal_code={internal_code}
-                             setInternal_code={setInternal_code}
-                             original_code={original_code}
-                             setOriginal_code={setOriginal_code}
-                             user_code={user_code}
-                             setUser_code={setUser_code}
-                             cost={cost}
-
-                             family={family}
-                             setFamily={setFamily}
-                             productServiceType={productServiceType}
-                             setProductServiceType={setProductServiceType}
-                             brand={brand}
-                             setBrand={setBrand}
-                             line={line}
-                             setLine={setLine}
-                             maker={maker}
-                             setMaker={setMaker}
-                             unitMeasure={unitMeasure}
-                             setUnitMeasure={setUnitMeasure}
-                             statusDinamic={statusDinamic}
-                             setStatusDinamic={setStatusDinamic}
-                             setCost={setCost}
+                    ) : (
+                        <Add
+                            handleOnClickRegister={handleOnClickUpdate}
+                            name={name}
+                            setName={setName}
+                            description={description}
+                            setDescription={setDescription}
+                            DescriptionAgain={DescriptionAgain}
+                            setDescriptionAgain={setDescriptionAgain}
+                            img={img}
+                            setImg={setImg}
+                            setFormType={setFormType}
+                            setProduct_ApprovedStatus={
+                                setProduct_ApprovedStatus
+                            }
+                            familyContainer={familyContainer}
+                            setFamilyContainer={setFamilyContainer}
+                            product_service_type_Container={
+                                product_service_type_Container
+                            }
+                            setProduct_service_type_Container={
+                                setProduct_service_type_Container
+                            }
+                            brandContainer={brandContainer}
+                            setBrandContainer={setBrandContainer}
+                            lineContainer={lineContainer}
+                            setLineContainer={setLineContainer}
+                            makerContainer={makerContainer}
+                            setMakerContainer={setMakerContainer}
+                            unit_of_measurement_Container={
+                                unit_of_measurement_Container
+                            }
+                            setUnit_of_measurement_Container={
+                                setUnit_of_measurement_Container
+                            }
+                            type={type}
+                            setType={setType}
+                            comment={comment}
+                            setComment={setComment}
+                            model={model}
+                            setModel={setModel}
+                            minimun_stock={minimun_stock}
+                            setMinimun_stock={setMinimun_stock}
+                            maximun_stock={maximun_stock}
+                            setMaximun_stock={setMaximun_stock}
+                            internal_code={internal_code}
+                            setInternal_code={setInternal_code}
+                            original_code={original_code}
+                            setOriginal_code={setOriginal_code}
+                            user_code={user_code}
+                            setUser_code={setUser_code}
+                            cost={cost}
+                            family={family}
+                            setFamily={setFamily}
+                            productServiceType={productServiceType}
+                            setProductServiceType={setProductServiceType}
+                            brand={brand}
+                            setBrand={setBrand}
+                            line={line}
+                            setLine={setLine}
+                            maker={maker}
+                            setMaker={setMaker}
+                            unitMeasure={unitMeasure}
+                            setUnitMeasure={setUnitMeasure}
+                            statusDinamic={statusDinamic}
+                            setStatusDinamic={setStatusDinamic}
+                            setCost={setCost}
                         />
-                    }
+                    )}
                 </>
-            }
+            )}
         </div>
     );
 }

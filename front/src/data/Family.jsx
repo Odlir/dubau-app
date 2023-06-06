@@ -1,58 +1,68 @@
 import React from 'react';
-import {Lucide} from "@/components/base-components/index.js";
+import { Lucide } from '@/components/base-components/index';
 
-const number = 20;
 const columns = (actionDelete, actionEdit) => [
     {
         name: '#',
-        selector: row => row.auto_increment,
-        width: "4rem",
+        selector: (row) => row.auto_increment,
+        width: '4rem',
     },
     {
         name: 'Cod. Interno',
-        selector: row => row.internal_code,
+        selector: (row) => row.internal_code,
     },
     {
         name: 'Cod. Usuario',
-        selector: row => row.user_code,
+        selector: (row) => row.user_code,
     },
     {
         name: 'Nombre',
-        selector: row => row.name,
+        selector: (row) => row.name,
     },
     {
         name: 'Tipo',
-        selector: row => row.type,
-        cell: (selector) =>
-            <p>{selector.type === 'S' ? 'SERVICIO' : 'PRODUCTO'}</p>,
+        selector: (row) => row.type,
+        cell: (selector) => (
+            <p>{selector.type === 'S' ? 'SERVICIO' : 'PRODUCTO'}</p>
+        ),
     },
-
 
     {
         name: 'Fecha de Creacion',
-        selector: row => row.created_in,
+        selector: (row) => row.created_in,
     },
     {
         name: 'Acciones',
-        selector: row => row.family_id,
-        cell: (selector) =>
+        selector: (row) => row.family_id,
+        cell: (selector) => (
             <div className="flex justify-center items-center">
-                <button className="flex items-center mr-3"
-                        onClick={(e) => actionEdit(selector.family_id)}>
-                    <Lucide icon="Edit3" className="w-4 h-4 mr-1 text-primary"/>{" "}
+                <button
+                    type="button"
+                    className="flex items-center mr-3"
+                    onClick={() => actionEdit(selector.family_id)}
+                >
+                    <Lucide
+                        icon="Edit3"
+                        className="w-4 h-4 mr-1 text-primary"
+                    />{' '}
                 </button>
-                <button className="flex items-center mr-3"
-                        onClick={(e) => actionDelete(selector.family_id)}>
-                    <Lucide icon="Trash2" className="w-4 h-4 mr-1 text-danger"/>
-
+                <button
+                    type="button"
+                    className="flex items-center mr-3"
+                    onClick={() => actionDelete(selector.family_id)}
+                >
+                    <Lucide
+                        icon="Trash2"
+                        className="w-4 h-4 mr-1 text-danger"
+                    />
                 </button>
-            </div>,
+            </div>
+        ),
         ignoreRowClick: true,
         allowOverflow: true,
         button: true,
-        width: "9rem"
+        width: '9rem',
     },
 ];
-
 
 export default columns;

@@ -18,7 +18,7 @@ class TypePersonSeeder extends Seeder
         TypePerson::create([
             'type_person_ID' => 1,
             'type_person_Name' => 'P. Natural',
-            'type_person_Initial' => '',
+            'type_person_Description' => '',
             'type_person_StatusID' => '1'
         ]);
 

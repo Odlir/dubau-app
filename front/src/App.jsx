@@ -1,6 +1,6 @@
 import { RecoilRoot } from 'recoil';
 import { BrowserRouter } from 'react-router-dom';
-import Router from './router';
+import Router from './router/index.jsx';
 import './index.css';
 
 function App() {

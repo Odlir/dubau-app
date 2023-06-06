@@ -1,3 +1,9 @@
+const a11yOff = Object.keys(require('eslint-plugin-jsx-a11y').rules)
+    .reduce((acc, rule) => {
+        acc[`jsx-a11y/${rule}`] = 'off';
+        return acc;
+    }, {});
+
 module.exports = {
     "env": {
         browser: true,
@@ -10,15 +16,20 @@ module.exports = {
         "eslint-config-prettier",
     ],
     "rules": {
+        ...a11yOff,
+        "camelcase": "off",
+        "react/prop-types": "off",
         "react/react-in-jsx-scope": "off",
+        "jsx-a11y/rule-name": "off",
+        "react/button-has-type": "off",
+        "react/jsx-props-no-spreading": "off",
+        "func-style": ['error', 'declaration', {allowArrowFunctions: true}],
         "import/extensions": [
             "error",
-            "ignorePackages",
+            "always",
             {
-                "js": "never",
-                "jsx": "never",
-                "ts": "never",
-                "tsx": "never"
+                "js": "always",
+                "jsx": "always",
             }
         ],
         "quotes": [
@@ -28,7 +39,7 @@ module.exports = {
     "settings": {
         "import/resolver": {
             "node": {
-                "extensions": [".js", ".jsx"]
+                "extensions": [".js", ".jsx", ".json"]
             },
             alias: {
                 map: [

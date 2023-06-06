@@ -1,11 +1,6 @@
-import React, {useState} from "react";
-import Menu_tool from "../../components/layouts/side-menu/Main.jsx";
+import React from 'react';
 
-const Index = () => {
-    return (
-        <>
-           <p>Mi DASHBOARD</p>
-        </>
-    )
+function Index() {
+    return <p>Mi DASHBOARD</p>;
 }
 export default Index;
