@@ -5,8 +5,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { useDebounce } from 'use-debounce';
 import Select from 'react-select';
 import debounce from 'lodash.debounce';
-import ExpandableTable from 'react-exp-table';
 import env from '@/env.js';
+import { Lucide } from '@/components/base-components/index.js';
 import Preload from '@/components/preload/preload.jsx';
 import Input from '@/components/Input/Input.jsx';
 import columns from '../../data/Inventory.jsx';
@@ -28,15 +28,13 @@ function Index() {
     const [productId, setProductId] = useState('');
     const [price, setPrice] = useState('');
     const [start_date, setStart_date] = useState('');
-    const [defaultProduct, setDefaultproduct] = useState('');
     const [final_date, setFinal_date] = useState('');
     const [created_in, setCreated_in] = useState('');
     const [dataInventoryId, setDataInventoryId] = useState('');
-    const [category_ApprovedStatus, setInventory_ApprovedStatus] =
-        useState('1');
+    const [category_ApprovedStatus, setInventory_ApprovedStatus] = useState('1');
     const [formType, setFormType] = useState('list');
     /* Server Side */
-    const [data, setData] = useState([]);
+    const [datasss, setData] = useState([]);
     const [dataDetail, setDataDetail] = useState([]);
     const [dataFamilyDetail, setDataFamilyDetail] = useState([]);
     const [dataProduct, setDataProduct] = useState([]);
@@ -52,9 +50,7 @@ function Index() {
     const fetchInventorys = async (page) => {
         setLoading(true);
         const endpoint = `${env.apiURL}listInventory`;
-        const response = await axios.get(
-            `${endpoint}?page=${page}&per_page=${perPage}`
-        );
+        const response = await axios.get(`${endpoint}?page=${page}&per_page=${perPage}`);
         setData(response.data.data);
         setPage_(response.data.page);
         setTotalRows(response.data.total);
@@ -98,11 +94,7 @@ function Index() {
                 axios
                     .post(endpoint, { inventory_id, status: 0 })
                     .then(() => {
-                        Swal.fire(
-                            'Eliminado!',
-                            'Se ha eliminado Correctamente.',
-                            'success'
-                        ).then(() => {
+                        Swal.fire('Eliminado!', 'Se ha eliminado Correctamente.', 'success').then(() => {
                             fetchInventorys(page_);
                         });
                     })
@@ -115,9 +107,7 @@ function Index() {
 
     const actionEdit = async (inventory_id) => {
         const endpoint = `${env.apiURL}listXInventory`;
-        const response = await axios.get(
-            `${endpoint}?inventory_id=${inventory_id}`
-        );
+        const response = await axios.get(`${endpoint}?inventory_id=${inventory_id}`);
         setdataxInventory(response.data.inventory_id);
         setName(response.data.name);
         setStart_date(response.data.start_date);
@@ -132,24 +122,18 @@ function Index() {
     const actionViewDetail = async (inventory_id) => {
         setId(id);
         const endpoint = `${env.apiURL}listXInventory`;
-        const response = await axios.get(
-            `${endpoint}?inventory_id=${inventory_id}`
-        );
+        const response = await axios.get(`${endpoint}?inventory_id=${inventory_id}`);
         setdataxInventory(response.data.inventory_id);
         setName(response.data.name);
         setStart_date(response.data.start_date);
         setFinal_date(response.data.final_date);
         const endpoint2 = `${env.apiURL}listInventoryDetail`;
-        const response2 = await axios.get(
-            `${endpoint2}?page=${1}&per_page=${perPage}&inventory_id=${inventory_id}`
-        );
+        const response2 = await axios.get(`${endpoint2}?page=${1}&per_page=${perPage}&inventory_id=${inventory_id}`);
         setDataDetail(response2.data.data);
         setPageDetail(response2.data.page);
         setTotalRowsDetail(response2.data.total);
         const endpoint3 = `${env.apiURL}listInventoryFamilyDetail`;
-        const response3 = await axios.get(
-            `${endpoint3}?page=${1}&per_page=${perPage}&inventory_id=${inventory_id}`
-        );
+        const response3 = await axios.get(`${endpoint3}?page=${1}&per_page=${perPage}&inventory_id=${inventory_id}`);
         setDataFamilyDetail(response3.data.data);
         setIventoryXDetail(inventory_id);
 
@@ -212,21 +196,10 @@ function Index() {
         setLoading(false);
     };
 
-    const handleInputChange = async (event) => {
-        const { value } = event.target;
-        setInputValue(value);
-        const endpoint = `${env.apiURL}listProducts`;
-        const response = await axios.get(`${endpoint}?productName=${value}`);
-        setDataProduct(response.data.data);
-    };
-
     const [options, setOptions] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-
-    const debouncedLoadOptions2 = '';
-
     const [selectedOption, setSelectedOption] = useState(null);
-    const loadOptions = async (inputVal) => {
+    const loadOptions = async (inputValue) => {
         if (!inputValue) {
             setOptions([]);
             return;
@@ -236,17 +209,12 @@ function Index() {
 
         try {
             const endpoint = `${env.apiURL}listProducts`;
-            const response = await axios.get(
-                `${endpoint}?productName=${inputVal}`
-            );
+            const response = await axios.get(`${endpoint}?productName=${inputValue}`);
             const datas = response.data;
-
-            // Formate os dados de resposta para o formato esperado pelo react-select
             const formattedOptions = datas.map((item) => ({
                 value: item.product_id,
                 label: item.name,
             }));
-
             setOptions(formattedOptions);
         } catch (error) {
             console.error('Error:', error);
@@ -254,13 +222,12 @@ function Index() {
         setIsLoading(false);
     };
 
-    const handleSelectChange = (selectedOpt) => {
-        setSelectedOption(selectedOpt);
-        setProductId(selectedOpt.value);
+    const handleSelectChange = (selectedOption) => {
+        setSelectedOption(selectedOption);
+        setProductId(selectedOption.value);
     };
 
     const debouncedLoadOptions = debounce(loadOptions, 500);
-
     const customStyles = {
         control: (provided) => ({
             ...provided,
@@ -282,11 +249,7 @@ function Index() {
                 axios
                     .post(endpoint, { inventory_detail_id, status: 0 })
                     .then(() => {
-                        Swal.fire(
-                            'Eliminado!',
-                            'Se ha eliminado Correctamente.',
-                            'success'
-                        ).then(() => {
+                        Swal.fire('Eliminado!', 'Se ha eliminado Correctamente.', 'success').then(() => {
                             actionViewDetail(inventoryXDetail);
                         });
                     })
@@ -297,15 +260,11 @@ function Index() {
         });
     };
 
-    const actionEditDetail = async (InventoryId) => {
+    const actionEditDetail = async (dataInventoryId) => {
         const endpoint = `${env.apiURL}listXInventoryDetail`;
-        const response = await axios.get(
-            `${endpoint}?inventory_detail_id=${InventoryId}`
-        );
+        const response = await axios.get(`${endpoint}?inventory_detail_id=${dataInventoryId}`);
         setDataInventoryId(response.data.inventory_id);
         setProductId(response.data.product_id);
-
-        // Formate os dados de resposta para o formato esperado pelo react-select
         const defaultSelectedOptionsInventoryDetail = {
             value: response.data.product_id,
             label: response.data.name,
@@ -352,10 +311,10 @@ function Index() {
             });
     };
 
-    const actionActiveDetail = async (dataInventory) => {
+    const actionActiveDetail = async (dataInventoryId) => {
         const endpoint = `${env.apiURL}activeInventoryDetail`;
         await axios
-            .post(endpoint, { dataInventory, status: '1' })
+            .post(endpoint, { dataInventoryId, status: '1' })
             .then(() => {
                 actionViewDetail(inventoryXDetail);
             })
@@ -394,85 +353,100 @@ function Index() {
         setShowDiv(false);
         setShowDivFamily(true);
     };
-    // const [familyContainer, setFamilyContainer] = useState([]);
-
-    let familyContainer = [];
-    const accordionItems = dataDetail.map((item) => {
-        familyContainer += [item.family_name];
-        return {
-            title: item.family_name,
-            content: item.name,
-        };
-    });
-
-    // const dataFamilyItems = dataFamilyDetail.map((item, key) => (key));
-    const ala = Object.entries(dataFamilyDetail).map(([key, value]) =>
-        Object.entries(value).map(([keyy, valuey]) => ({
-            location: 'Prueba con Profit',
-            population: '',
-            party: '',
-            child: [
-                {
-                    location: valuey.name,
-                    population: valuey.amount,
-                    party: valuey.cost,
-                },
-            ],
-        }))
-    );
 
     const columnsa = [
+        { name: 'Familia', selector: 'location', sortable: true },
+        { name: '', selector: 'population', sortable: true },
+        { name: '', selector: 'partys', sortable: true },
         {
-            title: 'Articulo',
-            key: 'location',
-        },
-        {
-            title: 'Cantidad',
-            key: 'population',
-        },
-        {
-            title: 'Precio',
-            key: 'party',
+            name: '',
+            selector: 'actions',
+            sortable: false,
         },
     ];
 
-    const datass = [
+    const columnsaExpanded = [
+        { name: '', selector: '', width: '4rem' },
+        { name: 'Producto', selector: 'location', width: '40rem' },
+        { name: 'Cantidad', selector: 'population' },
+        { name: 'Precio', selector: 'party' },
         {
-            location: 'Prueba con Profit',
-            population: '',
-            party: '',
-            child: [
-                {
-                    location:
-                        'ZAPAPICO PUNTA Y PALA ANCHA - 5 LB SIN MANGO - OJO 70X45MM (TRAMONTINA)\n',
-                    population: '11',
-                    party: '2',
-                },
-                {
-                    location: '12w21w12',
-                    population: '10',
-                    party: '22',
-                },
-            ],
-        },
-        {
-            location: 'familia0',
-            population: '',
-            party: '',
-            child: [
-                {
-                    location: 'Nuevo producto',
-                    population: '1',
-                    party: '2',
-                },
-                {
-                    location: 'NProducto prueba 2',
-                    population: '2',
-                    party: '2',
-                },
-            ],
+            name: 'Acciones',
+            selector: 'actions',
+            cell: (selector) => (
+                <div className="flex justify-center items-center">
+                    {selector.status_dinamic === 0 ? (
+                        <button className="flex items-center mr-3" onClick={() => actionActiveDetail(selector.actions)}>
+                            <Lucide icon="XOctagon" className="w-4 h-4 mr-1 text-danger" />
+                        </button>
+                    ) : (
+                        <button className="flex items-center mr-3" onClick={() => actionActiveDetail(selector.actions)}>
+                            <Lucide icon="ShieldCheck" className="w-4 h-4 mr-1 text-success" />
+                        </button>
+                    )}
+                    <p> a {selector.child}</p>
+                    <button className="flex items-center mr-3" onClick={() => actionEditDetail(selector.actions)}>
+                        <Lucide icon="Edit3" className="w-4 h-4 mr-1 text-primary" />{' '}
+                    </button>
+                    <button className="flex items-center mr-3" onClick={() => actionDeleteDetail(selector.actions)}>
+                        <Lucide icon="Trash2" className="w-4 h-4 mr-1 text-danger" />
+                    </button>
+                </div>
+            ),
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+            width: '9rem',
         },
     ];
+    const data = Object.entries(dataFamilyDetail).map(([key, value]) => {
+        const obj = {
+            location: key,
+            population: '',
+            party: '',
+            child: [],
+        };
+        Object.entries(value).map(([keyy, valuey]) =>
+            obj.child.push({
+                location: valuey.name,
+                population: valuey.amount,
+                party: valuey.cost,
+                actions: valuey.inventory_detail_id,
+            })
+        );
+        return obj;
+    });
+
+    function ExpandedComponent({ data }) {
+        return <ExpandableComponent data={data.child} className="expandable-table" />;
+    }
+
+    const [currentRow, setCurrentRow] = useState(null);
+    const [expandableRowss, setExpandableRowss] = useState(false);
+
+    const handleRowClick = () => {
+        setExpandableRowss(true);
+    };
+    const [expandedData22, setExpandedData22] = React.useState([]);
+    const handleExpandToggle = (expanded, row) => {
+        setCurrentRow(expanded);
+        setExpandedData22(row.child);
+    };
+
+    const expandedData = data.reduce((expanded, item, index) => {
+        const child = item.child ? <ExpandedComponent data={item.child} /> : null;
+
+        expanded.push({
+            ...item.child[0],
+            id: index + 1,
+            children: child,
+        });
+        return expanded;
+    }, []);
+
+    function ExpandableComponent() {
+        return <DataTable columns={columnsaExpanded} customStyles={customStyless} data={expandedData22} noHeader />;
+    }
 
     return (
         <div>
@@ -493,16 +467,12 @@ function Index() {
 
                                     <div className="flex items-start justify-between h-12  border-b border-solid border-slate-200 rounded-t">
                                         <div className="form-inline items-start p-5 flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0 w-full">
-                                            <div className="text-lg font-semibold">
-                                                Inventario: {name}
-                                            </div>
+                                            <div className="text-lg font-semibold">Inventario: {name}</div>
                                             <div className="ml-auto  flex ">
                                                 <div className="form-label xl:w-15 ">
                                                     <div className="text-left">
                                                         <div className="flex items-center justify-center h-10">
-                                                            <div className="font-medium">
-                                                                Fecha Inicial
-                                                            </div>
+                                                            <div className="font-medium">Fecha Inicial</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -529,58 +499,36 @@ function Index() {
                                                         <div className=" xl:w-10">
                                                             <div className="text-left">
                                                                 <div className="flex items-center justify-center h-10">
-                                                                    <div className="">
-                                                                        Articulo
-                                                                    </div>
+                                                                    <div className="">Articulo</div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="w-2">
-                                                            &nbsp;
-                                                        </div>
+                                                        <div className="w-2">&nbsp;</div>
                                                         <div className=" width-28em mt-3 xl:mt-0 flex-1 ">
                                                             <Select
-                                                                styles={
-                                                                    customStyles
-                                                                }
-                                                                options={
-                                                                    options
-                                                                }
-                                                                isLoading={
-                                                                    isLoading
-                                                                }
-                                                                onInputChange={
-                                                                    debouncedLoadOptions
-                                                                }
-                                                                onChange={
-                                                                    handleSelectChange
-                                                                }
-                                                                value={
-                                                                    selectedOption
-                                                                }
+                                                                styles={customStyles}
+                                                                options={options}
+                                                                isLoading={isLoading}
+                                                                onInputChange={debouncedLoadOptions}
+                                                                onChange={handleSelectChange}
+                                                                value={selectedOption}
                                                                 isClearable
                                                             />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className=" w-1 mt-3 xl:mt-0 flex-1 " />
-                                                <div className="w-2">
-                                                    &nbsp;
-                                                </div>
+                                                <div className="w-2">&nbsp;</div>
                                                 <div>
                                                     <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
                                                         <div className="xl:w-12 ">
                                                             <div className="text-left">
                                                                 <div className="flex items-center justify-center h-10">
-                                                                    <div className="">
-                                                                        Cantidad
-                                                                    </div>
+                                                                    <div className="">Cantidad</div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="w-2">
-                                                            &nbsp;
-                                                        </div>
+                                                        <div className="w-2">&nbsp;</div>
                                                         <div className="w-16 mt-4 xl:mt-0 flex-1">
                                                             <Input
                                                                 dataType="text"
@@ -588,12 +536,8 @@ function Index() {
                                                                 dataId="email"
                                                                 className="form-control h-9  font-size-8px "
                                                                 dataPlaceholder="0.0"
-                                                                dataValue={
-                                                                    quantity
-                                                                }
-                                                                dataOnchange={
-                                                                    setQuantity
-                                                                }
+                                                                dataValue={quantity}
+                                                                dataOnchange={setQuantity}
                                                             />
                                                         </div>
                                                     </div>
@@ -604,15 +548,11 @@ function Index() {
                                                         <div className=" xl:w-12  ">
                                                             <div className="text-left">
                                                                 <div className="flex items-center justify-center h-10">
-                                                                    <div className="">
-                                                                        Precio
-                                                                    </div>
+                                                                    <div className="">Precio</div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="w-2">
-                                                            &nbsp;
-                                                        </div>
+                                                        <div className="w-2">&nbsp;</div>
                                                         <div className="w-16 mt-4 xl:mt-0 flex-1">
                                                             <Input
                                                                 dataType="text"
@@ -620,12 +560,8 @@ function Index() {
                                                                 dataId="email"
                                                                 className="form-control h-9 font-size-8px "
                                                                 dataPlaceholder="0.00"
-                                                                dataValue={
-                                                                    price
-                                                                }
-                                                                dataOnchange={
-                                                                    setPrice
-                                                                }
+                                                                dataValue={price}
+                                                                dataOnchange={setPrice}
                                                             />
                                                         </div>
                                                     </div>
@@ -636,49 +572,40 @@ function Index() {
                                                 <div className="h-6 flex justify-end">
                                                     <button
                                                         className="btn btn-primary shadow-md mr-2"
-                                                        onClick={
-                                                            handleOnClickRegisterDetail
-                                                        }
+                                                        onClick={handleOnClickRegisterDetail}
                                                     >
                                                         Agregar
                                                     </button>
                                                     <button
                                                         className="btn btn-danger shadow-md mr-2"
-                                                        onClick={
-                                                            handleOnClickCancelDetail
-                                                        }
+                                                        onClick={handleOnClickCancelDetail}
                                                     >
                                                         Cancelar
                                                     </button>
                                                     <button
                                                         className="btn btn-success shadow-md mr-2 color-white"
-                                                        onClick={
-                                                            handleOnClickCancelDetail
-                                                        }
+                                                        onClick={handleOnClickCancelDetail}
                                                     >
                                                         Aceptar
                                                     </button>
                                                 </div>
                                             </div>
 
-                                            <div className="post  overflow-hidden box mt-5 z-0">
+                                            <div className="post  overflow-hidden box mt-2 z-0 max-h-10">
                                                 <ul
-                                                    className="post__tabs nav nav-tabs flex-col sm:flex-row bg-slate-100 dark:bg-darkmode-800"
+                                                    className="post__tabs nav nav-tabs flex-col sm:flex-row bg-slate-100 dark:bg-darkmode-800 max-h-10"
                                                     role="tablist"
                                                 >
                                                     <li className="nav-item">
                                                         <button
                                                             title=""
-                                                            className="nav-link tooltip w-full sm:w-40 py-4 active"
+                                                            className="nav-link tooltip w-full sm:w-40 py-2.5 active"
                                                             id="content-tab"
                                                             role="tab"
                                                             aria-controls="content"
                                                             onClick={general}
                                                         >
-                                                            <i
-                                                                data-lucide="file-text"
-                                                                className="w-4 h-4 mr-2"
-                                                            />{' '}
+                                                            {' '}
                                                             General
                                                         </button>
                                                     </li>
@@ -686,16 +613,12 @@ function Index() {
                                                     <li className="nav-item">
                                                         <button
                                                             title=""
-                                                            className="nav-link tooltip w-full sm:w-40 py-4"
+                                                            className="nav-link tooltip w-full sm:w-40 py-2.5 "
                                                             id="meta-title-tab"
                                                             role="tab"
                                                             aria-hidden="true"
                                                             onClick={family}
                                                         >
-                                                            <i
-                                                                data-lucide="code"
-                                                                className="w-4 h-4 mr-2"
-                                                            />{' '}
                                                             Familia
                                                         </button>
                                                     </li>
@@ -711,27 +634,15 @@ function Index() {
                                                                 actionDeleteDetail,
                                                                 actionEditDetail
                                                             )}
-                                                            customStyles={
-                                                                customStyless
-                                                            }
+                                                            customStyles={customStyless}
                                                             data={dataDetail}
-                                                            progressPending={
-                                                                loading
-                                                            }
-                                                            progressComponent={
-                                                                <Preload />
-                                                            }
+                                                            progressPending={loading}
+                                                            progressComponent={<Preload />}
                                                             pagination
                                                             paginationServer
-                                                            paginationTotalRows={
-                                                                totalRowsDetail
-                                                            }
-                                                            onChangeRowsPerPage={
-                                                                handlePerRowsChangeDetail
-                                                            }
-                                                            onChangePage={
-                                                                handlePageChange
-                                                            }
+                                                            paginationTotalRows={totalRowsDetail}
+                                                            onChangeRowsPerPage={handlePerRowsChangeDetail}
+                                                            onChangePage={handlePageChange}
                                                         />
                                                     ) : (
                                                         <DataTable
@@ -740,40 +651,38 @@ function Index() {
                                                                 actionDeleteDetail,
                                                                 actionEditDetail
                                                             )}
-                                                            customStyles={
-                                                                customStyless
-                                                            }
+                                                            customStyles={customStyless}
                                                             data={dataDetail}
-                                                            progressPending={
-                                                                loading
-                                                            }
-                                                            progressComponent={
-                                                                <Preload />
-                                                            }
+                                                            progressPending={loading}
+                                                            progressComponent={<Preload />}
                                                             noDataComponent="No existen registros en esta tabla"
                                                             pagination
                                                             paginationServer
-                                                            paginationTotalRows={
-                                                                totalRowsDetail
-                                                            }
-                                                            onChangeRowsPerPage={
-                                                                handlePerRowsChangeDetail
-                                                            }
-                                                            onChangePage={
-                                                                handlePageChange
-                                                            }
+                                                            paginationTotalRows={totalRowsDetail}
+                                                            onChangeRowsPerPage={handlePerRowsChangeDetail}
+                                                            onChangePage={handlePageChange}
                                                         />
                                                     )}
                                                 </div>
                                             )}
                                             {showDivFamily && (
-                                                <div className="tableContainer">
-                                                    <ExpandableTable
-                                                        columns={columnsa}
-                                                        data={datass}
-                                                        hideCollapseExpandButtons
-                                                    />
-                                                </div>
+                                                <DataTable
+                                                    columns={columnsa}
+                                                    customStyles={customStyless}
+                                                    data={data}
+                                                    expandableRows
+                                                    expandOnRowClicked
+                                                    onRowClicked={handleRowClick}
+                                                    expandableRowExpanded={() => false}
+                                                    expandableRowsComponent={ExpandableComponent}
+                                                    expandableRowsComponentProps={{
+                                                        data,
+                                                        className: 'expandable-table',
+                                                    }}
+                                                    onRowExpandToggled={handleExpandToggle}
+                                                    expandableRowsHideExpander={false}
+                                                    className="main-table"
+                                                />
                                             )}
                                         </div>
                                     </div>
@@ -800,14 +709,10 @@ function Index() {
                         handleOnClickClean={handleOnClickClean}
                         actionAdd={actionAdd}
                     />
-                    {data.length != 0 ? (
+                    {data.length !== 0 ? (
                         <DataTable
-                            columns={columns(
-                                actionDelete,
-                                actionViewDetail,
-                                actionEdit
-                            )}
-                            data={data}
+                            columns={columns(actionDelete, actionViewDetail, actionEdit)}
+                            data={datasss}
                             progressPending={loading}
                             progressComponent={<Preload />}
                             pagination
@@ -818,12 +723,8 @@ function Index() {
                         />
                     ) : (
                         <DataTable
-                            columns={columns(
-                                actionDelete,
-                                actionViewDetail,
-                                actionEdit
-                            )}
-                            data={data}
+                            columns={columns(actionDelete, actionViewDetail, actionEdit)}
+                            data={datasss}
                             progressPending={loading}
                             progressComponent={<Preload />}
                             noDataComponent="No existen registros en esta tabla"
@@ -836,6 +737,7 @@ function Index() {
                     )}
                 </>
             ) : (
+                // eslint-disable-next-line react/jsx-no-useless-fragment
                 <>
                     {formType === 'register' ? (
                         <Add

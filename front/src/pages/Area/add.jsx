@@ -20,17 +20,17 @@ function Add({
 
     return (
         <div>
-            <h2 className="intro-y text-lg font-medium mt-10">Añadir Areas</h2>
+            <h2 className="intro-y text-lg font-medium mt-10">
+                Añadir Areas
+            </h2>
             <div className="intro-y box p-5 mt-5">
-                <div className="flex">
+                <div className="flex" >
                     <div className=" w-6/12">
                         <div className="border w-full border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
-                            <div className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                <Lucide
-                                    icon="ChevronDown"
-                                    className="w-4 h-4 mr-2"
-                                />{' '}
-                                Area Info
+                            <div
+                                className="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                <Lucide icon="ChevronDown" className="w-4 h-4 mr-2"/> Area
+                                Info
                             </div>
                             <div className="mt-5">
                                 <div className="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">

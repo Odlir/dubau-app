@@ -23,6 +23,7 @@ module.exports = {
         "jsx-a11y/rule-name": "off",
         "react/button-has-type": "off",
         "react/jsx-props-no-spreading": "off",
+        "max-len": "off",
         "func-style": ['error', 'declaration', {allowArrowFunctions: true}],
         "import/extensions": [
             "error",
