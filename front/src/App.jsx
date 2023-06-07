@@ -1,23 +1,18 @@
-
-import reactLogo from './assets/react.svg'
-import Api from "./services/Api.jsx";
-import Dashboard from "./components/Dashboard.jsx";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import './index.css'
-
-import Counter from './components/Counter'
+import { RecoilRoot } from 'recoil';
+import { BrowserRouter } from 'react-router-dom';
+import Router from './router/index.jsx';
+import './index.css';
 
 function App() {
     return (
-        <div className="App">
-            <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={<Api/>}/>
-                    <Route path='/dashboard' element={<Dashboard/>}/>
-                </Routes>
-            </BrowserRouter>
-        </div>
-    )
+        <RecoilRoot>
+            <div className="App">
+                <BrowserRouter>
+                    <Router />
+                </BrowserRouter>
+            </div>
+        </RecoilRoot>
+    );
 }
+
 export default App;
