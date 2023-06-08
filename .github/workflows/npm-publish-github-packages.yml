@@ -4,7 +4,7 @@
 name: Node.js Package
 
 on:
-  push: 
+  push:
     branches: [ dev ]
 
 jobs:
@@ -15,10 +15,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Install deps    
-        run: npm i
-        
-      - name: build    
+
+      - name: Install deps
+        run: cd front/ && npm i
+
+      - name: build
         run: npm run build  --prefix front
 
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: front/build
 
