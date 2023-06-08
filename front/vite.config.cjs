@@ -7,10 +7,10 @@ export const aliases = {
 };
 // https://vitejs.dev/config/
 export default defineConfig({
+    base: '',
     plugins: [react()],
     resolve: {
         alias: aliases,
     },
     extensions: ['.js', '.jsx'],
-    base: '/dubau-app/',
 });
