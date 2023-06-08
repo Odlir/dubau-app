@@ -2,45 +2,37 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements JWTSubject
 {
-    public $timestamps = false;
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'names',
-        'email',
-        'password',
-    ];
+    protected $table = 'user';
+    protected $primaryKey = 'user_ID';
+    protected $fillable = array(
+        'person_ID',
+        'role_ID',
+        'user_Name',
+        'user_Password',
+        'user_CreationDate',
+        'user_CreationUser',
+        'user_ModificationDate',
+        'user_ModificationUser',
+        'user_ApprovedStatus',
+        'user_StatusID');
+    public $timestamps = false;
+    public static $rules = array();
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -64,5 +56,4 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-
 }
