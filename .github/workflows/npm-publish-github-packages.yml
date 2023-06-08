@@ -37,10 +37,9 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
+          cache-dependency-path: ./front/package-lock.json
       - name: Install dependencies
-        run: cd front/ && npm ci --prefer-offline --no-audit
-        env:
-          CI: false
+        run: cd front/ && npm i
       - name: Build
         run: npm run build --prefix front
       - name: Setup Pages
