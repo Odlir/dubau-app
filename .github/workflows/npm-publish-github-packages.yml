@@ -38,7 +38,7 @@ jobs:
           node-version: 18
           cache: 'npm'
       - name: Install dependencies
-        run: cd /front/ && npm install
+        run: cd front/ && npm install
       - name: Build
         run: npm run build --prefix front
       - name: Setup Pages
@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload dist repository
-          path: './dist'
+          path: './front/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
