@@ -12,5 +12,5 @@ export default defineConfig({
         alias: aliases,
     },
     extensions: ['.js', '.jsx'],
-    base: './dubau-app/',
+    base: '/dubau-app/',
 });
