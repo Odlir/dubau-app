@@ -15,6 +15,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+
       - name: Install deps
         run: cd front/ && npm i
 
@@ -22,7 +23,8 @@ jobs:
         run: npm run build  --prefix front
 
       - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
-          branch: dev
+          branch: gh-pages
           folder: front/build
 
